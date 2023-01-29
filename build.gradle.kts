@@ -40,6 +40,10 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+ktlint {
+    disabledRules.set(setOf("import-ordering"))
+}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
