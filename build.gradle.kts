@@ -8,12 +8,53 @@ plugins {
     kotlin("plugin.spring") version "1.8.0"
 }
 
-group = "com.tenmm"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+allprojects {
+    apply(plugin = "java")
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+    apply(plugin = "kotlin-kapt")
 
-repositories {
-    mavenCentral()
+    group = "com.tenmm"
+    version = "0.0.1-SNAPSHOT"
+    java.sourceCompatibility = JavaVersion.VERSION_17
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:2020.0.3")
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    // 전역적으로 사용되는 의존성
+    dependencies {
+
+        implementation("org.springframework.boot:spring-boot-starter")
+
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+        implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+
+        implementation("org.apache.commons:commons-lang3:3.12.0")
+
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = "17"
+        }
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }
 
 dependencies {
