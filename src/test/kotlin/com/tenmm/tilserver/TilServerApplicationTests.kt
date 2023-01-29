@@ -9,5 +9,4 @@ class TilServerApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
