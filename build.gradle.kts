@@ -59,8 +59,12 @@ allprojects {
         useJUnitPlatform()
     }
 
-
     ktlint {
         disabledRules.set(setOf("import-ordering"))
+    }
+
+    springBoot {
+        mainClass.set("com.tenmm.tilserver.CrawlerApplication")
+        mainClass.set("com.tenmm.tilserver.TilServerApplication")
     }
 }
