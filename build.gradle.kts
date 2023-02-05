@@ -30,19 +30,22 @@ allprojects {
         mavenCentral()
     }
 
-    // 전역적으로 사용되는 의존성
     dependencies {
-
+        implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("org.springframework.boot:spring-boot-starter")
-
-        implementation("org.jetbrains.kotlin:kotlin-reflect")
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+        implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+//    runtimeOnly("com.mysql:mysql-connector-j")
+//    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 
+        // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
         implementation("org.apache.commons:commons-lang3:3.12.0")
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("io.projectreactor:reactor-test")
     }
 
     tasks.withType<KotlinCompile> {
@@ -55,36 +58,13 @@ allprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
     }
-}
 
-dependencies {
-//    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-//    runtimeOnly("com.mysql:mysql-connector-j")
-
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    implementation("org.apache.commons:commons-lang3:3.12.0")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.projectreactor:reactor-test")
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
+    ktlint {
+        disabledRules.set(setOf("import-ordering"))
     }
-}
 
-ktlint {
-    disabledRules.set(setOf("import-ordering"))
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+    springBoot {
+        mainClass.set("com.tenmm.tilserver.CrawlerApplication")
+        mainClass.set("com.tenmm.tilserver.TilServerApplication")
+    }
 }
