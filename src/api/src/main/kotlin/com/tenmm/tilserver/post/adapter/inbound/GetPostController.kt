@@ -1,14 +1,18 @@
 package com.tenmm.tilserver.post.adapter.inbound
 
+import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.post.adapter.inbound.model.GetPostListResponse
-import com.tenmm.tilserver.post.adapter.inbound.model.Post
+import com.tenmm.tilserver.post.domain.Post
+import java.math.BigInteger
+import java.sql.Timestamp
+import java.time.Instant
+import java.util.UUID
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 @RestController
 @RequestMapping("/v1/posts")
@@ -20,12 +24,13 @@ class GetPostController {
         return GetPostListResponse(
             postList = listOf(
                 Post(
-                    id = RandomStringUtils.random(10),
+                    userIdentifier = Identifier(UUID.randomUUID().toString()),
                     title = RandomStringUtils.random(10),
-                    summary = RandomStringUtils.random(10),
-                    author = RandomStringUtils.random(10),
-                    url = RandomStringUtils.random(10),
-                    createdAt = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+                    description = RandomStringUtils.random(10),
+                    categoryIdentifier = Identifier(UUID.randomUUID().toString()),
+                    url = Url(RandomStringUtils.random(10)),
+                    createdAt = Timestamp.from(Instant.now()),
+                    hitCount = BigInteger.ONE,
                 )
             ),
             nextPageToken = "user - $name next token",
@@ -38,12 +43,13 @@ class GetPostController {
         return GetPostListResponse(
             postList = listOf(
                 Post(
-                    id = RandomStringUtils.random(10),
+                    userIdentifier = Identifier(UUID.randomUUID().toString()),
                     title = RandomStringUtils.random(10),
-                    summary = RandomStringUtils.random(10),
-                    author = RandomStringUtils.random(10),
-                    url = RandomStringUtils.random(10),
-                    createdAt = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+                    description = RandomStringUtils.random(10),
+                    categoryIdentifier = Identifier(UUID.randomUUID().toString()),
+                    url = Url(RandomStringUtils.random(10)),
+                    createdAt = Timestamp.from(Instant.now()),
+                    hitCount = BigInteger.ONE,
                 )
             ),
             nextPageToken = "recommend next token",
@@ -58,12 +64,13 @@ class GetPostController {
         return GetPostListResponse(
             postList = listOf(
                 Post(
-                    id = RandomStringUtils.random(10),
+                    userIdentifier = Identifier(UUID.randomUUID().toString()),
                     title = RandomStringUtils.random(10),
-                    summary = RandomStringUtils.random(10),
-                    author = RandomStringUtils.random(10),
-                    url = RandomStringUtils.random(10),
-                    createdAt = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+                    description = RandomStringUtils.random(10),
+                    categoryIdentifier = Identifier(UUID.randomUUID().toString()),
+                    url = Url(RandomStringUtils.random(10)),
+                    createdAt = Timestamp.from(Instant.now()),
+                    hitCount = BigInteger.ONE,
                 )
             ),
             nextPageToken = "category - $categoryId next token",
