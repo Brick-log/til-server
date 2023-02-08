@@ -8,5 +8,5 @@ import org.springframework.stereotype.Service
 @Service
 class GetBlogPlatformService : GetBlogPlatformUseCase {
     override fun getAll() = BlogPlatformType.getAll()
-    override fun getByUrl(url: Url): BlogPlatformType = BlogPlatformType.get(url.value)
+    override fun getByUrl(url: Url): BlogPlatformType = BlogPlatformType.get(url)
 }

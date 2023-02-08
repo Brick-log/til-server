@@ -20,13 +20,13 @@ enum class BlogPlatformType(
     MEDIUM("^(http|https):\\/\\/.*medium\\.com.*\$".toRegex()),
     ETC(URL_REGEX);
     companion object {
-        fun get(url: String): BlogPlatformType {
+        fun get(url: Url): BlogPlatformType {
             return when {
-                url.matches(VELOG.patternRegex) -> VELOG
-                url.matches(TISTORY.patternRegex) -> TISTORY
-                url.matches(NAVER.patternRegex) -> NAVER
-                url.matches(MEDIUM.patternRegex) -> MEDIUM
-                url.matches(ETC.patternRegex) -> ETC
+                url.value.matches(VELOG.patternRegex) -> VELOG
+                url.value.matches(TISTORY.patternRegex) -> TISTORY
+                url.value.matches(NAVER.patternRegex) -> NAVER
+                url.value.matches(MEDIUM.patternRegex) -> MEDIUM
+                url.value.matches(ETC.patternRegex) -> ETC
                 else -> throw IllegalArgumentException("Invalid URL")
             }
         }

@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.blog.domain
 
+import com.tenmm.tilserver.common.domain.Url
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test
 class TestVelog {
     @Test
     fun `Test Velog (Standard)`() {
-        val url = "https://velog.io/@username/post"
+        val url = Url("https://velog.io/@username/post")
         assertEquals(BlogPlatformType.VELOG, BlogPlatformType.get(url))
     }
 }
@@ -25,19 +26,19 @@ class TestVelog {
 class TestMeduim {
     @Test
     fun `Test Meduim (Standard)`() {
-        val url = "https://medium.com/@username/title"
+        val url = Url("https://medium.com/@username/title")
         assertEquals(BlogPlatformType.MEDIUM, BlogPlatformType.get(url))
     }
 
     @Test
     fun `Test Meduim (with prefix)`() {
-        val url = "https://jacquelinedooley.medium.com/title"
+        val url = Url("https://jacquelinedooley.medium.com/title")
         assertEquals(BlogPlatformType.MEDIUM, BlogPlatformType.get(url))
     }
 
     @Test
     fun `Test Meduim (with postfix)`() {
-        val url = "https://medium.com/postfix/title"
+        val url = Url("https://medium.com/postfix/title")
         assertEquals(BlogPlatformType.MEDIUM, BlogPlatformType.get(url))
     }
     @Test
@@ -45,7 +46,7 @@ class TestMeduim {
         /**
          * Sample Real URL
          */
-        val url = "https://betterprogramming.pub/context-over-task-lists-2e8912d7df61"
+        val url = Url("https://betterprogramming.pub/context-over-task-lists-2e8912d7df61")
 
         assertEquals(BlogPlatformType.ETC, BlogPlatformType.get(url))
     }
@@ -59,7 +60,7 @@ class TestMeduim {
 class TestNaver {
     @Test
     fun `Test naver (Standard)`() {
-        val url = "https://blog.naver.com/nickname/223302012"
+        val url = Url("https://blog.naver.com/nickname/223302012")
         assertEquals(BlogPlatformType.NAVER, BlogPlatformType.get(url))
     }
 }
@@ -72,7 +73,7 @@ class TestNaver {
 class TestTisotry {
     @Test
     fun `Test Tistory (Standard)`() {
-        val url = "https://prefix.tistory.com/nickname/223302012"
+        val url = Url("https://prefix.tistory.com/nickname/223302012")
         assertEquals(BlogPlatformType.TISTORY, BlogPlatformType.get(url))
     }
 
@@ -81,7 +82,7 @@ class TestTisotry {
         /**
          * Sample Real URL
          */
-        val url = "https://blog.lgcns.com/"
+        val url = Url("https://blog.lgcns.com/")
         assertEquals(BlogPlatformType.ETC, BlogPlatformType.get(url))
     }
 }
