@@ -8,6 +8,8 @@ import java.sql.Timestamp
 
 interface GetPostUseCase {
     fun getPostByIdentifier(postIdentifier: Identifier): GetPostResult
+
+    fun getPostListRandom(): GetPostListResult
     fun getPostListByCategory(categoryIdentifier: Identifier): GetPostListResult
     fun getPostListByNameAndDate(name: String, to: Timestamp, from: Timestamp): GetPostListResult
 
