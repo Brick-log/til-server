@@ -5,9 +5,10 @@ import com.tenmm.tilserver.common.domain.Url
 import java.sql.Timestamp
 
 data class PostSaveRequestResult(
-    val identifier: Identifier,
-    val title: String,
-    val description: String,
+    val saveIdentifier: Identifier,
     val url: Url,
-    val createdAt: Timestamp,
+    val title: String,
+    val description: String?,
+    val createdAt: Timestamp?,
+    val needToCheck: Boolean,
 )
