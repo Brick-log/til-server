@@ -9,5 +9,5 @@ data class User(
     val path: String,
     val introduction: String,
     val thumbnailUrl: Url,
-    val categoryIdentifier: Identifier,
+    val categoryIdentifier: Identifier?,
 )
