@@ -4,7 +4,7 @@ import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.common.randomUrl
 
 fun randomGetPostResult(
-    url:Url = randomUrl()
+    url: Url = randomUrl(),
 ): GetPostResult {
     return GetPostResult(url)
 }

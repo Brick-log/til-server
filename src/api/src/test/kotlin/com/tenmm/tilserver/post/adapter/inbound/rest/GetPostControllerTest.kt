@@ -67,7 +67,6 @@ class GetPostControllerTest {
             sut.getPostByIdentifier(postIdValue)
         }
 
-
         // then
         val expectedMessage = "Invalid identifier: $postIdValue"
 
