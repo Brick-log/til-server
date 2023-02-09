@@ -24,6 +24,7 @@ class GetPostController {
         return GetPostListResponse(
             postList = listOf(
                 Post(
+                    identifier = Identifier.generate(),
                     userIdentifier = Identifier(UUID.randomUUID().toString()),
                     title = RandomStringUtils.random(10),
                     description = RandomStringUtils.random(10),
@@ -43,6 +44,7 @@ class GetPostController {
         return GetPostListResponse(
             postList = listOf(
                 Post(
+                    identifier = Identifier.generate(),
                     userIdentifier = Identifier(UUID.randomUUID().toString()),
                     title = RandomStringUtils.random(10),
                     description = RandomStringUtils.random(10),
@@ -64,6 +66,7 @@ class GetPostController {
         return GetPostListResponse(
             postList = listOf(
                 Post(
+                    identifier = Identifier.generate(),
                     userIdentifier = Identifier(UUID.randomUUID().toString()),
                     title = RandomStringUtils.random(10),
                     description = RandomStringUtils.random(10),

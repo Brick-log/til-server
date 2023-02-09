@@ -1,9 +1,9 @@
-package com.tenmm.tilserver.post.application.inbound.model
+package com.tenmm.tilserver.blog.application.inbound.model
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 
-data class PostSaveRequestCommand(
+data class SaveBlogCommand(
     val userIdentifier: Identifier,
-    val url: Url,
+    val url: Url
 )
