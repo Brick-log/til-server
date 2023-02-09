@@ -46,6 +46,10 @@ allprojects {
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.projectreactor:reactor-test")
+        testImplementation("io.mockk:mockk:1.13.4")
+        testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
+
+
     }
 
     tasks.withType<KotlinCompile> {
