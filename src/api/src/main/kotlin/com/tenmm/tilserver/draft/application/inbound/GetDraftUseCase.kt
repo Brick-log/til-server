@@ -4,5 +4,5 @@ import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.draft.domain.Draft
 
 interface GetDraftUseCase {
-    fun getByIdentifier(identifier: Identifier): Draft
+    fun getByUserIdentifier(userIdentifier: Identifier): Draft
 }
