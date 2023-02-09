@@ -1,6 +1,6 @@
-package com.tenmm.tilserver.post.adapter.inbound
+package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.post.adapter.inbound.model.DeletePostResponse
+import com.tenmm.tilserver.post.adapter.inbound.rest.model.DeletePostResponse
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping

@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.post.adapter.inbound.model
+package com.tenmm.tilserver.post.adapter.inbound.rest.model
 
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.post.application.inbound.model.GetPostResult

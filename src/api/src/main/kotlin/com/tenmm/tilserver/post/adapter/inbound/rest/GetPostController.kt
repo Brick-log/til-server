@@ -1,9 +1,9 @@
-package com.tenmm.tilserver.post.adapter.inbound
+package com.tenmm.tilserver.post.adapter.inbound.rest
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.post.adapter.inbound.model.GetPostListResponse
-import com.tenmm.tilserver.post.adapter.inbound.model.GetPostMetaResponse
-import com.tenmm.tilserver.post.adapter.inbound.model.GetPostResponse
+import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
+import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostMetaResponse
+import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostResponse
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.GetRecommendedPostUseCase
 import java.sql.Timestamp
