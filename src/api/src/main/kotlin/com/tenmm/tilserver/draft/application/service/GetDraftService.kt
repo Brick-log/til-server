@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class GetDraftService : GetDraftUseCase {
-    override fun getByIdentifier(identifier: Identifier): Draft {
+    override fun getByUserIdentifier(userIdentifier: Identifier): Draft {
         TODO("Not yet implemented")
     }
 }
