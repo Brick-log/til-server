@@ -10,6 +10,7 @@ interface GetPostUseCase {
     fun getPostByIdentifier(postIdentifier: Identifier): GetPostResult
     fun getPostListByCategory(categoryIdentifier: Identifier): GetPostListResult
     fun getPostListByNameAndDate(name: String, to: Timestamp, from: Timestamp): GetPostListResult
+    fun getPostListByPageToken(pageToken: String): GetPostListResult
 
     fun getPostMetaListByNameAndDate(name: String, to: Timestamp, from: Timestamp): GetPostMetaResult
     fun getPostCountByMonth(name: String, month: Int): Int

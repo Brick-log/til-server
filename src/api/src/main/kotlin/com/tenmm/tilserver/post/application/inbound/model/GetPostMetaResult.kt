@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.post.application.inbound.model
 
-import java.time.LocalDate
+import java.sql.Timestamp
 
 data class GetPostMetaResult(
-    val dateList: List<LocalDate>,
+    val dateList: List<Timestamp>,
 )
