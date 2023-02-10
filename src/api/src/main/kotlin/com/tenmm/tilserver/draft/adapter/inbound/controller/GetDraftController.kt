@@ -1,6 +1,6 @@
-package com.tenmm.tilserver.draft.adapter.inbound
+package com.tenmm.tilserver.draft.adapter.inbound.controller
 
-import com.tenmm.tilserver.draft.adapter.inbound.model.GetDraftResponse
+import com.tenmm.tilserver.draft.adapter.inbound.controller.model.GetDraftResponse
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
