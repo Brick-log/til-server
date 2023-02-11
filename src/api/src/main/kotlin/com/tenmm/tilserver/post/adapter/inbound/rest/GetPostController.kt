@@ -19,11 +19,10 @@ class GetPostController(
     private val getPostUseCase: GetPostUseCase,
     private val getRecommendedPostUseCase: GetRecommendedPostUseCase,
 ) {
-    @GetMapping("/{postIdValue}")
+    @GetMapping("/{postIdentifier}")
     fun getPostByIdentifier(
-        @PathVariable postIdValue: String,
+        @PathVariable postIdentifier: Identifier,
     ): GetPostResponse {
-        val postIdentifier = Identifier(postIdValue)
         val post = getPostUseCase.getPostByIdentifier(postIdentifier)
         return GetPostResponse.fromResult(post)
     }
@@ -31,22 +30,26 @@ class GetPostController(
     @GetMapping("/user/{name}")
     fun getPostByName(
         @PathVariable name: String,
-        @RequestParam(required = false) to: Long? = null,
-        @RequestParam(required = false) from: Long? = null,
+        @RequestParam to: Long,
+        @RequestParam from: Long,
+        @RequestParam size: Long,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
         val postListResult = if (pageToken != null) {
-            getPostUseCase.getPostListByPageToken(pageToken)
+            getPostUseCase.getPostListByNameAndDateWithPageToken(
+                name = name,
+                to = Timestamp.from(Instant.ofEpochMilli(to)),
+                from = Timestamp.from(Instant.ofEpochMilli(from)),
+                size = size,
+                pageToken = pageToken
+            )
         } else {
-            if (to != null && from != null) {
-                getPostUseCase.getPostListByNameAndDate(
-                    name = name,
-                    to = Timestamp.from(Instant.ofEpochMilli(to)),
-                    from = Timestamp.from(Instant.ofEpochMilli(from))
-                )
-            } else {
-                throw IllegalArgumentException("Request post list parameter wrong to = $to, from = $from")
-            }
+            getPostUseCase.getPostListByNameAndDate(
+                name = name,
+                to = Timestamp.from(Instant.ofEpochMilli(to)),
+                from = Timestamp.from(Instant.ofEpochMilli(from)),
+                size = size,
+            )
         }
         return GetPostListResponse.fromResult(postListResult)
     }
@@ -54,35 +57,29 @@ class GetPostController(
     @GetMapping("/user/{name}/meta")
     fun getPostMetaByName(
         @PathVariable name: String,
-        @RequestParam(required = false) to: Long? = null,
-        @RequestParam(required = false) from: Long? = null,
+        @RequestParam to: Long,
+        @RequestParam from: Long,
     ): GetPostMetaResponse {
-        val postMetaResult = if (to != null && from != null) {
-            getPostUseCase.getPostMetaListByNameAndDate(
-                name = name,
-                to = Timestamp.from(Instant.ofEpochMilli(to)),
-                from = Timestamp.from(Instant.ofEpochMilli(from))
-            )
-        } else {
-            throw IllegalArgumentException("Request post list parameter wrong to = $to, from = $from")
-        }
+        val postMetaResult = getPostUseCase.getPostMetaListByNameAndDate(
+            name = name,
+            to = Timestamp.from(Instant.ofEpochMilli(to)),
+            from = Timestamp.from(Instant.ofEpochMilli(from))
+        )
         return GetPostMetaResponse.fromResult(postMetaResult)
     }
 
-    @GetMapping("/category/{categoryId}")
+    @GetMapping("/category/{categoryIdentifier}")
     fun getByCategory(
-        @PathVariable categoryId: String,
+        @PathVariable categoryIdentifier: Identifier,
     ): GetPostListResponse {
-        val categoryIdentifier = Identifier(categoryId)
         val postListResult = getPostUseCase.getPostListByCategory(categoryIdentifier)
         return GetPostListResponse.fromResult(postListResult)
     }
 
-    @GetMapping("/category/{categoryId}/recommend")
+    @GetMapping("/category/{categoryIdentifier}/recommend")
     fun getRecommendationList(
-        @PathVariable categoryId: String,
+        @PathVariable categoryIdentifier: Identifier,
     ): GetPostListResponse {
-        val categoryIdentifier = Identifier(categoryId)
         val postListResult = getRecommendedPostUseCase.getRecommendedPostListByCategory(categoryIdentifier)
         return GetPostListResponse.fromResult(postListResult)
     }
