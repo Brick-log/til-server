@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.post.adapter.inbound.model
+package com.tenmm.tilserver.post.adapter.inbound.rest.model
 
 data class ModifyPostRequest(
     val title: String,

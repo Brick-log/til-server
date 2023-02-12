@@ -1,7 +1,7 @@
-package com.tenmm.tilserver.post.adapter.inbound
+package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.post.adapter.inbound.model.ModifyPostRequest
-import com.tenmm.tilserver.post.adapter.inbound.model.ModifyPostResponse
+import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyPostRequest
+import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyPostResponse
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
