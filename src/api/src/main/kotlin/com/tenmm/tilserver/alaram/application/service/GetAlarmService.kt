@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class GetAlarmService : GetAlarmUsecase {
     override fun getAlarmByUserId(userIdentifier: Identifier): Alarm {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
         return Alarm(
             userIdentifier = userIdentifier,
             enable = true,
