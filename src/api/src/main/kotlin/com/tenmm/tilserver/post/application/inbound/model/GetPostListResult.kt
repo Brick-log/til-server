@@ -4,6 +4,6 @@ import com.tenmm.tilserver.post.domain.Post
 
 data class GetPostListResult(
     val posts: List<Post>,
+    val size: Long,
     val nextPageToken: String,
-    val prevPageToken: String,
 )

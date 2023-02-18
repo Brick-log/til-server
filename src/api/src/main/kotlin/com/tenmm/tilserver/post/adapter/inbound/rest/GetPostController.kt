@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 
 // @RestController
-@RequestMapping("/v1/posts")
+@RequestMapping("/v1/post")
 class GetPostController(
     private val getPostUseCase: GetPostUseCase,
     private val getRecommendedPostUseCase: GetRecommendedPostUseCase,
@@ -68,19 +68,27 @@ class GetPostController(
         return GetPostMetaResponse.fromResult(postMetaResult)
     }
 
-    @GetMapping("/category/{categoryIdentifier}")
+    @GetMapping("/category")
     fun getByCategory(
-        @PathVariable categoryIdentifier: Identifier,
+        @RequestParam(name = "id", required = false) categoryIdentifier: Identifier? = null,
     ): GetPostListResponse {
-        val postListResult = getPostUseCase.getPostListByCategory(categoryIdentifier)
+        val postListResult = if (categoryIdentifier != null) {
+            getPostUseCase.getPostListByCategory(categoryIdentifier)
+        } else {
+            getPostUseCase.getPostListRandom()
+        }
         return GetPostListResponse.fromResult(postListResult)
     }
 
-    @GetMapping("/category/{categoryIdentifier}/recommend")
+    @GetMapping("/category/recommend")
     fun getRecommendationList(
-        @PathVariable categoryIdentifier: Identifier,
+        @RequestParam(name = "id", required = false) categoryIdentifier: Identifier? = null,
     ): GetPostListResponse {
-        val postListResult = getRecommendedPostUseCase.getRecommendedPostListByCategory(categoryIdentifier)
+        val postListResult = if (categoryIdentifier != null) {
+            getRecommendedPostUseCase.getRecommendedPostListByCategory(categoryIdentifier)
+        } else {
+            getRecommendedPostUseCase.getRecommendedPostListRandom()
+        }
         return GetPostListResponse.fromResult(postListResult)
     }
 }

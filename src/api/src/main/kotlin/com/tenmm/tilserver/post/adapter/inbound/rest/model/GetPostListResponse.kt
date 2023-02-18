@@ -5,12 +5,14 @@ import com.tenmm.tilserver.post.domain.Post
 
 data class GetPostListResponse(
     val postList: List<Post>,
+    val size: Long,
     val nextPageToken: String,
 ) {
     companion object {
         fun fromResult(result: GetPostListResult): GetPostListResponse {
             return GetPostListResponse(
                 postList = result.posts,
+                size = result.size,
                 nextPageToken = result.nextPageToken,
             )
         }
