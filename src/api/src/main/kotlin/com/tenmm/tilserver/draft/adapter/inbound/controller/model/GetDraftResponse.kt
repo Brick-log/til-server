@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.draft.adapter.inbound.model
+package com.tenmm.tilserver.draft.adapter.inbound.controller.model
 
 data class GetDraftResponse(
     val id: String,

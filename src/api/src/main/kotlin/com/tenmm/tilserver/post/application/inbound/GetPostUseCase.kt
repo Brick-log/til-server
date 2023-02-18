@@ -8,8 +8,23 @@ import java.sql.Timestamp
 
 interface GetPostUseCase {
     fun getPostByIdentifier(postIdentifier: Identifier): GetPostResult
+
+    fun getPostListRandom(): GetPostListResult
     fun getPostListByCategory(categoryIdentifier: Identifier): GetPostListResult
-    fun getPostListByNameAndDate(name: String, to: Timestamp, from: Timestamp): GetPostListResult
+    fun getPostListByNameAndDate(
+        name: String,
+        to: Timestamp,
+        from: Timestamp,
+        size: Long,
+    ): GetPostListResult
+
+    fun getPostListByNameAndDateWithPageToken(
+        name: String,
+        to: Timestamp,
+        from: Timestamp,
+        size: Long,
+        pageToken: String,
+    ): GetPostListResult
 
     fun getPostMetaListByNameAndDate(name: String, to: Timestamp, from: Timestamp): GetPostMetaResult
     fun getPostCountByMonth(name: String, month: Int): Int
