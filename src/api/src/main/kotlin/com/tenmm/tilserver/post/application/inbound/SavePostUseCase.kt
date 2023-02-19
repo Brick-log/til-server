@@ -1,11 +1,11 @@
 package com.tenmm.tilserver.post.application.inbound
 
-import com.tenmm.tilserver.common.domain.OperationResult
 import com.tenmm.tilserver.post.application.inbound.model.PostSaveConfirmCommand
+import com.tenmm.tilserver.post.application.inbound.model.PostSaveConfirmResult
 import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestCommand
 import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestResult
 
 interface SavePostUseCase {
     fun requestSave(command: PostSaveRequestCommand): PostSaveRequestResult
-    fun confirmSave(command: PostSaveConfirmCommand): OperationResult
+    fun confirmSave(command: PostSaveConfirmCommand): PostSaveConfirmResult
 }
