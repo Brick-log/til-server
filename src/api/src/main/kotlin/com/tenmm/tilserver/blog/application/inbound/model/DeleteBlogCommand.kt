@@ -1,10 +1,8 @@
 package com.tenmm.tilserver.blog.application.inbound.model
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.Url
 
-data class SaveBlogCommand(
-    val url: Url,
+data class DeleteBlogCommand(
     val userIdentifier: Identifier,
     val blogIdentifier: Identifier
 )
