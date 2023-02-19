@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping("/v1/my/settings/notification")
+@RequestMapping("/v1/my/notification")
 class GetAlarmController(
     private val getAlarmUsecase: GetAlarmUsecase
 ) {
-    @GetMapping("")
+    @GetMapping()
     fun getAlarm(): Alarm {
         // TODO: userIdentifier 토큰에서 가져오도록 수정
         return getAlarmUsecase.getAlarmByUserId(Identifier(UUID.randomUUID().toString()))

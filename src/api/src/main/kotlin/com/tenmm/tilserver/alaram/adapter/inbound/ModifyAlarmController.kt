@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+// TODO: userIdentifier 토큰에서 가져오도록 수정 되면 아래 import 제거
 import java.util.UUID
 
 @RestController
-@RequestMapping("/v1/my/settings/notification")
+@RequestMapping("/v1/my/notification")
 class ModifyAlarmController(
     private val modifyAlarmUsecase: ModifyAlarmUsecase
 ) {
-    @PatchMapping("")
+    @PatchMapping()
     fun modifyAlarm(
         @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
     ): ModifyAlarmResponse {
