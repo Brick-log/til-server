@@ -6,6 +6,7 @@ import com.tenmm.tilserver.common.utils.URL_REGEX
 import java.lang.IllegalArgumentException
 
 data class Blog(
+    val identifier: Identifier,
     val userIdentifier: Identifier,
     val url: Url,
     val platformType: BlogPlatformType,
