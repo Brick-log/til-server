@@ -4,6 +4,6 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 data class ModifiyAlarmModel(
     val userIdentifier: Identifier,
-    val enable: Boolean,
-    val iteration: String,
+    val enable: Boolean? = null,
+    val iteration: String? = null,
 )
