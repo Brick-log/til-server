@@ -1,9 +1,9 @@
-package com.tenmm.tilserver.post.application.inbound.model
+package com.tenmm.tilserver.post.adapter.inbound.rest.model
 
 import com.tenmm.tilserver.common.domain.Identifier
 import java.sql.Timestamp
 
-data class PostSaveConfirmCommand(
+data class ConfirmUploadPostRequest(
     val saveIdentifier: Identifier,
     val title: String,
     val description: String,
