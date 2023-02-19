@@ -38,7 +38,7 @@ class SavePostController(
             description = confirmUploadPostRequest.description,
             createdAt = confirmUploadPostRequest.createdAt,
         )
-        val deleteResult = savePostUseCase.confirmSave(confirmCommand)
-        return ConfirmUploadPostResponse.fromResult(deleteResult)
+        val result = savePostUseCase.confirmSave(confirmCommand)
+        return ConfirmUploadPostResponse.fromResult(result)
     }
 }
