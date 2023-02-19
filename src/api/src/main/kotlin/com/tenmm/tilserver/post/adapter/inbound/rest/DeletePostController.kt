@@ -1,18 +1,22 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.DeletePostResponse
+import com.tenmm.tilserver.post.application.inbound.DeletePostUseCase
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 
-@RestController
+// @RestController
 @RequestMapping("/v1/post")
-class DeletePostController {
-    @DeleteMapping("/{postId}")
+class DeletePostController(
+    private val deletePostUseCase: DeletePostUseCase,
+) {
+    @DeleteMapping("/{postIdentifier}")
     fun deletePost(
-        @PathVariable postId: String,
+        @PathVariable postIdentifier: Identifier,
     ): DeletePostResponse {
-        return DeletePostResponse(true)
+        val deleteResult = deletePostUseCase.deleteByIdentifier(postIdentifier)
+        return DeletePostResponse.fromResult(deleteResult)
     }
 }
