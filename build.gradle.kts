@@ -62,6 +62,10 @@ allprojects {
     }
 
     ktlint {
+        filter {
+            exclude { it.file.path.contains("$buildDir/generated/") }
+        }
+
         disabledRules.set(setOf("import-ordering"))
     }
 

@@ -1,1 +1,7 @@
+grpc:
+  server:
+    port: 20080
 
+spring:
+  main:
+    web-application-type: reactive
