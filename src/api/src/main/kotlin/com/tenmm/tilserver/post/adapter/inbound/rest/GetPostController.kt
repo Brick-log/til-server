@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
-// @RestController
+@RestController
 @RequestMapping("/v1/post")
 class GetPostController(
     private val getPostUseCase: GetPostUseCase,
@@ -71,6 +72,8 @@ class GetPostController(
     @GetMapping("/category")
     fun getByCategory(
         @RequestParam(name = "id", required = false) categoryIdentifier: Identifier? = null,
+        @RequestParam size: Long,
+        @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
         val postListResult = if (categoryIdentifier != null) {
             getPostUseCase.getPostListByCategory(categoryIdentifier)

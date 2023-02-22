@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v1/blogs")
 class DeleteBlogController(
-    private val deleteBlogUseCase: DeleteBlogUseCase
+    private val deleteBlogUseCase: DeleteBlogUseCase,
 ) {
 
-    @DeleteMapping("/{blogId}")
-    fun deleteBlog(@PathVariable blogId: String): DeleteBlogResponse {
+    @DeleteMapping("/{blogIdentifier}")
+    fun deleteBlog(@PathVariable blogIdentifier: Identifier): DeleteBlogResponse {
         val command = DeleteBlogCommand(
             userIdentifier = Identifier("mockUserIdentifier"),
-            blogIdentifier = Identifier(blogId)
+            blogIdentifier = blogIdentifier
         )
 
         return DeleteBlogResponse(deleteBlogUseCase.delete(command).isSuccess)

@@ -6,11 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class SaveDraftService : SaveDraftUseCase {
-    override fun save(draftIdentifier: Identifier, data: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun saveAll() {
+    override fun save(userIdentifier: Identifier, data: String) {
         TODO("Not yet implemented")
     }
 }

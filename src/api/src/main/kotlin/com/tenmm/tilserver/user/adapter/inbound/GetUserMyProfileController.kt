@@ -1,22 +1,20 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/user/{path}")
-class GetUserProfileController(
+@RequestMapping("/v1/my/user")
+class GetUserMyProfileController(
     private val getUserUseCase: GetUserUseCase,
 ) {
     @GetMapping
-    fun getUserProfile(
-        @PathVariable path: String,
-    ): GetUserProfileResponse {
-        val user = getUserUseCase.getByPath(path)
+    fun getUserMyProfile(): GetUserProfileResponse {
+        val user = getUserUseCase.getByIdentifier(Identifier.generate())
         return GetUserProfileResponse.fromUser(user)
     }
 }
