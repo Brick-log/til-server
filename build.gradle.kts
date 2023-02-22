@@ -48,6 +48,10 @@ allprojects {
         testImplementation("io.projectreactor:reactor-test")
         testImplementation("io.mockk:mockk:1.13.4")
         testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
+
+        // redis
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+        implementation("org.springframework.boot:spring-boot-starter-data-redis")
     }
 
     tasks.withType<KotlinCompile> {
