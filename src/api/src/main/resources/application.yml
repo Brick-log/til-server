@@ -1,3 +1,14 @@
 springdoc:
   swagger-ui:
     path: "/swg"
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password:
+  jpa:
+    show-sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: create
