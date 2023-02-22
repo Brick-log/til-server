@@ -17,7 +17,7 @@ import java.util.UUID
 class ModifyAlarmController(
     private val modifyAlarmUsecase: ModifyAlarmUsecase
 ) {
-    @PatchMapping()
+    @PatchMapping
     fun modifyAlarm(
         @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
     ): ModifyAlarmResponse {

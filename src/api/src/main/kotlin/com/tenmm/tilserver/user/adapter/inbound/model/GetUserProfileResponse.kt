@@ -9,6 +9,7 @@ data class GetUserProfileResponse(
     val profileImgSrc: Url,
     val introduction: String,
     val categoryId: Identifier?,
+    val isAuthorized: Boolean,
 ) {
     companion object {
         fun fromUser(user: User): GetUserProfileResponse {
@@ -16,7 +17,8 @@ data class GetUserProfileResponse(
                 name = user.name,
                 profileImgSrc = user.thumbnailUrl,
                 introduction = user.introduction,
-                categoryId = user.categoryIdentifier
+                categoryId = user.categoryIdentifier,
+                isAuthorized = false
             )
         }
     }

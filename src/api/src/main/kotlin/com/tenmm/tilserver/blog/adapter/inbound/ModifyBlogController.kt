@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v1/blogs")
 class ModifyBlogController(
-    private val modifyBlogUseCase: ModifyBlogUseCase
+    private val modifyBlogUseCase: ModifyBlogUseCase,
 ) {
 
-    @PatchMapping("/{blogId}")
+    @PatchMapping("/{blogIdentifier}")
     fun modifyBlog(
-        @PathVariable blogId: String,
-        @RequestBody modifyBlogRequest: ModifyBlogRequest
+        @PathVariable blogIdentifier: Identifier,
+        @RequestBody modifyBlogRequest: ModifyBlogRequest,
     ): ModifyBlogResponse {
         val command = ModifyBlogCommand(
             url = modifyBlogRequest.url,
             userIdentifier = Identifier("mockUserIdentifier"),
-            blogIdentifier = Identifier(blogId)
+            blogIdentifier = blogIdentifier
         )
 
         return ModifyBlogResponse(

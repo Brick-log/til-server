@@ -6,8 +6,9 @@ import com.tenmm.tilserver.post.application.inbound.DeletePostUseCase
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
-// @RestController
+@RestController
 @RequestMapping("/v1/post")
 class DeletePostController(
     private val deletePostUseCase: DeletePostUseCase,
