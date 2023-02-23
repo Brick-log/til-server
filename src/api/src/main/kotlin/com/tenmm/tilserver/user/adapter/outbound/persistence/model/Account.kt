@@ -18,7 +18,7 @@ class Account(
     @field:Column
     val oAuthIdentifier: String,
 
-    @field:Column(unique = true)
+    @field:Column
     val userIdentifier: String,
 
     @field:Column

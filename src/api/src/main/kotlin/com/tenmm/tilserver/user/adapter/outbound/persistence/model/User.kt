@@ -7,7 +7,6 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.Lob
 
 @Entity
 class User(
@@ -15,23 +14,22 @@ class User(
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @field:Column(unique = true)
+    @field:Column
     val name: String,
 
-    @field:Column(unique = true)
+    @field:Column
     val userIdentifier: String,
 
     @field:Column
     val categoryIdentifier: String,
 
-    @field:Lob
     @field:Column
     val introduction: String,
 
     @field:Column
     val profileImgSrc: String,
 
-    @field:Column(unique = true)
+    @field:Column
     val path: String,
 
     @field:Column
