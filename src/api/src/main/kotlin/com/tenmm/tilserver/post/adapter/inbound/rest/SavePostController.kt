@@ -10,8 +10,9 @@ import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestCommand
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
-// @RestController
+@RestController
 @RequestMapping("/v1/post/upload")
 class SavePostController(
     private val savePostUseCase: SavePostUseCase,
@@ -38,7 +39,7 @@ class SavePostController(
             description = confirmUploadPostRequest.description,
             createdAt = confirmUploadPostRequest.createdAt,
         )
-        val deleteResult = savePostUseCase.confirmSave(confirmCommand)
-        return ConfirmUploadPostResponse.fromResult(deleteResult)
+        val result = savePostUseCase.confirmSave(confirmCommand)
+        return ConfirmUploadPostResponse.fromResult(result)
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/v1/my/draft")
 class SyncDraftController {
     @PutMapping("/sync")
-    fun getDraft(
+    fun syncDraft(
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {
         return SyncDraftResponse(true)

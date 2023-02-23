@@ -9,7 +9,6 @@ data class RequestUploadPostResponse(
     val title: String,
     val description: String?,
     val createdAt: Timestamp?,
-    val needToCheck: Boolean,
 ) {
     companion object {
         fun fromResult(result: PostSaveRequestResult): RequestUploadPostResponse {
@@ -18,7 +17,6 @@ data class RequestUploadPostResponse(
                 title = result.title,
                 description = result.description,
                 createdAt = result.createdAt,
-                needToCheck = result.needToCheck
             )
         }
     }
