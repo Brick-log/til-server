@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface DraftSyncRepotiroy : JpaRepository<DraftSyncEntity, String> {
+interface DraftSyncRepository : JpaRepository<DraftSyncEntity, String> {
     fun save(draftSyncEntity: DraftSyncEntity): DraftSyncEntity
 }
