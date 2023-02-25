@@ -6,3 +6,18 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
+# MySQL 설정
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://<HOST>:<PORT>/<DB>?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: 
+    password: 
+ 
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      format_sql: true
+main:
+  allow-bean-definition-overriding: true
