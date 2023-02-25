@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.draft.adapter.outbound
+package com.tenmm.tilserver.draft.adapter.persistence.outbound
 
 import com.tenmm.tilserver.draft.adapter.outbound.model.DraftSyncEntity
 import org.springframework.data.jpa.repository.JpaRepository
