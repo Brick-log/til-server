@@ -7,32 +7,34 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import java.time.LocalDateTime
 
 @Entity
-class User(
+class AccountEntity(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
     @field:Column
-    val name: String,
+    val oAuthIdentifier: String,
 
     @field:Column
     val userIdentifier: String,
 
     @field:Column
-    val categoryIdentifier: String,
+    @field:Enumerated(EnumType.STRING)
+    val oAuthType: OAuthType,
 
     @field:Column
-    val introduction: String,
+    val oAuthToken: String,
 
     @field:Column
-    val profileImgSrc: String,
-
-    @field:Column
-    val path: String,
+    val isSpamNotificationAgreed: Boolean,
 
     @field:Column
     @field:Enumerated(EnumType.STRING)
-    val status: UserStatus
+    val status: AccountStatus,
+
+    @field:Column
+    val createdAt: LocalDateTime
 )
