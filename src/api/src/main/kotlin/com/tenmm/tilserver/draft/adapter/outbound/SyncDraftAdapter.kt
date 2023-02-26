@@ -5,7 +5,9 @@ import com.tenmm.tilserver.draft.application.outbound.SyncDraftPort
 import com.tenmm.tilserver.outbound.persistence.repository.DraftSyncRepository
 import com.tenmm.tilserver.outbound.persistence.entity.DraftSyncEntity
 import java.time.LocalDateTime
+import org.springframework.stereotype.Component
 
+@Component
 class SyncDraftAdapter(
     private val draftSyncRepository: DraftSyncRepository
 ) : SyncDraftPort {

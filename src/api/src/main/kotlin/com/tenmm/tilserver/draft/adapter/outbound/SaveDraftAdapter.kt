@@ -5,7 +5,9 @@ import com.tenmm.tilserver.draft.application.outbound.SaveDraftPort
 import com.tenmm.tilserver.outbound.persistence.repository.DraftRepository
 import com.tenmm.tilserver.outbound.persistence.entity.DraftEntity
 import java.time.LocalDateTime
+import org.springframework.stereotype.Component
 
+@Component
 class SaveDraftAdapter(
     private val draftRepository: DraftRepository
 ) : SaveDraftPort {
