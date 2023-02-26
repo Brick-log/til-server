@@ -5,3 +5,5 @@ grpc:
 spring:
   main:
     web-application-type: reactive
+  config:
+    import: application-storage.yml
