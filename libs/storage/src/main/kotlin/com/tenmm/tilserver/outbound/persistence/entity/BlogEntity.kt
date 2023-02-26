@@ -23,4 +23,3 @@ data class BlogEntity(
     @Column
     val url: String,
 )
-

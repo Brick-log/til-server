@@ -23,4 +23,3 @@ data class AlarmEntity(
     @Column
     val iteration: String,
 )
-
