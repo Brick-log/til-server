@@ -1,19 +1,20 @@
 package com.tenmm.tilserver.draft.adapter.outbound
 
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.draft.application.outbound.SaveDraftPort
-import com.tenmm.tilserver.draft.adapter.outbound.persistence.DraftRepository
-import com.tenmm.tilserver.draft.adapter.outbound.persistence.model.DraftEntity
-import java.sql.Timestamp
+import com.tenmm.tilserver.outbound.persistence.repository.DraftRepository
+import com.tenmm.tilserver.outbound.persistence.entity.DraftEntity
+import java.time.LocalDateTime
 
-class SaveDraftAdapter (
+class SaveDraftAdapter(
     private val draftRepository: DraftRepository
-) :SaveDraftPort {
-    fun saveDraft(userIdentifier: Identifier, data: String) {
-        draftRepository.saveDraft(
+) : SaveDraftPort {
+    override fun saveDraft(userIdentifier: Identifier, data: String) {
+        draftRepository.save(
             DraftEntity(
-                userIdentifier = userIdentifier,
+                userIdentifier = userIdentifier.value,
                 data = data,
-                updatedAt = Timestamp(System.currentTimeMillis())
+                updatedAt = LocalDateTime.now()
             )
         )
     }

@@ -1,5 +1,7 @@
 package com.tenmm.tilserver.draft.application.outbound
 
-interface SaveDraftPort {
+import com.tenmm.tilserver.common.domain.Identifier
+
+interface SyncDraftPort {
     fun syncDraft(userIdentifier: Identifier, data: String)
 }
