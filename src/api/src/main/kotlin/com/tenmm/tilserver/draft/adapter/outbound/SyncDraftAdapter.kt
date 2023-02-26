@@ -10,7 +10,7 @@ class SyncDraftAdapter(
     private val draftSyncRepository: DraftSyncRepository
 ) : SyncDraftPort {
     override fun syncDraft(userIdentifier: Identifier, data: String) {
-        draftSyncRepository.sync(
+        draftSyncRepository.save(
             DraftSyncEntity(
                 userIdentifier = userIdentifier.value,
                 data = data,
