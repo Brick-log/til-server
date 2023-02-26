@@ -8,7 +8,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.time.LocalDateTime
 
-@Table(name = "recommend_post")
+@Table(name = "recommended_post")
 @Entity
 data class RecommendPostEntity(
     @Id
