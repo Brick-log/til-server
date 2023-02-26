@@ -6,7 +6,6 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.8.0"
     kotlin("plugin.spring") version "1.8.0"
-    kotlin("plugin.jpa") version "1.8.0"
 }
 
 allprojects {
@@ -15,7 +14,6 @@ allprojects {
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-    apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
     apply(plugin = "kotlin-kapt")
 
     group = "com.tenmm"
@@ -41,12 +39,9 @@ allprojects {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
         implementation("org.springframework.boot:spring-boot-starter-validation")
-        runtimeOnly("com.mysql:mysql-connector-j")
-        // implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 
         // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
         implementation("org.apache.commons:commons-lang3:3.12.0")
-        implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.projectreactor:reactor-test")
