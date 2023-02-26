@@ -24,4 +24,3 @@ data class DraftEntity(
     @Column
     val updatedAt: LocalDateTime,
 )
-

@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface DraftRepository : JpaRepository<DraftEntity, Long>
+interface DraftRepository : JpaRepository<DraftEntity, Long> {
+    fun findByUserIdentifier(userIdentifier: String): DraftEntity?
+}

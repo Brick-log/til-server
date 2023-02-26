@@ -7,3 +7,7 @@ spring:
     web-application-type: reactive
   config:
     import: application-storage.yml
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
