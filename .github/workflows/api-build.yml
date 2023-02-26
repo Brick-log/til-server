@@ -10,12 +10,8 @@ name: Api CI
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'src/api/**'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'src/api/**'
 
 permissions:
   contents: read
