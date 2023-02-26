@@ -43,7 +43,7 @@ create table `draft`
     `id`              int          not null primary key auto_increment,
     `user_identifier` varchar(255) not null,
     `data`            text         not null,
-    `updatedAt`       datetime     not null,
+    `updated_at`       datetime     not null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
