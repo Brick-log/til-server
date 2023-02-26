@@ -3,6 +3,8 @@ springdoc:
     path: "/swg"
 
 spring:
+  profiles:
+    active: local
   main:
     web-application-type: reactive
   config:
