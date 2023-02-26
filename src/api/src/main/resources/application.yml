@@ -6,7 +6,7 @@ spring:
   main:
     web-application-type: reactive
   config:
-    import: application-storage.yml
+    import: application-storage-${spring.profiles.active}.yml
   data:
     redis:
       host: 127.0.0.1
