@@ -1,7 +1,8 @@
-grpc:
-  server:
-    port: 20080
-
 spring:
   main:
     web-application-type: reactive
+  config:
+    import: application-storage.yml
+
+grpc:
+  port: 9090
