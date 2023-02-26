@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import com.tenmm.tilserver.common.domain.Identifier
-import java.sql.Timestamp
 
 @Entity(name = "categories")
 data class CategoryEntity(

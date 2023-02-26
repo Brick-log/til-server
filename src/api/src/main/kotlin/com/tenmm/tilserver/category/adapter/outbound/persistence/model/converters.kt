@@ -5,7 +5,7 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 fun CategoryEntity.toDomain(): Category {
     return Category(
-        identifier = Identifier(identifier),
+        identifier = identifier.value, 
         name = name
     )
 }
