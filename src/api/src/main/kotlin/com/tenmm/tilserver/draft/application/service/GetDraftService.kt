@@ -6,8 +6,11 @@ import com.tenmm.tilserver.draft.domain.Draft
 import org.springframework.stereotype.Service
 
 @Service
-class GetDraftService : GetDraftUseCase {
+class GetDraftService(
+    private val getDraftPort: GetDraftPort,
+) : GetDraftUseCase {
     override fun getByUserIdentifier(userIdentifier: Identifier): Draft {
+        return getDraftPort.getDraft(userIdentifier)
         TODO("Not yet implemented")
     }
 }
