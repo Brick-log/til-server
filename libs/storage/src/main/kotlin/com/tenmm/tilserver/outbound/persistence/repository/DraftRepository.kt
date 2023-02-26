@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository
 @Repository
 interface DraftRepository : JpaRepository<DraftEntity, Long> {
     fun findByUserIdentifier(userIdentifier: String): DraftEntity?
-    fun sync(draftEntity: DraftEntity)
 }
