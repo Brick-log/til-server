@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
@@ -40,8 +41,6 @@ allprojects {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
         implementation("org.springframework.boot:spring-boot-starter-validation")
 
-        // for-mac
-        implementation("io.netty:netty-resolver-dns-native-macos:4.1.86.Final:osx-aarch_64")
         // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
         implementation("org.apache.commons:commons-lang3:3.12.0")
 
@@ -49,6 +48,11 @@ allprojects {
         testImplementation("io.projectreactor:reactor-test")
         testImplementation("io.mockk:mockk:1.13.4")
         testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
+
+        if (Os.isFamily(Os.FAMILY_MAC)) {
+            // for-mac
+            implementation("io.netty:netty-resolver-dns-native-macos:4.1.86.Final:osx-aarch_64")
+        }
     }
 
     tasks.withType<KotlinCompile> {
