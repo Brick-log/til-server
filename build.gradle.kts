@@ -40,6 +40,8 @@ allprojects {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
         implementation("org.springframework.boot:spring-boot-starter-validation")
 
+        // for-mac
+        implementation("io.netty:netty-resolver-dns-native-macos:4.1.86.Final:osx-aarch_64")
         // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
         implementation("org.apache.commons:commons-lang3:3.12.0")
 
