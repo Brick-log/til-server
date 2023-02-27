@@ -51,7 +51,7 @@ class PostService : GetPostUseCase, SavePostUseCase, DeletePostUseCase {
         TODO("Not yet implemented")
     }
 
-    override fun getPostCountByMonth(name: String, month: Int): Int {
+    override fun getPostCountByMonth(userIdentifier: Identifier, month: Int): Int {
         TODO("Not yet implemented")
     }
 
