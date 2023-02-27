@@ -5,7 +5,7 @@ import com.tenmm.tilserver.post.domain.Post
 
 data class GetPostListResponse(
     val postList: List<Post>,
-    val size: Long,
+    val size: Int,
     val nextPageToken: String,
 ) {
     companion object {
