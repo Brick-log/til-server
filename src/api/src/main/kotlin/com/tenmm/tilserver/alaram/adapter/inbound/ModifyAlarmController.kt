@@ -5,6 +5,7 @@ import com.tenmm.tilserver.alaram.adapter.inbound.model.ModifyAlarmResponse
 import com.tenmm.tilserver.alaram.application.inbound.ModifyAlarmUsecase
 import com.tenmm.tilserver.alaram.application.inbound.model.ModifiyAlarmModel
 import com.tenmm.tilserver.common.domain.Identifier
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
+@Tag(name = "alarm")
 @RequestMapping("/v1/my/notification")
 class ModifyAlarmController(
     private val modifyAlarmUsecase: ModifyAlarmUsecase
