@@ -19,10 +19,13 @@ class SyncDraftController(
     fun syncDraft(
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {
-        saveDraftUseCase.save(
-            Identifier.generate(),
-            syncDraftRequest.data
-        )
+        // saveDraftUseCase.save(
+        //     Identifier.generate(),
+        //     syncDraftRequest.data
+        // )
+
+        // Mock data 입력 테스트용 출력 코드
+        println("Identifier : ${Identifier.generate()} data: ${syncDraftRequest.data}")
 
         return SyncDraftResponse(true)
     }
