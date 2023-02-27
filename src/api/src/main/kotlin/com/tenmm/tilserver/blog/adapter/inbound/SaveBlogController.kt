@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/blogs")
-@Tag(name = "Blog", description = "Save Blog")
+@Tag(name = "Blog")
 class SaveBlogController(
     private val saveBlogUseCase: SaveBlogUseCase,
 ) {

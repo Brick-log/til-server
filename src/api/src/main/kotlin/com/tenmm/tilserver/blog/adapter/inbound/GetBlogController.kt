@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/blogs")
-@Tag(name = "Blog", description = "Get Blog")
+@Tag(name = "Blog")
 class GetBlogController(
     private val getUserBlogUseCase: GetUserBlogUseCase,
 ) {

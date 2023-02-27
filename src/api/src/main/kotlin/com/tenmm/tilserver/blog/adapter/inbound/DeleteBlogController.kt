@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/blogs")
-@Tag(name = "Blog", description = "Delete Blog")
+@Tag(name = "Blog")
 class DeleteBlogController(
     private val deleteBlogUseCase: DeleteBlogUseCase,
 ) {
