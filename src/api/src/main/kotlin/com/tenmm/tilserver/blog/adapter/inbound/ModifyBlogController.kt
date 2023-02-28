@@ -5,6 +5,7 @@ import com.tenmm.tilserver.blog.adapter.inbound.model.ModifyBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.ModifyBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.ModifyBlogCommand
 import com.tenmm.tilserver.common.domain.Identifier
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/blogs")
+@Tag(name = "Blog")
 class ModifyBlogController(
     private val modifyBlogUseCase: ModifyBlogUseCase,
 ) {
@@ -24,7 +26,7 @@ class ModifyBlogController(
     ): ModifyBlogResponse {
         val command = ModifyBlogCommand(
             url = modifyBlogRequest.url,
-            userIdentifier = Identifier("mockUserIdentifier"),
+            userIdentifier = Identifier.generate(),
             blogIdentifier = blogIdentifier
         )
 

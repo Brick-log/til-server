@@ -18,10 +18,13 @@ class SaveDraftController(
     fun save(
         @RequestBody saveDraftRequest: SaveDraftRequest,
     ): SaveDraftResponse {
-        saveDraftUseCase.save(
-            Identifier.generate(),
-            saveDraftRequest.data
-        )
+        // saveDraftUseCase.save(
+        //     Identifier.generate(),
+        //     saveDraftRequest.data
+        // )
+
+        // Mock data 입력 테스트용 출력 코드
+        println("Identifier : ${Identifier.generate()} data: ${saveDraftRequest.data}")
 
         return SaveDraftResponse(true)
     }
