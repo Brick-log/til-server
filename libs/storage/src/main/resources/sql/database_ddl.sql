@@ -43,29 +43,31 @@ create table `draft`
     `id`              int          not null primary key auto_increment,
     `user_identifier` varchar(255) not null,
     `data`            text         not null,
-    `updated_at`       datetime     not null,
+    `updated_at`      datetime     not null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
 CREATE TABLE `post`
 (
     `id`                  int           not null primary key auto_increment,
-    `category_identifier` varchar(36)   not null,
+    `identifier`          char(36)      not null,
+    `category_identifier` char(36)      not null,
     `user_identifier`     char(36)      not null,
     `title`               varchar(30)   not null,
     `description`         varchar(250)  not null,
     `url`                 varchar(1024) not null,
     `hit_count`           int           not null,
     `created_at`          timestamp     not null,
+    unique index UDX_IDENTIFIER (`identifier`),
     index IDX_USER_IDENTIFIER (`user_identifier`)
 );
 
 CREATE TABLE `recommended_post`
 (
-    `id`                  int         not null primary key auto_increment,
-    `post_identifier`     varchar(36) not null,
-    `category_identifier` varchar(36) not null,
-    `created_at`          timestamp   not null,
+    `id`                  int       not null primary key auto_increment,
+    `post_identifier`     char(36)  not null,
+    `category_identifier` char(36)  not null,
+    `created_at`          timestamp not null,
     index IDX_CATEGORY_IDENTIFIER (`category_identifier`)
 );
 
