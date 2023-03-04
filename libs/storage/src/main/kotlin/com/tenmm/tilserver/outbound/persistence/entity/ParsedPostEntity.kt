@@ -8,10 +8,9 @@ import org.springframework.data.redis.core.RedisHash
 data class ParsedPostEntity(
     @Id
     val identifier: String,
-
+    val userIdentifier: String,
+    val url: String,
     val title: String,
-
     val description: String?,
-
     val createdAt: Timestamp?,
 )

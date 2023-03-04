@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ParsedPostRepository : CrudRepository<ParsedPostEntity, String> {
-    fun save(parsedPostEntity: ParsedPostEntity): ParsedPostEntity
     fun findByIdentifier(identifier: String): ParsedPostEntity?
+    fun deleteByIdentifier(identifier: String): Boolean
 }
