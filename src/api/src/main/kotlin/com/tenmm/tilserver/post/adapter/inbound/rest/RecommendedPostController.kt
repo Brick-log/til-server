@@ -20,15 +20,17 @@ class RecommendedPostController(
     fun addRecommendedPost(
         @PathVariable postIdentifier: Identifier,
     ): ModifyRecommendedPostResponse {
-        val result = addRecommendedPostUseCase.addByPostId(postIdentifier)
-        return ModifyRecommendedPostResponse.fromResult(result)
+//        val result = addRecommendedPostUseCase.addByPostId(postIdentifier)
+//        return ModifyRecommendedPostResponse.fromResult(result)
+        return ModifyRecommendedPostResponse(true)
     }
 
     @DeleteMapping("/{postIdentifier}")
     fun deleteRecommendedPost(
         @PathVariable postIdentifier: Identifier,
     ): ModifyRecommendedPostResponse {
-        val result = deleteRecommendedPostUseCase.deleteByPostId(postIdentifier)
-        return ModifyRecommendedPostResponse.fromResult(result)
+//        val result = deleteRecommendedPostUseCase.deleteByPostId(postIdentifier)
+//        return ModifyRecommendedPostResponse.fromResult(result)
+        return ModifyRecommendedPostResponse(true)
     }
 }

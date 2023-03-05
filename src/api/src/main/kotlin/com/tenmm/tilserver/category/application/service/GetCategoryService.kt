@@ -5,7 +5,9 @@ import com.tenmm.tilserver.category.application.outbound.GetCategoryPort
 import com.tenmm.tilserver.category.domain.Category
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.NotFoundException
+import org.springframework.stereotype.Service
 
+@Service
 class GetCategoryService(
     private val getCategoryPort: GetCategoryPort,
 ) : GetCategoryUseCase {

@@ -27,5 +27,5 @@ interface GetPostUseCase {
     ): GetPostListResult
 
     fun getPostMetaListByNameAndDate(name: String, to: Timestamp, from: Timestamp): GetPostMetaResult
-    fun getPostCountByMonth(name: String, month: Int): Int
+    fun getPostCountByMonth(userIdentifier: Identifier, month: Int): Int
 }
