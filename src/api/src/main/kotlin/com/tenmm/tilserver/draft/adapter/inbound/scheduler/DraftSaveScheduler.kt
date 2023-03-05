@@ -15,6 +15,6 @@ class DraftSaveScheduler(
      */
     // @Scheduled
     fun saveAll() {
-        saveDraftUseCase.save(Identifier.generate(), "EE")
+        saveDraftUseCase.saveByUserIdentifier(Identifier.generate(), "EE")
     }
 }
