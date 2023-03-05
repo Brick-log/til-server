@@ -3,12 +3,12 @@ package com.tenmm.tilserver.outbound.persistence.entity
 import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.annotation.Id
 import java.time.LocalDateTime
+// import Serializable
+import java.io.Serializable
 
 @RedisHash("member")
-data class DraftSyncEntity(
+data class DraftSyncEntity:Serializable (
     @Id
-    val id: Long = 0,
-
     val userIdentifier: String,
 
     val data: String,
