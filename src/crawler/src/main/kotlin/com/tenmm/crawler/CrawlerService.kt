@@ -1,25 +1,30 @@
 package com.tenmm.crawler
 
-import io.grpc.tenm.crawler.CrawlerGrpcKt
-import io.grpc.tenm.crawler.CrawlReply
-import io.grpc.tenm.crawler.CrawlRequest
+import com.tenmm.tilserver.protocol.CrawlerServiceGrpcKt
+import com.tenmm.tilserver.protocol.CrawlingResponse
+import com.tenmm.tilserver.protocol.CrawlingRequest
 import org.springframework.stereotype.Component
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
 @Component
-class CrawlerService : CrawlerGrpcKt.CrawlerCoroutineImplBase() {
-    override suspend fun doCrawl(request: CrawlRequest): CrawlReply {
-        when (request.type) {
-            "tistory" -> return getTistoryInfo(request.url)
-            else -> return CrawlReply.newBuilder()
-                .setTitle("")
-                .setCreatedAt("")
-                .build()
-        }
+class CrawlerService : CrawlerServiceGrpcKt.CrawlerServiceCoroutineImplBase() {
+    override suspend fun doCrawling(request: CrawlingRequest): CrawlingResponse {
+        /**
+         * TODO: CrawlingRequest에 type에 따른 CrawlingResponse 반환
+         */
+        return CrawlingResponse.newBuilder()
+            .setIdentifier("")
+            .build()
+        // when (request.type) {
+        //     "tistory" -> return getTistoryInfo(request.url)
+        //     else -> return CrawlingResponse.newBuilder()
+        //         .setIdentifier("")
+        //         .build()
+        // }
     }
-    fun getTistoryInfo(url: String): CrawlReply {
+    fun getTistoryInfo(url: String): CrawlingResponse {
         var title: String = ""
         var dttm: String = ""
         try {
@@ -31,9 +36,12 @@ class CrawlerService : CrawlerGrpcKt.CrawlerCoroutineImplBase() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return CrawlReply.newBuilder()
-            .setTitle(title)
-            .setCreatedAt(dttm)
+
+        /**
+         * TODO: Redis에 title, dttm, Desription(?) 저장 후 CrawlingResponse에 identifier(key)로 반환
+         */
+        return CrawlingResponse.newBuilder()
+            .setIdentifier("")
             .build()
     }
 }

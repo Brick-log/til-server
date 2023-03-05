@@ -1,21 +1,20 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "io.grpc.tenm.crawler";
+option java_package = "com.tenmm.tilserver.protocol";
 option java_outer_classname = "CralerProto";
 
 package crawler;
 
-service Crawler {
-    rpc doCrawl (CrawlRequest) returns (CrawlReply) {}
+service CrawlerService {
+    rpc doCrawling (CrawlingRequest) returns (CrawlingResponse) {}
 }
   
-message CrawlRequest {
+message CrawlingRequest {
     string type = 1;
     string url = 2;
 }
   
-message CrawlReply {
-    string title = 1;
-    string createdAt = 2;
+message CrawlingResponse {
+    string identifier = 1;
 }
