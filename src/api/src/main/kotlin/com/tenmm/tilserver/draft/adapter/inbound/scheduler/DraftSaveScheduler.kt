@@ -18,13 +18,13 @@ class DraftSaveScheduler(
      */
     // @Scheduled
     fun saveAll() {
-        val draft: Draft? = syncDraftUseCase.getByUserIdentifier(Identifier.generate())
+        val draft: Draft? = syncDraftUseCase.findById(Identifier.generate())
         draft?.let {
             saveDraftUseCase.saveByUserIdentifier(
                 userIdentifier = draft.userIdentifier,
                 data = draft.data
             )
-            syncDraftUseCase.deleteByUserIdentifier(draft.userIdentifier)
+            syncDraftUseCase.deleteById(draft.userIdentifier)
         }
     }
 }

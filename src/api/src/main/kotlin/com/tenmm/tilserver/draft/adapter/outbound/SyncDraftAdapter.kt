@@ -8,6 +8,7 @@ import com.tenmm.tilserver.draft.domain.Draft
 import java.time.LocalDateTime
 import org.springframework.stereotype.Component
 import java.sql.Timestamp
+import java.util.Optional
 
 @Component
 class SyncDraftAdapter(
@@ -22,17 +23,17 @@ class SyncDraftAdapter(
             )
         )
     }
-    override fun getByUserIdentifier(userIdentifier: Identifier): Draft? {
-        val draftSyncEntity: DraftSyncEntity? = draftSyncRepository.findByUserIdentifier(userIdentifier.value)
-        draftSyncEntity?.let {
-            return Draft(
+    override fun findById(userIdentifier: Identifier): Draft? {
+        val draftSyncEntity: Optional<DraftSyncEntity> = draftSyncRepository.findById(userIdentifier.value)
+        return draftSyncEntity.map {
+            Draft(
                 userIdentifier = Identifier(it.userIdentifier),
                 data = it.data,
                 updatedAt = Timestamp.valueOf(it.updatedAt)
             )
-        } ?: return null
+        }.orElse(null)
     }
-    override fun deleteByUserIdentifier(userIdentifier: Identifier) {
-        draftSyncRepository.deleteByUserIdentifier(userIdentifier.value)
+    override fun deleteById(userIdentifier: Identifier) {
+        draftSyncRepository.deleteById(userIdentifier.value)
     }
 }

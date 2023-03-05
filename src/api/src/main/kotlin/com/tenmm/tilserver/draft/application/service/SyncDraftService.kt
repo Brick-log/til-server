@@ -14,11 +14,11 @@ class SyncDraftService(
         syncDraftPort.save(draftIdentifier, data)
     }
 
-    override fun getByUserIdentifier(userIdentifier: Identifier): Draft? {
-        return syncDraftPort.getByUserIdentifier(userIdentifier)
+    override fun findById(userIdentifier: Identifier): Draft? {
+        return syncDraftPort.findById(userIdentifier)
     }
 
-    override fun deleteByUserIdentifier(userIdentifier: Identifier) {
-        syncDraftPort.deleteByUserIdentifier(userIdentifier)
+    override fun deleteById(userIdentifier: Identifier) {
+        syncDraftPort.deleteById(userIdentifier)
     }
 }
