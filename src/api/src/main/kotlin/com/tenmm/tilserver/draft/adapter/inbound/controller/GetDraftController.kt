@@ -17,8 +17,8 @@ class GetDraftController(
     fun getDraft(): GetDraftResponse {
         val draft: Draft? = getDraftUseCase.getByUserIdentifier(Identifier("913115be-5b64-491e-bcfb-d5e724f25642")) // TODO token에서 가져오도록 수정
         return GetDraftResponse(
-            data = draft?.data ?: null,
-            updatedAt = draft?.updatedAt ?: null,
+            data = draft?.data,
+            updatedAt = draft?.updatedAt,
         )
         /**
          * Exception : IllegalArgumentException => 400, Identifier가 잘못된 경우
