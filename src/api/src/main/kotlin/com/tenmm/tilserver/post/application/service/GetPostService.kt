@@ -5,12 +5,21 @@ import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
 import com.tenmm.tilserver.post.application.inbound.model.GetPostMetaResult
 import com.tenmm.tilserver.post.application.inbound.model.GetPostResult
+import com.tenmm.tilserver.post.domain.Post
 import java.sql.Timestamp
 import org.springframework.stereotype.Service
 
 @Service
 class GetPostService : GetPostUseCase {
-    override fun getPostByIdentifier(postIdentifier: Identifier): GetPostResult {
+    override fun showPostByIdentifier(postIdentifier: Identifier): GetPostResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun getPostByIdentifier(postIdentifier: Identifier): Post {
+        TODO("Not yet implemented")
+    }
+
+    override fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post> {
         TODO("Not yet implemented")
     }
 
