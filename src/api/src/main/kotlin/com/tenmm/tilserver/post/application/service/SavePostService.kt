@@ -59,6 +59,7 @@ class SavePostService(
                 operationResult = OperationResult.success(),
                 monthlyPublishCount = getPostUseCase.getPostCountByMonth(
                     userIdentifier = userInfo.identifier,
+                    year = LocalDate.now().year,
                     month = LocalDate.now().monthValue
                 )
             )

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component
 private val logger = KotlinLogging.logger {}
 
 @Component
-class PostAdapter(
+class ModifyPostAdapter(
     private val postRepository: PostRepository,
 ) : SavePostPort, ModifyPostPort, DeletePostPort {
     override fun deleteByIdentifier(identifier: Identifier): Boolean {
