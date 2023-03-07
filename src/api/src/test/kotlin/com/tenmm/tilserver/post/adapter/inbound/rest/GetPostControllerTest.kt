@@ -42,7 +42,7 @@ class GetPostControllerTest {
         val postIdentifier = Identifier.generate()
         val getPostResult = randomGetPostResult()
 
-        every { getPostUseCase.getPostByIdentifier(any()) } returns getPostResult
+        every { getPostUseCase.showPostByIdentifier(any()) } returns getPostResult
 
         // when
         val result = sut.getPostByIdentifier(postIdentifier)
@@ -52,6 +52,6 @@ class GetPostControllerTest {
 
         assertThat(result).isEqualTo(expected)
 
-        verify { getPostUseCase.getPostByIdentifier(postIdentifier) }
+        verify { getPostUseCase.showPostByIdentifier(postIdentifier) }
     }
 }

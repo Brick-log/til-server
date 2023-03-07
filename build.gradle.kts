@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
@@ -32,6 +32,9 @@ allprojects {
     }
 
     dependencies {
+        // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging-jvm
+        implementation("io.github.microutils:kotlin-logging:3.0.5")
+
         implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("org.springframework.boot:spring-boot-starter")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
