@@ -20,6 +20,6 @@ class GetDraftAdapter(
                 data = it.data,
                 updatedAt = Timestamp.valueOf(it.updatedAt)
             )
-        } ?: null
+        }
     }
 }
