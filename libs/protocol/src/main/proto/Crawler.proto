@@ -11,8 +11,7 @@ service CrawlerService {
 }
   
 message CrawlingRequest {
-    string type = 1;
-    string url = 2;
+    string url = 1;
 }
   
 message CrawlingResponse {
