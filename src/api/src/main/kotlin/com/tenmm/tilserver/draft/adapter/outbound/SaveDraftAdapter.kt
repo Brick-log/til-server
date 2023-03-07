@@ -16,7 +16,7 @@ class SaveDraftAdapter(
     override fun saveByUserIdentifier(userIdentifier: Identifier, data: String): Draft? {
         val savedDraft: DraftEntity? = draftRepository.findByUserIdentifier(userIdentifier.value)
         val newDraft: DraftEntity = DraftEntity(
-            id = savedDraft?.id,
+            id = savedDraft?.id ?: 0,
             userIdentifier = userIdentifier.value,
             data = data,
             updatedAt = LocalDateTime.now()
