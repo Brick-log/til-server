@@ -12,7 +12,7 @@ class GetUserBlogService : GetUserBlogUseCase {
         return listOf(
             GetBlogResult(
                 platform = BlogPlatformType.VELOG,
-                blogIdentifier = Identifier.generate(),
+                blogIdentifier = Identifier.generate().toString(),
                 url = "https://velog.io/"
             )
         )
