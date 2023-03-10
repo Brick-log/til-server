@@ -4,10 +4,16 @@ import com.tenmm.tilserver.blog.adapter.inbound.model.DeleteBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.DeleteBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.DeleteBlogCommand
 import com.tenmm.tilserver.common.domain.Identifier
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -17,7 +23,18 @@ class DeleteBlogController(
     private val deleteBlogUseCase: DeleteBlogUseCase,
 ) {
 
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/{blogIdentifier}")
+    @Operation(
+        summary = "나의 블로그 삭제",
+        responses = [
+            ApiResponse(responseCode = "200", description = "나의 블로그 삭제 성공"),
+            ApiResponse(responseCode = "400", description = "잘못된 블로그 삭제 요청 (ex.잘못된 blog id)", content = [Content(schema = Schema(hidden = true))]),
+            ApiResponse(responseCode = "401", description = "로그인 하지 않은 사용자", content = [Content(schema = Schema(hidden = true))]),
+            ApiResponse(responseCode = "403", description = "접근 권한이 없는 사용자", content = [Content(schema = Schema(hidden = true))]),
+            ApiResponse(responseCode = "500", description = "서버에러", content = [Content(schema = Schema(hidden = true))])
+        ]
+    )
     fun deleteBlog(@PathVariable blogIdentifier: Identifier): DeleteBlogResponse {
         val command = DeleteBlogCommand(
             userIdentifier = Identifier.generate(),
