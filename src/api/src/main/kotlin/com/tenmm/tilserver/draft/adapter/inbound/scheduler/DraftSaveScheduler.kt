@@ -3,8 +3,8 @@ package com.tenmm.tilserver.draft.adapter.inbound.scheduler
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.draft.application.inbound.SaveDraftUseCase
 import com.tenmm.tilserver.draft.application.inbound.SyncDraftUseCase
-import org.springframework.stereotype.Service
 import com.tenmm.tilserver.draft.domain.Draft
+import org.springframework.stereotype.Service
 
 @Service
 class DraftSaveScheduler(

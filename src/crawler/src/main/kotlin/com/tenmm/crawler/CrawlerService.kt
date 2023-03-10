@@ -1,12 +1,12 @@
 package com.tenmm.crawler
 
 import com.tenmm.tilserver.protocol.CrawlerServiceGrpcKt
-import com.tenmm.tilserver.protocol.CrawlingResponse
 import com.tenmm.tilserver.protocol.CrawlingRequest
-import org.springframework.stereotype.Component
+import com.tenmm.tilserver.protocol.CrawlingResponse
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.springframework.stereotype.Component
 
 @Component
 class CrawlerService : CrawlerServiceGrpcKt.CrawlerServiceCoroutineImplBase() {
@@ -24,6 +24,7 @@ class CrawlerService : CrawlerServiceGrpcKt.CrawlerServiceCoroutineImplBase() {
         //         .build()
         // }
     }
+
     fun getTistoryInfo(url: String): CrawlingResponse {
         var title: String = ""
         var dttm: String = ""
