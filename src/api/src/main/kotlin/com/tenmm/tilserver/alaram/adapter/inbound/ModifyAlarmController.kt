@@ -2,8 +2,8 @@ package com.tenmm.tilserver.alaram.adapter.inbound
 
 import com.tenmm.tilserver.alaram.adapter.inbound.model.ModifyAlarmRequest
 import com.tenmm.tilserver.alaram.adapter.inbound.model.ModifyAlarmResponse
-import com.tenmm.tilserver.alaram.application.inbound.ModifyAlarmUsecase
-import com.tenmm.tilserver.alaram.application.inbound.model.ModifiyAlarmModel
+import com.tenmm.tilserver.alaram.application.inbound.ModifyAlarmUseCase
+import com.tenmm.tilserver.alaram.application.inbound.model.ModifyAlarmCommand
 import com.tenmm.tilserver.common.domain.Identifier
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping
 @Tag(name = "alarm")
 @RequestMapping("/v1/my/notification")
 class ModifyAlarmController(
-    private val modifyAlarmUsecase: ModifyAlarmUsecase
+    private val modifyAlarmUseCase: ModifyAlarmUseCase
 ) {
     @PutMapping
     @Operation(
@@ -37,9 +37,8 @@ class ModifyAlarmController(
         @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
     ): ModifyAlarmResponse {
         return ModifyAlarmResponse(
-            modifyAlarmUsecase.modifyAlarm(
-                ModifiyAlarmModel(
-                    // TODO: userIdentifier 토큰에서 가져오도록 수정
+            modifyAlarmUseCase.modifyAlarm(
+                ModifyAlarmCommand(
                     userIdentifier = Identifier(UUID.randomUUID().toString()),
                     enable = modifyAlarmRequest.enable,
                     iteration = modifyAlarmRequest.iteration,
