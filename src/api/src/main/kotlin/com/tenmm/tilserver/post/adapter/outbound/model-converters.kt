@@ -20,6 +20,19 @@ fun Post.toEntity(): PostEntity {
     )
 }
 
+fun PostEntity.toModel(): Post {
+    return Post(
+        identifier = Identifier(this.identifier),
+        categoryIdentifier = Identifier(this.categoryIdentifier),
+        userIdentifier = Identifier(this.userIdentifier),
+        url = Url(this.url),
+        title = this.title,
+        description = this.description,
+        hitCount = this.hitCount.toBigInteger(),
+        createdAt = this.createdAt
+    )
+}
+
 fun ParsedPostEntity.toResult(): ParsedPostResult {
     return ParsedPostResult(
         identifier = Identifier(this.identifier),

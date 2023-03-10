@@ -12,23 +12,17 @@ interface GetPostUseCase {
     fun getPostByIdentifier(postIdentifier: Identifier): Post
     fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post>
 
-    fun getPostListRandom(): GetPostListResult
-    fun getPostListByCategory(categoryIdentifier: Identifier): GetPostListResult
-    fun getPostListByNameAndDate(
-        name: String,
-        to: Timestamp,
-        from: Timestamp,
-        size: Long,
-    ): GetPostListResult
+    fun getPostListRandom(size: Int, pageToken: String?): GetPostListResult
+    fun getPostListByCategory(categoryIdentifier: Identifier, size: Int, pageToken: String?): GetPostListResult
 
     fun getPostListByNameAndDateWithPageToken(
-        name: String,
+        path: String,
         to: Timestamp,
         from: Timestamp,
-        size: Long,
-        pageToken: String,
+        size: Int,
+        pageToken: String?,
     ): GetPostListResult
 
-    fun getPostMetaListByNameAndDate(name: String, to: Timestamp, from: Timestamp): GetPostMetaResult
-    fun getPostCountByMonth(userIdentifier: Identifier, month: Int): Int
+    fun getPostMetaListByNameAndDate(path: String, to: Timestamp, from: Timestamp): GetPostMetaResult
+    fun getPostCountByMonth(userIdentifier: Identifier, year: Int, month: Int): Int
 }
