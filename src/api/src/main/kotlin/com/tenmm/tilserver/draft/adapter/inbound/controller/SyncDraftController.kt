@@ -1,32 +1,30 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
+import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.draft.application.inbound.SyncDraftUseCase
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftRequest
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftResponse
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-// 추후 redis 사용 시 SyncDraftUseCase로 변경
-import com.tenmm.tilserver.draft.application.inbound.SaveDraftUseCase
-import com.tenmm.tilserver.common.domain.Identifier
 
 @RestController
 @RequestMapping("/v1/my/draft")
 class SyncDraftController(
-    private val saveDraftUseCase: SaveDraftUseCase,
+    private val syncDraftUseCase: SyncDraftUseCase,
 ) {
     @PutMapping("/sync")
     fun syncDraft(
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {
-        // saveDraftUseCase.save(
-        //     Identifier.generate(),
-        //     syncDraftRequest.data
-        // )
-
-        // Mock data 입력 테스트용 출력 코드
-        println("Identifier : ${Identifier.generate()} data: ${syncDraftRequest.data}")
-
+        syncDraftUseCase.save(
+            Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
+            syncDraftRequest.data
+        )
         return SyncDraftResponse(true)
+        /**
+         * Exception : IllegalArgumentException => 400, Identifier가 잘못된 경우
+         */
     }
 }

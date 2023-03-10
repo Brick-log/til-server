@@ -2,11 +2,14 @@ package com.tenmm.tilserver.draft.adapter.inbound.scheduler
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.draft.application.inbound.SaveDraftUseCase
+import com.tenmm.tilserver.draft.application.inbound.SyncDraftUseCase
 import org.springframework.stereotype.Service
+import com.tenmm.tilserver.draft.domain.Draft
 
 @Service
 class DraftSaveScheduler(
     private val saveDraftUseCase: SaveDraftUseCase,
+    private val syncDraftUseCase: SyncDraftUseCase,
 ) {
     /**
      * TODO
@@ -15,6 +18,13 @@ class DraftSaveScheduler(
      */
     // @Scheduled
     fun saveAll() {
-        saveDraftUseCase.save(Identifier.generate(), "EE")
+        val draft: Draft? = syncDraftUseCase.findById(Identifier.generate())
+        draft?.let {
+            saveDraftUseCase.saveByUserIdentifier(
+                userIdentifier = draft.userIdentifier,
+                data = draft.data
+            )
+            syncDraftUseCase.deleteById(draft.userIdentifier)
+        }
     }
 }

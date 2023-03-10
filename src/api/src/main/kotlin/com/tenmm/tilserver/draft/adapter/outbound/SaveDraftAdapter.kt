@@ -6,18 +6,26 @@ import com.tenmm.tilserver.outbound.persistence.repository.DraftRepository
 import com.tenmm.tilserver.outbound.persistence.entity.DraftEntity
 import java.time.LocalDateTime
 import org.springframework.stereotype.Component
+import com.tenmm.tilserver.draft.domain.Draft
+import java.sql.Timestamp
 
 @Component
 class SaveDraftAdapter(
     private val draftRepository: DraftRepository
 ) : SaveDraftPort {
-    override fun saveDraft(userIdentifier: Identifier, data: String) {
-        draftRepository.save(
-            DraftEntity(
-                userIdentifier = userIdentifier.value,
-                data = data,
-                updatedAt = LocalDateTime.now()
-            )
+    override fun saveByUserIdentifier(userIdentifier: Identifier, data: String): Draft? {
+        val savedDraft: DraftEntity? = draftRepository.findByUserIdentifier(userIdentifier.value)
+        val newDraft: DraftEntity = DraftEntity(
+            id = savedDraft?.id ?: 0,
+            userIdentifier = userIdentifier.value,
+            data = data,
+            updatedAt = LocalDateTime.now()
+        )
+        draftRepository.save(newDraft)
+        return Draft(
+            userIdentifier = Identifier(newDraft.userIdentifier),
+            data = data,
+            updatedAt = Timestamp.valueOf(newDraft.updatedAt)
         )
     }
 }
