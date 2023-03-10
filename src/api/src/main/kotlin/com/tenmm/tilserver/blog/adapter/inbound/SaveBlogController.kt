@@ -4,6 +4,7 @@ import com.tenmm.tilserver.blog.adapter.inbound.model.SaveBlogRequest
 import com.tenmm.tilserver.blog.adapter.inbound.model.SaveBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.SaveBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.SaveBlogCommand
+import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import io.swagger.v3.oas.annotations.Operation
@@ -27,10 +28,30 @@ class SaveBlogController(
     @Operation(
         summary = "나의 블로그 저장",
         responses = [
-            ApiResponse(responseCode = "200", description = "나의 블로그 삭제 성공"),
-            ApiResponse(responseCode = "400", description = "잘못된 블로그 저장 요청", content = [Content(schema = Schema(hidden = true))]),
-            ApiResponse(responseCode = "401", description = "로그인 하지 않은 사용자", content = [Content(schema = Schema(hidden = true))]),
-            ApiResponse(responseCode = "500", description = "서버에러", content = [Content(schema = Schema(hidden = true))])
+            ApiResponse(
+                responseCode = "200",
+                description = "나의 블로그 삭제 성공"
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "잘못된 블로그 저장 요청",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "로그인 하지 않은 사용자",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "403",
+                description = "접근 권한이 없는 사용자",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "서버에러",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            )
         ]
     )
     fun saveBlog(@RequestBody saveBlogRequest: SaveBlogRequest): SaveBlogResponse {
