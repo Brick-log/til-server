@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.common.domain
 
-import com.tenmm.tilserver.common.utils.UUID_REGEX
+import com.tenmm.tilserver.common.constants.UUID_REGEX
 import java.util.UUID
 
 data class Identifier(

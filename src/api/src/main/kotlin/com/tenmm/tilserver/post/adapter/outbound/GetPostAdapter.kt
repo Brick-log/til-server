@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.tenmm.tilserver.common.adapter.outbound.PageTokenConverter
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.ResultWithToken
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Component
 @Component
 class GetPostAdapter(
     private val postRepository: PostRepository,
+    private val pageTokenConverter: PageTokenConverter,
 ) : GetPostPort {
     override fun getPostByIdentifier(postIdentifier: Identifier): Post {
         return postRepository.findByIdentifier(postIdentifier.value)?.toModel()
@@ -50,7 +50,7 @@ class GetPostAdapter(
         size: Int,
         pageToken: String,
     ): ResultWithToken<List<Post>> {
-        val parsedPageToken = jacksonObjectMapper().readValue<PageTokenSearchPostWithIdentifier>(pageToken)
+        val parsedPageToken = pageTokenConverter.decryptPageToken(pageToken, PageTokenSearchPostWithIdentifier::class)
         val result = postRepository.findAllByIdGreaterThanAndCategoryIdentifier(
             id = parsedPageToken.lastEntityId,
             categoryIdentifier = parsedPageToken.identifier.value,
@@ -98,7 +98,7 @@ class GetPostAdapter(
         size: Int,
         pageToken: String,
     ): ResultWithToken<List<Post>> {
-        val parsedPageToken = jacksonObjectMapper().readValue<PageTokenSearchPostWithIdentifier>(pageToken)
+        val parsedPageToken = pageTokenConverter.decryptPageToken(pageToken, PageTokenSearchPostWithIdentifier::class)
         val result =
             postRepository.findAllByIdGreaterThanAndUserIdentifierAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(
                 id = parsedPageToken.lastEntityId,
@@ -137,26 +137,26 @@ class GetPostAdapter(
             to
         )
     }
-}
 
-private fun generatePageToken(
-    condition: Boolean,
-    identifier: Identifier,
-    entityId: Long,
-): PageTokenSearchPostWithIdentifier? {
-    return if (condition) {
-        PageTokenSearchPostWithIdentifier(identifier, entityId)
-    } else {
-        null
+    private fun generatePageToken(
+        condition: Boolean,
+        identifier: Identifier,
+        entityId: Long,
+    ): String? {
+        return if (condition) {
+            pageTokenConverter.encryptPageToken(PageTokenSearchPostWithIdentifier(identifier, entityId))
+        } else {
+            null
+        }
     }
-}
 
-private fun generatePageRequest(size: Int): PageRequest {
-    val sort = Sort.by(Sort.Order.desc("created_at"))
-    return PageRequest.of(0, size, sort)
-}
+    private fun generatePageRequest(size: Int): PageRequest {
+        val sort = Sort.by(Sort.Order.desc("created_at"))
+        return PageRequest.of(0, size, sort)
+    }
 
-data class PageTokenSearchPostWithIdentifier(
-    val identifier: Identifier,
-    val lastEntityId: Long,
-)
+    private data class PageTokenSearchPostWithIdentifier(
+        val identifier: Identifier,
+        val lastEntityId: Long,
+    )
+}

@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.utils
+package com.tenmm.tilserver.common.constants
 
 const val UUID_REGEX_VALUE = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
 val UUID_REGEX = UUID_REGEX_VALUE.toRegex()

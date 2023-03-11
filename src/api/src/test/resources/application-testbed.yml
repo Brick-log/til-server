@@ -1,0 +1,3 @@
+security:
+  aes128:
+    key: "password12341234"
