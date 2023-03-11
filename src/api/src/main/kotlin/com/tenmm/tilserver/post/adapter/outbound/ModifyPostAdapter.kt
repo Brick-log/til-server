@@ -33,11 +33,9 @@ class ModifyPostAdapter(
             ?: throw NotFoundException("Not found Post - ${command.identifier}")
 
         val modifiedEntity = postEntity.copy(
-            title = command.title ?: postEntity.title,
-            description = command.summary ?: postEntity.description,
-            createdAt = command.createdAt?.let {
-                Timestamp.from(Instant.ofEpochMilli(it))
-            } ?: postEntity.createdAt
+            title = command.title,
+            description = command.summary,
+            createdAt = Timestamp.from(Instant.ofEpochMilli(command.createdAt))
         )
 
         return try {

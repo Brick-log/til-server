@@ -1,11 +1,10 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest.model
 
-import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestResult
 import java.sql.Timestamp
 
 data class RequestUploadPostResponse(
-    val saveIdentifier: Identifier,
+    val saveIdentifier: String,
     val title: String,
     val description: String?,
     val createdAt: Timestamp?,
@@ -13,7 +12,7 @@ data class RequestUploadPostResponse(
     companion object {
         fun fromResult(result: PostSaveRequestResult): RequestUploadPostResponse {
             return RequestUploadPostResponse(
-                saveIdentifier = result.saveIdentifier,
+                saveIdentifier = result.saveIdentifier.value,
                 title = result.title,
                 description = result.description,
                 createdAt = result.createdAt,

@@ -45,7 +45,7 @@ class GetPostControllerTest {
         every { getPostUseCase.showPostByIdentifier(any()) } returns getPostResult
 
         // when
-        val result = sut.getPostByIdentifier(postIdentifier)
+        val result = sut.getPostByIdentifier(postIdentifier.value)
 
         // then
         val expected = GetPostResponse.fromResult(getPostResult)
