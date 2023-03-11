@@ -1,45 +1,57 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
-import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserCategoryRequest
-import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserIntroductionRequest
-import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserNameRequest
-import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserPathRequest
+import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserProfileResponse
+import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserRequest
 import com.tenmm.tilserver.user.application.inbound.ModifyUserUseCase
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/my")
+@RequestMapping("/v1/my/profile")
+@Tag(name = "Profile")
 class ModifyUserProfileController(
     private val modifyUserUseCase: ModifyUserUseCase,
 ) {
-    @PatchMapping("/category")
-    fun modifyUserCategory(
-        @RequestBody modifyUserCategoryRequest: ModifyUserCategoryRequest,
-    ): ModifyUserProfileResponse {
-        return ModifyUserProfileResponse(true)
-    }
-
-    @PatchMapping("/introduction")
-    fun modifyUserIntroduction(
-        @RequestBody modifyUserIntroductionRequest: ModifyUserIntroductionRequest,
-    ): ModifyUserProfileResponse {
-        return ModifyUserProfileResponse(true)
-    }
-
-    @PatchMapping("/path")
-    fun modifyUserPath(
-        @RequestBody modifyUserPathRequest: ModifyUserPathRequest,
-    ): ModifyUserProfileResponse {
-        return ModifyUserProfileResponse(true)
-    }
-
-    @PatchMapping("/name")
-    fun modifyUserName(
-        @RequestBody modifyUserNameRequest: ModifyUserNameRequest,
+    @PatchMapping
+    @Operation(
+        summary = "사용자 정보 업데이트",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "사용자 정보 업데이트 성공"
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "잘못된 업데이트 요청 (ex.잘못된 post id)",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "401",
+                description = "로그인 하지 않은 사용자",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "403",
+                description = "접근 권한이 없는 사용자",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "서버에러",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            )
+        ]
+    )
+    fun modifyUserProfile(
+        @RequestBody modifyUserRequest: ModifyUserRequest,
     ): ModifyUserProfileResponse {
         return ModifyUserProfileResponse(true)
     }
