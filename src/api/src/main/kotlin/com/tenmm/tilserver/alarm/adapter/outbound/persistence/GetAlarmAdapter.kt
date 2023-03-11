@@ -12,6 +12,6 @@ class GetAlarmAdapter(
     private val alarmRepository: AlarmRepository
 ) : GetAlarmPort {
     override fun findByUserIdentifier(userIdentifier: Identifier): Alarm? {
-        return alarmRepository.findByUserIdentifier(userIdentifier.toString())?.toModel()
+        return alarmRepository.findByUserIdentifier(userIdentifier.value)?.toModel()
     }
 }
