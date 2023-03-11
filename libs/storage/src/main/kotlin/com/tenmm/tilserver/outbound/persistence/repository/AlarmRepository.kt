@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AlarmRepository : JpaRepository<AlarmEntity, Long>{
-    fun findByUserIdentifier(userIdentifier: String) : AlarmEntity?
+interface AlarmRepository : JpaRepository<AlarmEntity, Long> {
+    fun findByUserIdentifier(userIdentifier: String): AlarmEntity?
 }
