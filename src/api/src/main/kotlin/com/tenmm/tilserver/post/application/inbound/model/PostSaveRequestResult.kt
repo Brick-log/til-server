@@ -10,5 +10,4 @@ data class PostSaveRequestResult(
     val title: String,
     val description: String?,
     val createdAt: Timestamp?,
-    val needToCheck: Boolean,
 )

@@ -4,7 +4,7 @@ import com.tenmm.tilserver.post.application.inbound.model.PostSaveConfirmResult
 
 data class ConfirmUploadPostResponse(
     val isSuccess: Boolean,
-    val monthlyPublishCount: Long,
+    val monthlyPublishCount: Int,
 ) {
     companion object {
         fun fromResult(result: PostSaveConfirmResult): ConfirmUploadPostResponse {

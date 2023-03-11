@@ -7,8 +7,6 @@ import java.time.LocalDateTime
 @RedisHash("member")
 data class DraftSyncEntity(
     @Id
-    val id: Long = 0,
-
     val userIdentifier: String,
 
     val data: String,

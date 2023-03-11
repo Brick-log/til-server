@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import java.time.LocalDateTime
+import java.sql.Timestamp
 
 @Table(name = "post")
 @Entity
@@ -14,6 +14,9 @@ data class PostEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
+
+    @Column
+    val identifier: String,
 
     @Column
     val categoryIdentifier: String,
@@ -34,5 +37,5 @@ data class PostEntity(
     val hitCount: Int,
 
     @Column
-    val createdAt: LocalDateTime,
+    val createdAt: Timestamp,
 )

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class GetDraftAdapter(
-    private val draftRepository: DraftRepository
+    private val draftRepository: DraftRepository,
 ) : GetDraftPort {
     override fun findByUserIdentifier(userIdentifier: Identifier): Draft? {
         val draftEntity: DraftEntity? = draftRepository.findByUserIdentifier(userIdentifier.value)

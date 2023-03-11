@@ -17,8 +17,7 @@ class DeletePostController(
     fun deletePost(
         @PathVariable postIdentifier: Identifier,
     ): DeletePostResponse {
-//        val deleteResult = deletePostUseCase.deleteByIdentifier(postIdentifier)
-//        return DeletePostResponse.fromResult(deleteResult)
-        return DeletePostResponse(true)
+        val deleteResult = deletePostUseCase.deleteByIdentifier(postIdentifier)
+        return DeletePostResponse.fromResult(deleteResult)
     }
 }
