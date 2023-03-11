@@ -22,7 +22,7 @@ class GetBlogController(
 ) {
     @GetMapping("/{name}")
     @Operation(
-        summary = "나의 블로그 삭제",
+        summary = "나의 블로그 가져오기",
         responses = [
             ApiResponse(
                 responseCode = "200",

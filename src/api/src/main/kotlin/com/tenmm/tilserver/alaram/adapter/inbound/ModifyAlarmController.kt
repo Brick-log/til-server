@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@Tag(name = "alarm")
+@Tag(name = "Alarm")
 @RequestMapping("/v1/my/notification")
 class ModifyAlarmController(
     private val modifyAlarmUsecase: ModifyAlarmUsecase,
