@@ -6,12 +6,10 @@ import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.ModifyAlarmResponse
 import com.tenmm.tilserver.alarm.application.inbound.ModifyAlarmUseCase
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.randomModifyAlarmRequest
 import com.tenmm.tilserver.common.domain.OperationResult
-import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
