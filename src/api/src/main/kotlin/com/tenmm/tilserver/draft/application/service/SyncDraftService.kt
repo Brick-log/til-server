@@ -22,7 +22,7 @@ class SyncDraftService(
         syncDraftPort.deleteById(userIdentifier)
     }
 
-    override fun  findAll(): List<Draft> {
+    override fun findAll(): List<Draft> {
         return syncDraftPort.findAll()
     }
 }
