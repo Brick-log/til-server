@@ -1,13 +1,11 @@
 package com.tenmm.tilserver.draft.adapter.inbound.scheduler
 
-import com.tenmm.tilserver.draft.application.inbound.SaveDraftUseCase
 import com.tenmm.tilserver.draft.application.inbound.SyncDraftUseCase
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
 @Service
 class DraftSaveScheduler(
-    private val saveDraftUseCase: SaveDraftUseCase,
     private val syncDraftUseCase: SyncDraftUseCase,
 ) {
     /**
@@ -20,9 +18,6 @@ class DraftSaveScheduler(
          * Redis에 저장되어 있는 Key 값은 삭제
          * Redis -> RDB
          */
-        syncDraftUseCase.findAll().forEach {
-            saveDraftUseCase.saveByUserIdentifier(it.userIdentifier, it.data, it.updatedAt)
-            syncDraftUseCase.deleteById(it.userIdentifier)
-        }
+         syncDraftUseCase.sync()
     }
 }
