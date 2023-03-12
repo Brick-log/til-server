@@ -1,37 +1,41 @@
-package com.tenmm.tilserver.blog.adapter.inbound
+package com.tenmm.tilserver.blog.adapter.inbound.rest
 
-import com.tenmm.tilserver.blog.adapter.inbound.model.DeleteBlogResponse
-import com.tenmm.tilserver.blog.application.inbound.DeleteBlogUseCase
-import com.tenmm.tilserver.blog.application.inbound.model.DeleteBlogCommand
+import com.tenmm.tilserver.blog.adapter.inbound.rest.model.ModifyBlogRequest
+import com.tenmm.tilserver.blog.adapter.inbound.rest.model.ModifyBlogResponse
+import com.tenmm.tilserver.blog.application.inbound.ModifyBlogUseCase
+import com.tenmm.tilserver.blog.application.inbound.model.ModifyBlogCommand
 import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.Url
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/blogs")
 @Tag(name = "Blog")
-class DeleteBlogController(
-    private val deleteBlogUseCase: DeleteBlogUseCase,
+class ModifyBlogController(
+    private val modifyBlogUseCase: ModifyBlogUseCase,
 ) {
-    @DeleteMapping("/{blogIdentifier}")
+
+    @PutMapping("/{blogIdentifier}")
     @Operation(
-        summary = "나의 블로그 삭제",
+        summary = "나의 블로그 수정",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "나의 블로그 삭제 성공"
+                description = "나의 블로그 수정 성공"
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "잘못된 블로그 삭제 요청 (ex.잘못된 blog id)",
+                description = "잘못된 블로그 수정 요청 (ex.잘못된 blog id)",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
@@ -56,12 +60,18 @@ class DeleteBlogController(
             )
         ]
     )
-    fun deleteBlog(@PathVariable blogIdentifier: Identifier): DeleteBlogResponse {
-        val command = DeleteBlogCommand(
+    fun modifyBlog(
+        @PathVariable blogIdentifier: Identifier,
+        @RequestBody modifyBlogRequest: ModifyBlogRequest,
+    ): ModifyBlogResponse {
+        val command = ModifyBlogCommand(
+            url = Url(modifyBlogRequest.url),
             userIdentifier = Identifier.generate(),
             blogIdentifier = blogIdentifier
         )
 
-        return DeleteBlogResponse(deleteBlogUseCase.delete(command).isSuccess)
+        return ModifyBlogResponse(
+            modifyBlogUseCase.modify(command).isSuccess
+        )
     }
 }

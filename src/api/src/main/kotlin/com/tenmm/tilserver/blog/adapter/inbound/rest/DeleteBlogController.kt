@@ -1,32 +1,29 @@
-package com.tenmm.tilserver.blog.adapter.inbound
+package com.tenmm.tilserver.blog.adapter.inbound.rest
 
-import com.tenmm.tilserver.blog.adapter.inbound.model.SaveBlogRequest
-import com.tenmm.tilserver.blog.adapter.inbound.model.SaveBlogResponse
-import com.tenmm.tilserver.blog.application.inbound.SaveBlogUseCase
-import com.tenmm.tilserver.blog.application.inbound.model.SaveBlogCommand
+import com.tenmm.tilserver.blog.adapter.inbound.rest.model.DeleteBlogResponse
+import com.tenmm.tilserver.blog.application.inbound.DeleteBlogUseCase
+import com.tenmm.tilserver.blog.application.inbound.model.DeleteBlogCommand
 import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.Url
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/blogs")
 @Tag(name = "Blog")
-class SaveBlogController(
-    private val saveBlogUseCase: SaveBlogUseCase,
+class DeleteBlogController(
+    private val deleteBlogUseCase: DeleteBlogUseCase,
 ) {
-
-    @PostMapping
+    @DeleteMapping("/{blogIdentifier}")
     @Operation(
-        summary = "나의 블로그 저장",
+        summary = "나의 블로그 삭제",
         responses = [
             ApiResponse(
                 responseCode = "200",
@@ -34,7 +31,7 @@ class SaveBlogController(
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "잘못된 블로그 저장 요청",
+                description = "잘못된 블로그 삭제 요청 (ex.잘못된 blog id)",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
@@ -48,20 +45,23 @@ class SaveBlogController(
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
+                responseCode = "404",
+                description = "블로그 조회 실패",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
                 responseCode = "500",
                 description = "서버에러",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             )
         ]
     )
-    fun saveBlog(@RequestBody saveBlogRequest: SaveBlogRequest): SaveBlogResponse {
-        val command = SaveBlogCommand(
-            url = Url(saveBlogRequest.url),
+    fun deleteBlog(@PathVariable blogIdentifier: Identifier): DeleteBlogResponse {
+        val command = DeleteBlogCommand(
             userIdentifier = Identifier.generate(),
-            blogIdentifier = Identifier.generate()
+            blogIdentifier = blogIdentifier
         )
-        return SaveBlogResponse(
-            saveBlogUseCase.save(command).isSuccess
-        )
+
+        return DeleteBlogResponse(deleteBlogUseCase.delete(command).isSuccess)
     }
 }
