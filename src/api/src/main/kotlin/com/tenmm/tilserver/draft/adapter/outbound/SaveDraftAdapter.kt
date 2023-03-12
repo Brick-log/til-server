@@ -13,7 +13,7 @@ import java.sql.Timestamp
 class SaveDraftAdapter(
     private val draftRepository: DraftRepository
 ) : SaveDraftPort {
-    override fun saveByUserIdentifier(userIdentifier: Identifier, data: String): Draft? {
+    override fun saveByUserIdentifier(userIdentifier: Identifier, data: String, updatedAt: Timestamp?): Draft? {
         val savedDraft: DraftEntity? = draftRepository.findByUserIdentifier(userIdentifier.value)
         /**
          * 기존 draft가 없으면 새로 생성
@@ -23,7 +23,7 @@ class SaveDraftAdapter(
             id = savedDraft?.id ?: 0,
             userIdentifier = userIdentifier.value,
             data = data,
-            updatedAt = LocalDateTime.now()
+            updatedAt = updatedAt?.toLocalDateTime() ?: LocalDateTime.now()
         )
         draftRepository.save(newDraft)
 

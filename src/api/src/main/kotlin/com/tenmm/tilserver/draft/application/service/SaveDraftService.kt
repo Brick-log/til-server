@@ -6,13 +6,14 @@ import com.tenmm.tilserver.draft.application.inbound.SaveDraftUseCase
 import com.tenmm.tilserver.draft.application.outbound.SaveDraftPort
 import com.tenmm.tilserver.draft.application.outbound.SyncDraftPort
 import org.springframework.stereotype.Service
+import java.sql.Timestamp
 
 @Service
 class SaveDraftService(
     private val saveDraftPort: SaveDraftPort,
     private val syncDraftPort: SyncDraftPort,
 ) : SaveDraftUseCase {
-    override fun saveByUserIdentifier(userIdentifier: Identifier, data: String): Draft? {
+    override fun saveByUserIdentifier(userIdentifier: Identifier, data: String, updatedAt: Timestamp?): Draft? {
         /**
          * redis 내용 있으면 삭제
          */
@@ -22,6 +23,6 @@ class SaveDraftService(
         /**
          * RDB에 저장
          */
-        return saveDraftPort.saveByUserIdentifier(userIdentifier, data)
+        return saveDraftPort.saveByUserIdentifier(userIdentifier, data, updatedAt)
     }
 }

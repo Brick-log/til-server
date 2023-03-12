@@ -21,4 +21,8 @@ class SyncDraftService(
     override fun deleteById(userIdentifier: Identifier) {
         syncDraftPort.deleteById(userIdentifier)
     }
+
+    override fun  findAll(): List<Draft> {
+        return syncDraftPort.findAll()
+    }
 }

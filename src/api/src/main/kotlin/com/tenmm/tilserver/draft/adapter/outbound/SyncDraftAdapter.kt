@@ -36,4 +36,14 @@ class SyncDraftAdapter(
     override fun deleteById(userIdentifier: Identifier) {
         draftSyncRepository.deleteById(userIdentifier.value)
     }
+
+    override fun findAll(): List<Draft> {
+        return draftSyncRepository.findAll().map {
+            Draft(
+                userIdentifier = Identifier(it.userIdentifier),
+                data = it.data,
+                updatedAt = Timestamp.valueOf(it.updatedAt)
+            )
+        }
+    }
 }
