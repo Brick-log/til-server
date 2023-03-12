@@ -1,9 +1,7 @@
-package com.tenmm.tilserver.alaram.adapter.inbound
+package com.tenmm.tilserver.alarm.adapter.inbound.rest
 
-import com.tenmm.tilserver.alaram.adapter.inbound.model.ModifyAlarmRequest
-import com.tenmm.tilserver.alaram.adapter.inbound.model.ModifyAlarmResponse
-import com.tenmm.tilserver.alaram.application.inbound.ModifyAlarmUsecase
-import com.tenmm.tilserver.alaram.application.inbound.model.ModifiyAlarmModel
+import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.GetAlarmResponse
+import com.tenmm.tilserver.alarm.application.inbound.GetAlarmUseCase
 import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
 import io.swagger.v3.oas.annotations.Operation
@@ -12,24 +10,23 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import java.util.UUID
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@Tag(name = "alarm")
+@Tag(name = "Alarm")
 @RequestMapping("/v1/my/notification")
-class ModifyAlarmController(
-    private val modifyAlarmUsecase: ModifyAlarmUsecase,
+class GetAlarmController(
+    private val getAlarmUseCase: GetAlarmUseCase,
 ) {
-    @PutMapping
+    @GetMapping
     @Operation(
-        summary = "나의 알람 수정하기",
+        summary = "나의 알람 가져오기",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "알람 수정 성공",
+                description = "나의 알람 조회 성공",
             ),
             ApiResponse(
                 responseCode = "401",
@@ -48,18 +45,13 @@ class ModifyAlarmController(
             )
         ]
     )
-    fun modifyAlarm(
-        @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
-    ): ModifyAlarmResponse {
-        return ModifyAlarmResponse(
-            modifyAlarmUsecase.modifyAlarm(
-                ModifiyAlarmModel(
-                    // TODO: userIdentifier 토큰에서 가져오도록 수정
-                    userIdentifier = Identifier(UUID.randomUUID().toString()),
-                    enable = modifyAlarmRequest.enable,
-                    iteration = modifyAlarmRequest.iteration,
-                )
-            )
+    fun getAlarm(): GetAlarmResponse {
+        // TODO: userIdentifier 토큰에서 가져오도록 수정
+        val alarm = getAlarmUseCase.getAlarmByUserId(Identifier(UUID.randomUUID().toString()))
+        return GetAlarmResponse(
+            userIdentifier = alarm.userIdentifier.value,
+            enable = alarm.enable,
+            iteration = alarm.iteration
         )
     }
 }
