@@ -23,7 +23,7 @@ class SyncDraftService(
     override fun deleteById(userIdentifier: Identifier) {
         syncDraftPort.deleteById(userIdentifier)
     }
-
+    
     override fun sync() {
         syncDraftPort.findAll().forEach {
             saveDraftPort.saveByUserIdentifier(it.userIdentifier, it.data, it.updatedAt)
