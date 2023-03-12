@@ -4,12 +4,13 @@ import com.tenmm.crawler.domain.Crawling
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.sql.Timestamp
 
 class TistoryCrawlingService {
     companion object {
         fun crawling(url: String): Crawling {
             var title = ""
-            var createdAt = ""
+            var createdAt: Timestamp? = null
             var description = ""
 
             try {
@@ -17,7 +18,7 @@ class TistoryCrawlingService {
                 val document: Document = conn.get()
 
                 title = document.select("meta[property=og:title]").attr("content")
-                createdAt = document.select("meta[property=article:published_time]").attr("content")
+                createdAt = Timestamp.valueOf(document.select("meta[property=article:published_time]").attr("content"))
                 description = document.select("meta[property=og:description]").attr("content")
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -26,7 +27,8 @@ class TistoryCrawlingService {
             return Crawling(
                 title = title,
                 createdAt = createdAt,
-                description = description
+                description = description,
+                url = url
             )
         }
     }

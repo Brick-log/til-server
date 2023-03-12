@@ -21,7 +21,10 @@ class CrawlerService(
     private val saveCrawlingUseCase: SaveCrawlingUseCase
 ) : CrawlerServiceGrpcKt.CrawlerServiceCoroutineImplBase() {
     override suspend fun doCrawling(request: CrawlingRequest): CrawlingResponse {
-        val identifier = saveCrawlingUseCase.saveCrawling(request.url)
+        val identifier = saveCrawlingUseCase.saveCrawling(
+            url = request.url,
+            userIdentifier = "913115be-5b64-491e-bcfb-d5e724f25642"
+        )
         return CrawlingResponse.newBuilder()
             .setIdentifier(identifier)
             .build()

@@ -16,7 +16,7 @@ import com.tenmm.crawler.application.outbound.SaveCrawlingPort
 class SaveCrawlingService(
     private val saveCrawlingPort: SaveCrawlingPort
 ) : SaveCrawlingUseCase {
-    override fun saveCrawling(url: String): String {
+    override fun saveCrawling(url: String, userIdentifier: String): String {
         var crawling: Crawling
 
         when (UrlCheck.getDomain(url)) {
@@ -36,6 +36,6 @@ class SaveCrawlingService(
                 crawling = EtcCrawlingService.crawling(url)
             }
         }
-        return saveCrawlingPort.saveCrawling(crawling)
+        return saveCrawlingPort.saveCrawling(crawling, userIdentifier)
     }
 }
