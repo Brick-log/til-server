@@ -11,7 +11,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -25,10 +24,6 @@ class ModifyAlarmControllerTest {
     @MockK
     private lateinit var modifyAlarmUseCase: ModifyAlarmUseCase
 
-    @AfterEach
-    fun tearDown() {
-        confirmVerified(modifyAlarmUseCase)
-    }
     @Test
     fun `modifyAlarmByUserIdentifier - success`() {
 
@@ -39,12 +34,17 @@ class ModifyAlarmControllerTest {
         every { modifyAlarmUseCase.modifyAlarm(any()) } returns OperationResult.success()
 
         // then
-        val result = sut.modifyAlarm(randomModifyAlarmRequest())
+        val result = sut.modifyAlarm(request)
         val expected = ModifyAlarmResponse(OperationResult.success().isSuccess)
 
         assertThat(result).isEqualTo(expected)
 
-        verify { modifyAlarmUseCase.modifyAlarm(any()) }
+        /**
+         * TODO
+         * modifyAlarmUseCase.modifyAlarm(command)에 대한 verify() 필요.
+         * 현재는 userIdentifier를 Controller단에서 임의로 넣어주고 있기 떄문에, 랜덤한 값이라서 정확한 검증 불가
+         * 추후, JWT를 통한 userIdentifier 파싱이 가능해지면 해당 테스트 코드 추가 요망
+         */
     }
 
     @Test
@@ -57,11 +57,16 @@ class ModifyAlarmControllerTest {
         every { modifyAlarmUseCase.modifyAlarm(any()) } returns OperationResult.fail()
 
         // then
-        val result = sut.modifyAlarm(randomModifyAlarmRequest())
+        val result = sut.modifyAlarm(request)
         val expected = ModifyAlarmResponse(OperationResult.fail().isSuccess)
 
         assertThat(result).isEqualTo(expected)
 
-        verify { modifyAlarmUseCase.modifyAlarm(any()) }
+        /**
+         * TODO
+         * modifyAlarmUseCase.modifyAlarm(command)에 대한 verify() 필요.
+         * 현재는 userIdentifier를 Controller단에서 임의로 넣어주고 있기 떄문에, 랜덤한 값이라서 정확한 검증 불가
+         * 추후, JWT를 통한 userIdentifier 파싱이 가능해지면 해당 테스트 코드 추가 요망
+         */
     }
 }

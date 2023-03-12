@@ -16,7 +16,7 @@ class ModifyAlarmAdapter(
 ) : ModifyAlarmPort {
     @Transactional
     override fun modifyByUserIdentifier(command: ModifyAlarmCommand): Boolean {
-        val alarmEntity = alarmRepository.findByUserIdentifier(command.userIdentifier.value) ?: throw NotFoundException("Not found ALarm - userIdentifier: ${command.userIdentifier}")
+        val alarmEntity = alarmRepository.findByUserIdentifier(command.userIdentifier.value) ?: throw NotFoundException("Not found Alarm - userIdentifier: ${command.userIdentifier}")
         val modifiedEntity = alarmEntity.copy(
             enable = command.enable,
             iteration = command.iteration
@@ -26,7 +26,7 @@ class ModifyAlarmAdapter(
             alarmRepository.save(modifiedEntity)
             true
         } catch (e: Exception) {
-            logger.error(e) { "Post save Fail - $command" }
+            logger.error(e) { "Alarm Modify Fail - $command" }
             false
         }
     }

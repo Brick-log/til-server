@@ -10,6 +10,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -40,6 +41,8 @@ class ModifyAlarmAdapterTest {
         val expected = OperationResult.success().isSuccess
 
         assertThat(result).isEqualTo(expected)
+        verify { alarmRepository.findByUserIdentifier(command.userIdentifier.value) }
+        verify { alarmRepository.save(entity.copy(id = 0)) }
     }
 
     @Test
@@ -62,5 +65,6 @@ class ModifyAlarmAdapterTest {
         val expected = OperationResult.fail().isSuccess
 
         assertThat(result).isEqualTo(expected)
+        verify { alarmRepository.findByUserIdentifier(command.userIdentifier.value) }
     }
 }
