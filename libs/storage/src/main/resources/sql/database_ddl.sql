@@ -24,7 +24,7 @@ CREATE TABLE `blog`
     `id`              int           not null primary key auto_increment,
     `blog_identifier` char(36)      not null,
     `user_identifier` char(36)      not null,
-    `url`             varchar(1024) not null,
+    `url`             varchar(255) not null,
     unique index UDX_BLOG_IDENTIFIER (`blog_identifier`),
     index IDX_USER_IDENTIFIER (`user_identifier`)
 );
@@ -32,7 +32,7 @@ CREATE TABLE `blog`
 create table `category`
 (
     `id`         int          not null primary key auto_increment,
-    `identifier` varchar(255) not null,
+    `identifier` char(36) not null,
     `name`       varchar(255) not null,
     `createdAt`  datetime     not null,
     unique index UDX_CATEGORY_IDENTIFIER (`identifier`)
@@ -41,7 +41,7 @@ create table `category`
 create table `draft`
 (
     `id`              int          not null primary key auto_increment,
-    `user_identifier` varchar(255) not null,
+    `user_identifier` char(36) not null,
     `data`            text         not null,
     `updated_at`      datetime     not null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
@@ -55,7 +55,7 @@ CREATE TABLE `post`
     `user_identifier`     char(36)      not null,
     `title`               varchar(30)   not null,
     `description`         varchar(250)  not null,
-    `url`                 varchar(1024) not null,
+    `url`                 varchar(255) not null,
     `hit_count`           int           not null,
     `created_at`          timestamp     not null,
     unique index UDX_IDENTIFIER (`identifier`),
@@ -78,8 +78,8 @@ CREATE TABLE `user`
     `user_identifier`     char(36)      not null,
     `category_identifier` varchar(20)   not null,
     `introduction`        TEXT,
-    `profile_img_src`     varchar(1024),
-    `path`                varchar(1024) not null,
+    `profile_img_src`     varchar(255),
+    `path`                varchar(255) not null,
     `status`              varchar(20)   not null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`),
     unique index UDX_NAME (`name`),
