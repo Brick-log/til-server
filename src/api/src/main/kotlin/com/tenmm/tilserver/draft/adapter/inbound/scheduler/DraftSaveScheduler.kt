@@ -18,6 +18,6 @@ class DraftSaveScheduler(
          * Redis에 저장되어 있는 Key 값은 삭제
          * Redis -> RDB
          */
-         syncDraftUseCase.sync()
+        syncDraftUseCase.sync()
     }
 }
