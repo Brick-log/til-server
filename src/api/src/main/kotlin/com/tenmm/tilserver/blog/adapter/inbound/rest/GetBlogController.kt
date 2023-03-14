@@ -1,7 +1,7 @@
-package com.tenmm.tilserver.blog.adapter.inbound
+package com.tenmm.tilserver.blog.adapter.inbound.rest
 
-import com.tenmm.tilserver.blog.adapter.inbound.model.BlogResult
-import com.tenmm.tilserver.blog.adapter.inbound.model.GetBlogResponse
+import com.tenmm.tilserver.blog.adapter.inbound.rest.model.BlogResult
+import com.tenmm.tilserver.blog.adapter.inbound.rest.model.GetBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.GetUserBlogUseCase
 import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
 import io.swagger.v3.oas.annotations.Operation
