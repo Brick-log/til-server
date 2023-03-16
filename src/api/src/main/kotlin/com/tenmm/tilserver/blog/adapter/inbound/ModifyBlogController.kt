@@ -61,17 +61,20 @@ class ModifyBlogController(
         ]
     )
     fun modifyBlog(
-        @PathVariable blogIdentifier: Identifier,
+        @PathVariable blogIdentifier: String,
         @RequestBody modifyBlogRequest: ModifyBlogRequest,
     ): ModifyBlogResponse {
+        /**
         val command = ModifyBlogCommand(
             url = Url(modifyBlogRequest.url),
             userIdentifier = Identifier.generate(),
-            blogIdentifier = blogIdentifier
+            blogIdentifier = Identifier(blogIdentifier)
         )
 
         return ModifyBlogResponse(
             modifyBlogUseCase.modify(command).isSuccess
-        )
+        )*/
+
+        return ModifyBlogResponse(true)
     }
 }

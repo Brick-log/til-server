@@ -53,9 +53,9 @@ class GetUserProfileController(
 //        val user = getUserUseCase.getByPath(path)
 //        return GetUserProfileResponse.fromUser(user)
         return GetUserProfileResponse(
-            name = RandomStringUtils.random(10),
-            profileImgSrc = Url("https://www.naver.com/"),
-            introduction = RandomStringUtils.random(10),
+            name = RandomStringUtils.randomAlphabetic(10),
+            profileImgSrc = Url("https://www.naver.com/").value,
+            introduction = "안녕하세요오~~",
             categoryId = Identifier.generate().value,
             isAuthorized = false
         )

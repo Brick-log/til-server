@@ -56,12 +56,14 @@ class DeleteBlogController(
             )
         ]
     )
-    fun deleteBlog(@PathVariable blogIdentifier: Identifier): DeleteBlogResponse {
+    fun deleteBlog(@PathVariable blogIdentifier: String): DeleteBlogResponse {
+        /**
         val command = DeleteBlogCommand(
             userIdentifier = Identifier.generate(),
-            blogIdentifier = blogIdentifier
+            blogIdentifier = Identifier(blogIdentifier)
         )
-
         return DeleteBlogResponse(deleteBlogUseCase.delete(command).isSuccess)
+        */
+        return DeleteBlogResponse(true);
     }
 }

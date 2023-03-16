@@ -55,6 +55,7 @@ class SaveBlogController(
         ]
     )
     fun saveBlog(@RequestBody saveBlogRequest: SaveBlogRequest): SaveBlogResponse {
+        /**
         val command = SaveBlogCommand(
             url = Url(saveBlogRequest.url),
             userIdentifier = Identifier.generate(),
@@ -63,5 +64,8 @@ class SaveBlogController(
         return SaveBlogResponse(
             saveBlogUseCase.save(command).isSuccess
         )
+        */
+
+        return SaveBlogResponse(true)
     }
 }

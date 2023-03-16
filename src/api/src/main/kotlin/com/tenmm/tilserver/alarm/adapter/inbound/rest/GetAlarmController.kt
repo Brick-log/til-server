@@ -47,11 +47,18 @@ class GetAlarmController(
     )
     fun getAlarm(): GetAlarmResponse {
         // TODO: userIdentifier 토큰에서 가져오도록 수정
+        /**
         val alarm = getAlarmUseCase.getAlarmByUserId(Identifier(UUID.randomUUID().toString()))
         return GetAlarmResponse(
             userIdentifier = alarm.userIdentifier.value,
             enable = alarm.enable,
             iteration = alarm.iteration
+        )
+        */
+
+        return GetAlarmResponse(
+            enable = true,
+            iteration = "* * * * *"
         )
     }
 }

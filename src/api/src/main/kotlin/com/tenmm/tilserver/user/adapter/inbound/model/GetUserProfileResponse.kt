@@ -5,7 +5,7 @@ import com.tenmm.tilserver.user.domain.User
 
 data class GetUserProfileResponse(
     val name: String,
-    val profileImgSrc: Url,
+    val profileImgSrc: String,
     val introduction: String,
     val categoryId: String?,
     val isAuthorized: Boolean,
@@ -14,7 +14,7 @@ data class GetUserProfileResponse(
         fun fromUser(user: User): GetUserProfileResponse {
             return GetUserProfileResponse(
                 name = user.name,
-                profileImgSrc = user.thumbnailUrl,
+                profileImgSrc = user.thumbnailUrl.value,
                 introduction = user.introduction,
                 categoryId = user.categoryIdentifier?.value,
                 isAuthorized = false

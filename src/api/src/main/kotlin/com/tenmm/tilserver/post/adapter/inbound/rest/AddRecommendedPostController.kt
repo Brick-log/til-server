@@ -58,7 +58,11 @@ class AddRecommendedPostController(
     fun addRecommendedPost(
         @PathVariable postIdentifier: String,
     ): ModifyRecommendedPostResponse {
+        /**
         val result = addRecommendedPostUseCase.addByPostId(Identifier(postIdentifier))
         return ModifyRecommendedPostResponse.fromResult(result)
+        */
+
+        return ModifyRecommendedPostResponse(true)
     }
 }

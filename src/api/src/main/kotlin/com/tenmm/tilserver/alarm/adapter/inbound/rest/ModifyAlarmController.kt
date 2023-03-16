@@ -51,6 +51,7 @@ class ModifyAlarmController(
     fun modifyAlarm(
         @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
     ): ModifyAlarmResponse {
+        /**
         return ModifyAlarmResponse(
             modifyAlarmUseCase.modifyAlarm(
                 ModifyAlarmCommand(
@@ -59,6 +60,8 @@ class ModifyAlarmController(
                     iteration = modifyAlarmRequest.iteration,
                 )
             ).isSuccess
-        )
+        )*/
+
+        return ModifyAlarmResponse(true)
     }
 }

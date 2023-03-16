@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 class ModifyPostController(
     private val modifyPostUseCase: ModifyPostUseCase,
 ) {
-    @PatchMapping("/{postIdentifier}")
+    @PutMapping("/{postIdentifier}")
     @Operation(
         summary = "포스트 변경",
         responses = [
@@ -59,16 +60,18 @@ class ModifyPostController(
         ]
     )
     fun modifyPost(
-        @PathVariable postIdentifier: Identifier,
+        @PathVariable postIdentifier: String,
         @RequestBody modifyPostRequest: ModifyPostRequest,
     ): ModifyPostResponse {
+        /**
         val command = ModifyPostCommand(
-            identifier = postIdentifier,
+            identifier = Identifier(postIdentifier),
             title = modifyPostRequest.title,
             summary = modifyPostRequest.summary,
             createdAt = modifyPostRequest.createdAt,
         )
         modifyPostUseCase.modifyByIdentifier(command)
+        */
         return ModifyPostResponse(true)
     }
 }

@@ -44,10 +44,12 @@ class SyncDraftController(
     fun syncDraft(
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {
+        /**
         syncDraftUseCase.save(
             Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
             syncDraftRequest.data
         )
+        */
         return SyncDraftResponse(true)
     }
 }

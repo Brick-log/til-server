@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import java.sql.Timestamp
+import java.time.LocalDateTime
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -41,11 +43,18 @@ class GetDraftController(
         ]
     )
     fun getDraft(): GetDraftResponse {
+        /**
         val draft: Draft? =
             getDraftUseCase.getByUserIdentifier(Identifier("913115be-5b64-491e-bcfb-d5e724f25642")) // TODO token에서 가져오도록 수정
         return GetDraftResponse(
             data = draft?.data,
             updatedAt = draft?.updatedAt,
+        )
+        */
+
+        return GetDraftResponse(
+            data = "dummyData (It can be null)",
+            updatedAt = Timestamp.valueOf(LocalDateTime.now())
         )
     }
 }
