@@ -1,17 +1,14 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyPostRequest
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyPostResponse
 import com.tenmm.tilserver.post.application.inbound.ModifyPostUseCase
-import com.tenmm.tilserver.post.application.inbound.model.ModifyPostCommand
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -64,14 +61,14 @@ class ModifyPostController(
         @RequestBody modifyPostRequest: ModifyPostRequest,
     ): ModifyPostResponse {
         /**
-        val command = ModifyPostCommand(
-            identifier = Identifier(postIdentifier),
-            title = modifyPostRequest.title,
-            summary = modifyPostRequest.summary,
-            createdAt = modifyPostRequest.createdAt,
-        )
-        modifyPostUseCase.modifyByIdentifier(command)
-        */
+         val command = ModifyPostCommand(
+         identifier = Identifier(postIdentifier),
+         title = modifyPostRequest.title,
+         summary = modifyPostRequest.summary,
+         createdAt = modifyPostRequest.createdAt,
+         )
+         modifyPostUseCase.modifyByIdentifier(command)
+         */
         return ModifyPostResponse(true)
     }
 }

@@ -1,15 +1,12 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ConfirmUploadPostRequest
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ConfirmUploadPostResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.RequestUploadPostRequest
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.RequestUploadPostResponse
 import com.tenmm.tilserver.post.application.inbound.SavePostUseCase
-import com.tenmm.tilserver.post.application.inbound.model.PostSaveConfirmCommand
-import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestCommand
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -62,15 +59,17 @@ class SavePostController(
         @RequestBody requestUploadPostRequest: RequestUploadPostRequest,
     ): RequestUploadPostResponse {
         /**
-        val requestCommand = PostSaveRequestCommand(
-            Identifier(requestUploadPostRequest.userIdentifier),
-            Url(requestUploadPostRequest.url)
+         val requestCommand = PostSaveRequestCommand(
+         Identifier(requestUploadPostRequest.userIdentifier),
+         Url(requestUploadPostRequest.url)
+         )
+         val result = savePostUseCase.requestSave(requestCommand)
+         return RequestUploadPostResponse.fromResult(result)
+         */
+        return RequestUploadPostResponse(
+            Identifier.generate().value, "dummy", "dummny",
+            Timestamp.valueOf(LocalDateTime.now())
         )
-        val result = savePostUseCase.requestSave(requestCommand)
-        return RequestUploadPostResponse.fromResult(result)
-        */
-        return RequestUploadPostResponse(Identifier.generate().value,"dummy","dummny",
-            Timestamp.valueOf(LocalDateTime.now()))
     }
 
     @PostMapping("/confirm")
@@ -114,15 +113,15 @@ class SavePostController(
 
         /**
          *
-        val confirmCommand = PostSaveConfirmCommand(
-            saveIdentifier = Identifier(confirmUploadPostRequest.saveIdentifier),
-            title = confirmUploadPostRequest.title,
-            description = confirmUploadPostRequest.description,
-            createdAt = confirmUploadPostRequest.createdAt,
-        )
-        val result = savePostUseCase.confirmSave(confirmCommand)
-        return ConfirmUploadPostResponse.fromResult(result)
-        */
-        return ConfirmUploadPostResponse(true,5);
+         val confirmCommand = PostSaveConfirmCommand(
+         saveIdentifier = Identifier(confirmUploadPostRequest.saveIdentifier),
+         title = confirmUploadPostRequest.title,
+         description = confirmUploadPostRequest.description,
+         createdAt = confirmUploadPostRequest.createdAt,
+         )
+         val result = savePostUseCase.confirmSave(confirmCommand)
+         return ConfirmUploadPostResponse.fromResult(result)
+         */
+        return ConfirmUploadPostResponse(true, 5)
     }
 }

@@ -1,6 +1,5 @@
 package com.tenmm.tilserver.user.adapter.inbound.model
 
-import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.user.domain.User
 
 data class GetUserProfileResponse(

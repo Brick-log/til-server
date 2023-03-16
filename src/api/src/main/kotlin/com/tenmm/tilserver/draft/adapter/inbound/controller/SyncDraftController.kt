@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftRequest
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftResponse
 import com.tenmm.tilserver.draft.application.inbound.SyncDraftUseCase
@@ -45,11 +44,11 @@ class SyncDraftController(
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {
         /**
-        syncDraftUseCase.save(
-            Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
-            syncDraftRequest.data
-        )
-        */
+         syncDraftUseCase.save(
+         Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
+         syncDraftRequest.data
+         )
+         */
         return SyncDraftResponse(true)
     }
 }

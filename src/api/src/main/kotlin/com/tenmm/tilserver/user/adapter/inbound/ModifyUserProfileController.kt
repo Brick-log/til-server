@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserProfileResponse
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserRequest
 import com.tenmm.tilserver.user.application.inbound.ModifyUserUseCase
