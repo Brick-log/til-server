@@ -1,6 +1,6 @@
-package com.tenmm.tilserver.common.adapter.inbound
+package com.tenmm.tilserver.common.adapter.inbound.rest
 
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
