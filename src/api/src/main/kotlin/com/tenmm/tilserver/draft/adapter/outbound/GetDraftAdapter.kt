@@ -5,7 +5,6 @@ import com.tenmm.tilserver.draft.domain.Draft
 import com.tenmm.tilserver.draft.application.outbound.GetDraftPort
 import com.tenmm.tilserver.outbound.persistence.entity.DraftEntity
 import com.tenmm.tilserver.outbound.persistence.repository.DraftRepository
-import java.sql.Timestamp
 import org.springframework.stereotype.Component
 
 @Component
@@ -18,7 +17,7 @@ class GetDraftAdapter(
             Draft(
                 userIdentifier = Identifier(it.userIdentifier),
                 data = it.data,
-                updatedAt = Timestamp.valueOf(it.updatedAt)
+                updatedAt = it.updatedAt
             )
         }
     }

@@ -4,7 +4,7 @@ import org.springframework.data.redis.core.RedisHash
 import org.springframework.data.annotation.Id
 import java.time.LocalDateTime
 
-@RedisHash("member")
+@RedisHash("draft")
 data class DraftSyncEntity(
     @Id
     val userIdentifier: String,

@@ -5,7 +5,6 @@ import com.tenmm.tilserver.draft.application.outbound.SyncDraftPort
 import com.tenmm.tilserver.outbound.persistence.repository.DraftSyncRepository
 import com.tenmm.tilserver.outbound.persistence.entity.DraftSyncEntity
 import com.tenmm.tilserver.draft.domain.Draft
-import java.time.LocalDateTime
 import org.springframework.stereotype.Component
 import java.sql.Timestamp
 import java.util.Optional
@@ -19,7 +18,7 @@ class SyncDraftAdapter(
             DraftSyncEntity(
                 userIdentifier = userIdentifier.value,
                 data = data,
-                updatedAt = LocalDateTime.now()
+                updatedAt = Timestamp(System.currentTimeMillis()).toLocalDateTime()
             )
         )
     }
