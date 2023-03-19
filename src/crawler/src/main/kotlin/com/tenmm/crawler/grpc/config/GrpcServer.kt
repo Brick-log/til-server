@@ -17,11 +17,13 @@ class GrpcServer(
 
     @PostConstruct
     fun setUp() {
+        print("GrpcServer.setUp: ${server.services}")
         server.start()
     }
 
     @PreDestroy
     fun sutDown() {
+        print("GrpcServer.sutDown")
         server.shutdown()
     }
 }

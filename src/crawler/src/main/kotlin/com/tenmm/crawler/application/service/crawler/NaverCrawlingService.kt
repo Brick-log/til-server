@@ -5,8 +5,8 @@ import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
 
-// TODO: Naver에 맞게 crawling logic 구현 필요
 class NaverCrawlingService {
     companion object {
         fun crawling(url: String): Crawling {
@@ -17,10 +17,11 @@ class NaverCrawlingService {
             try {
                 val conn: Connection = Jsoup.connect(url)
                 val document: Document = conn.get()
+                val published_time: String = document.getElementsByClass("blog_date").text()
 
                 title = document.select("meta[property=og:title]").attr("content")
-                createdAt = Timestamp.valueOf(document.select("meta[property=article:published_time]").attr("content"))
                 description = document.select("meta[property=og:description]").attr("content")
+                createdAt = Timestamp(SimpleDateFormat("yyyy. MM. dd. HH:mm").parse(published_time).time)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
