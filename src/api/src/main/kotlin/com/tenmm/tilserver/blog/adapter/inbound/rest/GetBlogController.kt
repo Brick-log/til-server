@@ -4,7 +4,6 @@ import com.tenmm.tilserver.blog.adapter.inbound.rest.model.BlogResult
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.GetBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.GetUserBlogUseCase
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -42,24 +41,14 @@ class GetBlogController(
         ]
     )
     fun getBlogs(@PathVariable name: String): GetBlogResponse {
-        /**
-         val blogList = getUserBlogUseCase.getAllByUserName(name)
-         return GetBlogResponse(
-         blogList.map {
-         BlogResult(
-         it.blogIdentifier.value,
-         it.url.value
-         )
-         }
-         )
-         */
-
+        val blogList = getUserBlogUseCase.getAllByUserName(name)
         return GetBlogResponse(
-            listOf(
-                BlogResult(Identifier.generate().value, "https://velog.io"),
-                BlogResult(Identifier.generate().value, "https://naver.blog.com"),
-                BlogResult(Identifier.generate().value, "https://tistory.com")
-            )
+            blogList.map {
+                BlogResult(
+                    it.blogIdentifier.value,
+                    it.url.value
+                )
+            }
         )
     }
 }

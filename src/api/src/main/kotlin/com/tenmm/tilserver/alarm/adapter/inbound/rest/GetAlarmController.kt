@@ -3,11 +3,13 @@ package com.tenmm.tilserver.alarm.adapter.inbound.rest
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.GetAlarmResponse
 import com.tenmm.tilserver.alarm.application.inbound.GetAlarmUseCase
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.domain.Identifier
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import java.util.UUID
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -45,18 +47,10 @@ class GetAlarmController(
     )
     fun getAlarm(): GetAlarmResponse {
         // TODO: userIdentifier 토큰에서 가져오도록 수정
-        /**
-         val alarm = getAlarmUseCase.getAlarmByUserId(Identifier(UUID.randomUUID().toString()))
-         return GetAlarmResponse(
-         userIdentifier = alarm.userIdentifier.value,
-         enable = alarm.enable,
-         iteration = alarm.iteration
-         )
-         */
-
+        val alarm = getAlarmUseCase.getAlarmByUserId(Identifier(UUID.randomUUID().toString()))
         return GetAlarmResponse(
-            enable = true,
-            iteration = "* * * * *"
+            enable = alarm.enable,
+            iteration = alarm.iteration
         )
     }
 }

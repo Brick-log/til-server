@@ -3,12 +3,15 @@ package com.tenmm.tilserver.alarm.adapter.inbound.rest
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.ModifyAlarmRequest
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.ModifyAlarmResponse
 import com.tenmm.tilserver.alarm.application.inbound.ModifyAlarmUseCase
+import com.tenmm.tilserver.alarm.application.inbound.model.ModifyAlarmCommand
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.domain.Identifier
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import java.util.UUID
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -48,17 +51,14 @@ class ModifyAlarmController(
     fun modifyAlarm(
         @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
     ): ModifyAlarmResponse {
-        /**
-         return ModifyAlarmResponse(
-         modifyAlarmUseCase.modifyAlarm(
-         ModifyAlarmCommand(
-         userIdentifier = Identifier(UUID.randomUUID().toString()),
-         enable = modifyAlarmRequest.enable,
-         iteration = modifyAlarmRequest.iteration,
-         )
-         ).isSuccess
-         )*/
-
-        return ModifyAlarmResponse(true)
+        return ModifyAlarmResponse(
+            modifyAlarmUseCase.modifyAlarm(
+                ModifyAlarmCommand(
+                    userIdentifier = Identifier(UUID.randomUUID().toString()),
+                    enable = modifyAlarmRequest.enable,
+                    iteration = modifyAlarmRequest.iteration,
+                )
+            ).isSuccess
+        )
     }
 }

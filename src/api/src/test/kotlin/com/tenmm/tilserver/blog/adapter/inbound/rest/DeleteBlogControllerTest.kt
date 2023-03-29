@@ -42,7 +42,7 @@ class DeleteBlogControllerTest {
         every { deleteBlogUseCase.delete(any()) } returns deleteBlogResult
 
         // when
-        val result = sut.deleteBlog(blogIdentifier)
+        val result = sut.deleteBlog(blogIdentifier.value)
 
         // then
         val expected = DeleteBlogResponse(deleteBlogResult.isSuccess)
