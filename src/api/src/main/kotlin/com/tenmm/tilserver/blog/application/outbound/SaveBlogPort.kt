@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.blog.application.outbound
 
-import com.tenmm.tilserver.blog.domain.Blog
+import com.tenmm.tilserver.blog.application.inbound.model.SaveBlogCommand
 
 interface SaveBlogPort {
-    fun save(): Blog
+    fun save(blogCommand: SaveBlogCommand): Boolean
 }

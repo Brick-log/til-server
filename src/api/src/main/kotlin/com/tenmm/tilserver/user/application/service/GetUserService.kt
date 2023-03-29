@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class GetUserService : GetUserUseCase {
+    override fun getByName(name: String): User {
+        TODO("Not yet implemented")
+    }
+
     override fun getByPath(path: String): User {
         TODO("Not yet implemented")
     }
