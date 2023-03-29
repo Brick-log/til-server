@@ -2,9 +2,7 @@ package com.tenmm.tilserver.blog.adapter.inbound.rest
 
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.DeleteBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.DeleteBlogUseCase
-import com.tenmm.tilserver.blog.application.inbound.model.DeleteBlogCommand
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -56,12 +54,14 @@ class DeleteBlogController(
             )
         ]
     )
-    fun deleteBlog(@PathVariable blogIdentifier: Identifier): DeleteBlogResponse {
-        val command = DeleteBlogCommand(
-            userIdentifier = Identifier.generate(),
-            blogIdentifier = blogIdentifier
-        )
-
-        return DeleteBlogResponse(deleteBlogUseCase.delete(command).isSuccess)
+    fun deleteBlog(@PathVariable blogIdentifier: String): DeleteBlogResponse {
+        /**
+         val command = DeleteBlogCommand(
+         userIdentifier = Identifier.generate(),
+         blogIdentifier = Identifier(blogIdentifier)
+         )
+         return DeleteBlogResponse(deleteBlogUseCase.delete(command).isSuccess)
+         */
+        return DeleteBlogResponse(true)
     }
 }

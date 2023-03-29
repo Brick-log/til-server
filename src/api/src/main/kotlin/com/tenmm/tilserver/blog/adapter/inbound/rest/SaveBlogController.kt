@@ -3,10 +3,7 @@ package com.tenmm.tilserver.blog.adapter.inbound.rest
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.SaveBlogRequest
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.SaveBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.SaveBlogUseCase
-import com.tenmm.tilserver.blog.application.inbound.model.SaveBlogCommand
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.Url
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -55,13 +52,17 @@ class SaveBlogController(
         ]
     )
     fun saveBlog(@RequestBody saveBlogRequest: SaveBlogRequest): SaveBlogResponse {
-        val command = SaveBlogCommand(
-            url = Url(saveBlogRequest.url),
-            userIdentifier = Identifier.generate(),
-            blogIdentifier = Identifier.generate()
-        )
-        return SaveBlogResponse(
-            saveBlogUseCase.save(command).isSuccess
-        )
+        /**
+         val command = SaveBlogCommand(
+         url = Url(saveBlogRequest.url),
+         userIdentifier = Identifier.generate(),
+         blogIdentifier = Identifier.generate()
+         )
+         return SaveBlogResponse(
+         saveBlogUseCase.save(command).isSuccess
+         )
+         */
+
+        return SaveBlogResponse(true)
     }
 }

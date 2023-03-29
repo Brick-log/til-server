@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.adapter.inbound
+package com.tenmm.tilserver.common.adapter.inbound.rest
 
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order

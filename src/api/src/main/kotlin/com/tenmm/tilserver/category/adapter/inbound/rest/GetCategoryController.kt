@@ -2,7 +2,7 @@ package com.tenmm.tilserver.category.adapter.inbound.rest
 
 import com.tenmm.tilserver.category.adapter.inbound.rest.model.CategoryResult
 import com.tenmm.tilserver.category.adapter.inbound.rest.model.GetCategoriesResponse
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
