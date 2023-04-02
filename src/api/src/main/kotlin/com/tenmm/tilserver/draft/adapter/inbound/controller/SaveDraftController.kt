@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SaveDraftRequest
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SaveDraftResponse
 import com.tenmm.tilserver.draft.application.inbound.SaveDraftUseCase

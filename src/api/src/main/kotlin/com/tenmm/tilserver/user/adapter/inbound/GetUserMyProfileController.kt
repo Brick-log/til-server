@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
-import com.tenmm.tilserver.common.adapter.inbound.model.ErrorResponse
+import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse
@@ -50,9 +50,9 @@ class GetUserMyProfileController(
 //        val user = getUserUseCase.getByIdentifier(Identifier.generate())
 //        return GetUserProfileResponse.fromUser(user)
         return GetUserProfileResponse(
-            name = RandomStringUtils.random(10),
-            profileImgSrc = Url("https://www.naver.com/"),
-            introduction = RandomStringUtils.random(10),
+            name = RandomStringUtils.randomAlphabetic(10),
+            profileImgSrc = Url("https://www.naver.com/").value,
+            introduction = "안녕하세요오~",
             categoryId = Identifier.generate().value,
             isAuthorized = false
         )

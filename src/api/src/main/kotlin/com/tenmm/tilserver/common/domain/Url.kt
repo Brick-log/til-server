@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.common.domain
 
-import com.tenmm.tilserver.common.utils.URL_REGEX
+import com.tenmm.tilserver.common.constants.URL_REGEX
 
 data class Url(
     val value: String,

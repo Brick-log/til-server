@@ -13,3 +13,6 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
+security:
+  aes128:
+    key: 1q2w3e4r5t6y7u8i
