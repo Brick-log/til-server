@@ -13,6 +13,7 @@ import java.time.LocalDateTime
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import com.tenmm.tilserver.common.domain.Identifier
 
 @RestController
 @RequestMapping("/v1/my/draft")
@@ -41,18 +42,16 @@ class GetDraftController(
         ]
     )
     fun getDraft(): GetDraftResponse {
-        /**
-         val draft: Draft? =
-         getDraftUseCase.getByUserIdentifier(Identifier("913115be-5b64-491e-bcfb-d5e724f25642")) // TODO token에서 가져오도록 수정
-         return GetDraftResponse(
-         data = draft?.data,
-         updatedAt = draft?.updatedAt,
-         )
-         */
-
+        val draft: Draft? =
+        getDraftUseCase.getByUserIdentifier(Identifier("913115be-5b64-491e-bcfb-d5e724f25642")) // TODO token에서 가져오도록 수정
         return GetDraftResponse(
-            data = "dummyData (It can be null)",
-            updatedAt = Timestamp.valueOf(LocalDateTime.now())
+            data = draft?.data,
+            updatedAt = draft?.updatedAt,
         )
+        
+        // return GetDraftResponse(
+        //     data = "dummyData (It can be null)",
+        //     updatedAt = Timestamp.valueOf(LocalDateTime.now())
+        // )
     }
 }
