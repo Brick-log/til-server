@@ -36,7 +36,6 @@ class SaveCrawlingService(
                 crawling = EtcCrawlingService.crawling(url)
             }
         }
-        print(crawling)
         return saveCrawlingPort.saveCrawling(crawling, userIdentifier)
     }
 }
