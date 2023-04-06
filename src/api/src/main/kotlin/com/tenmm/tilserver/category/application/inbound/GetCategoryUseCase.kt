@@ -5,5 +5,5 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 interface GetCategoryUseCase {
     fun getAll(): List<Category>
-    fun getByIdentifier(identifier: Identifier): Category
+    fun getByIdentifier(identifier: Identifier): Category?
 }
