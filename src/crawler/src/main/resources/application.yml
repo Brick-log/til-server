@@ -10,5 +10,8 @@ spring:
       host: 127.0.0.1
       port: 6379
 
+server:
+  port: 8000
+
 grpc:
   port: 9090

@@ -5,8 +5,8 @@ import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.sql.Timestamp
+import java.text.SimpleDateFormat
 
-// TODO: Velog에 맞게 crawling logic 구현 필요
 class VelogCrawlingService {
     companion object {
         fun crawling(url: String): Crawling {
@@ -17,10 +17,11 @@ class VelogCrawlingService {
             try {
                 val conn: Connection = Jsoup.connect(url)
                 val document: Document = conn.get()
+                var published_time: String = document.select("div.information > span:nth-child(3)").text()
 
                 title = document.select("meta[property=og:title]").attr("content")
-                createdAt = Timestamp.valueOf(document.select("meta[property=article:published_time]").attr("content"))
                 description = document.select("meta[property=og:description]").attr("content")
+                createdAt = Timestamp(SimpleDateFormat("yyyy년 MM월 dd일").parse(published_time).time)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
