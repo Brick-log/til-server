@@ -1,19 +1,15 @@
 package com.tenmm.crawler.util
 
-class UrlCheck {
-    companion object {
-        fun getDomain(url: String): String {
-            if (url.contains(UrlType.TISTORY.name.lowercase())) {
-                return UrlType.TISTORY.name
-            } else if (url.contains(UrlType.NAVER.name.lowercase())) {
-                return UrlType.NAVER.name
-            } else if (url.contains(UrlType.VELOG.name.lowercase())) {
-                return UrlType.VELOG.name
-            } else if (url.contains(UrlType.MEDIUM.name.lowercase())) {
-                return UrlType.MEDIUM.name
-            } else {
-                return UrlType.ETC.name
-            }
+import com.tenmm.crawler.post.domain.Url
+
+object UrlCheck {
+    fun getType(url: Url): UrlType {
+        return when {
+            url.value.contains(UrlType.TISTORY.name.lowercase()) -> UrlType.TISTORY
+            url.value.contains(UrlType.NAVER.name.lowercase()) -> UrlType.NAVER
+            url.value.contains(UrlType.VELOG.name.lowercase()) -> UrlType.VELOG
+            url.value.contains(UrlType.MEDIUM.name.lowercase()) -> UrlType.MEDIUM
+            else -> UrlType.ETC
         }
     }
 }

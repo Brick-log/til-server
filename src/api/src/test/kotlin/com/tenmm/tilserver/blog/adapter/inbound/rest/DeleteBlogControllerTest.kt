@@ -2,6 +2,7 @@ package com.tenmm.tilserver.blog.adapter.inbound.rest
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.DeleteBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.DeleteBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.randomDeleteBlogCommand
@@ -42,7 +43,7 @@ class DeleteBlogControllerTest {
         every { deleteBlogUseCase.delete(any()) } returns deleteBlogResult
 
         // when
-        val result = sut.deleteBlog(blogIdentifier.value)
+        val result = sut.deleteBlog(UserAuthInfo(Identifier.generate()), blogIdentifier.value)
 
         // then
         val expected = DeleteBlogResponse(deleteBlogResult.isSuccess)

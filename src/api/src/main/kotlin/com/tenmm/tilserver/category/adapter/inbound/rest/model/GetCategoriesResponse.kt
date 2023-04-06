@@ -13,7 +13,7 @@ data class CategoryResult(
 
 fun Category.toResult(): CategoryResult {
     return CategoryResult(
-        identifier = this.identifier.toString(),
+        identifier = this.identifier.value,
         name = this.name
     )
 }

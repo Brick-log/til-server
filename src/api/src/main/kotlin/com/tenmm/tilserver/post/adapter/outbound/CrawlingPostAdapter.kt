@@ -11,9 +11,10 @@ import org.springframework.stereotype.Component
 class CrawlingPostAdapter(
     private val crawlerServiceCoroutineStub: CrawlerServiceGrpcKt.CrawlerServiceCoroutineStub,
 ) : CrawlingPostPort {
-    override suspend fun requestParseFromUrl(url: Url): Identifier {
+    override suspend fun requestParseFromUrl(url: Url, userIdentifier: Identifier): Identifier {
         val request = CrawlingRequest.newBuilder()
-            .setUrl(url.toString())
+            .setUrl(url.value)
+            .setUserIdentifier(userIdentifier.value)
             .build()
         val response = crawlerServiceCoroutineStub.doCrawling(request)
         return Identifier(response.identifier)
