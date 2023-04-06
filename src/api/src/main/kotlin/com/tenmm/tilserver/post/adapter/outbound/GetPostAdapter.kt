@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
-import com.tenmm.tilserver.common.adapter.outbound.PageTokenConverter
+import com.tenmm.tilserver.common.utils.PageTokenConverter
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.ResultWithToken

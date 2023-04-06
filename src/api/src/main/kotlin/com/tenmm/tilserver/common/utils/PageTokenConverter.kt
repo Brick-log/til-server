@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.adapter.outbound
+package com.tenmm.tilserver.common.utils
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.tenmm.tilserver.common.security.AES128

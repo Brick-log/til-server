@@ -1,6 +1,7 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyRecommendedPostResponse
 import com.tenmm.tilserver.post.application.inbound.AddRecommendedPostUseCase
 import io.swagger.v3.oas.annotations.Operation
@@ -57,11 +58,7 @@ class AddRecommendedPostController(
     fun addRecommendedPost(
         @PathVariable postIdentifier: String,
     ): ModifyRecommendedPostResponse {
-        /**
-         val result = addRecommendedPostUseCase.addByPostId(Identifier(postIdentifier))
-         return ModifyRecommendedPostResponse.fromResult(result)
-         */
-
-        return ModifyRecommendedPostResponse(true)
+        val result = addRecommendedPostUseCase.addByPostId(Identifier(postIdentifier))
+        return ModifyRecommendedPostResponse.fromResult(result)
     }
 }

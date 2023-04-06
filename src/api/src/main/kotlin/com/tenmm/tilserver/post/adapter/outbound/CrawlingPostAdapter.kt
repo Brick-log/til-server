@@ -3,11 +3,19 @@ package com.tenmm.tilserver.post.adapter.outbound
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.post.application.outbound.CrawlingPostPort
+import com.tenmm.tilserver.protocol.CrawlerServiceGrpcKt
+import com.tenmm.tilserver.protocol.CrawlingRequest
 import org.springframework.stereotype.Component
 
 @Component
-class CrawlingPostAdapter : CrawlingPostPort {
-    override fun requestParseFromUrl(url: Url): Identifier {
-        TODO("Not yet implemented")
+class CrawlingPostAdapter(
+    private val crawlerServiceCoroutineStub: CrawlerServiceGrpcKt.CrawlerServiceCoroutineStub,
+) : CrawlingPostPort {
+    override suspend fun requestParseFromUrl(url: Url): Identifier {
+        val request = CrawlingRequest.newBuilder()
+            .setUrl(url.toString())
+            .build()
+        val response = crawlerServiceCoroutineStub.doCrawling(request)
+        return Identifier(response.identifier)
     }
 }

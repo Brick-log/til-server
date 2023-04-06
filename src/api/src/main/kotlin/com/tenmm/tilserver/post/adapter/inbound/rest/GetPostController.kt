@@ -5,7 +5,6 @@ import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostMetaResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostResponse
-import com.tenmm.tilserver.post.adapter.inbound.rest.model.PostResponse
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.GetRecommendedPostUseCase
 import io.swagger.v3.oas.annotations.Operation
@@ -13,9 +12,8 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import java.math.BigInteger
 import java.sql.Timestamp
-import java.time.LocalDateTime
+import java.time.Instant
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -57,11 +55,8 @@ class GetPostController(
     fun getPostByIdentifier(
         @PathVariable postIdentifier: String,
     ): GetPostResponse {
-        /**
-         val post = getPostUseCase.showPostByIdentifier(Identifier(postIdentifier))
-         return GetPostResponse.fromResult(post)
-         **/
-        return GetPostResponse("https://medium.com")
+        val post = getPostUseCase.showPostByIdentifier(Identifier(postIdentifier))
+        return GetPostResponse.fromResult(post)
     }
 
     @GetMapping("/user/{path}")
@@ -96,37 +91,14 @@ class GetPostController(
         @RequestParam size: Int,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
-        /**
-         val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
-         path = path,
-         to = Timestamp.from(Instant.ofEpochMilli(to)),
-         from = Timestamp.from(Instant.ofEpochMilli(from)),
-         size = size,
-         pageToken = pageToken
-         )
-         return GetPostListResponse.fromResult(postListResult)
-         */
-
-        return GetPostListResponse(
-            listOf(
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()),
-                    BigInteger.valueOf(1L)
-                ),
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()), BigInteger.valueOf(2L)
-                ),
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()),
-                    BigInteger.valueOf(3L)
-                )
-            ),
-            2,
-            "SamplePageToken"
+        val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
+            path = path,
+            to = Timestamp.from(Instant.ofEpochMilli(to)),
+            from = Timestamp.from(Instant.ofEpochMilli(from)),
+            size = size,
+            pageToken = pageToken
         )
+        return GetPostListResponse.fromResult(postListResult)
     }
 
     @GetMapping("/user/{path}/meta")
@@ -159,22 +131,12 @@ class GetPostController(
         @RequestParam to: Long,
         @RequestParam from: Long,
     ): GetPostMetaResponse {
-        /**
-         val postMetaResult = getPostUseCase.getPostMetaListByNameAndDate(
-         path = path,
-         to = Timestamp.from(Instant.ofEpochMilli(to)),
-         from = Timestamp.from(Instant.ofEpochMilli(from))
-         )
-         return GetPostMetaResponse.fromResult(postMetaResult)
-         */
-        return GetPostMetaResponse(
-            listOf(
-                Timestamp.valueOf(LocalDateTime.now()).toString(),
-                Timestamp.valueOf(LocalDateTime.now().minusDays(1)).toString(),
-                Timestamp.valueOf(LocalDateTime.now().minusDays(2)).toString(),
-                Timestamp.valueOf(LocalDateTime.now().minusDays(3)).toString(),
-            )
+        val postMetaResult = getPostUseCase.getPostMetaListByNameAndDate(
+            path = path,
+            to = Timestamp.from(Instant.ofEpochMilli(to)),
+            from = Timestamp.from(Instant.ofEpochMilli(from))
         )
+        return GetPostMetaResponse.fromResult(postMetaResult)
     }
 
     @GetMapping("/category")
@@ -207,34 +169,12 @@ class GetPostController(
         @RequestParam size: Int,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
-        /**
-         val postListResult = if (categoryIdentifier != null) {
-         getPostUseCase.getPostListByCategory(Identifier(categoryIdentifier), size, pageToken)
-         } else {
-         getPostUseCase.getPostListRandom(size, pageToken)
-         }
-         return GetPostListResponse.fromResult(postListResult)
-         */
-        return GetPostListResponse(
-            listOf(
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()),
-                    BigInteger.valueOf(1L)
-                ),
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()), BigInteger.valueOf(2L)
-                ),
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()),
-                    BigInteger.valueOf(3L)
-                )
-            ),
-            2,
-            "SamplePageToken"
-        )
+        val postListResult = if (categoryIdentifier != null) {
+            getPostUseCase.getPostListByCategory(Identifier(categoryIdentifier), size, pageToken)
+        } else {
+            getPostUseCase.getPostListRandom(size, pageToken)
+        }
+        return GetPostListResponse.fromResult(postListResult)
     }
 
     @GetMapping("/category/recommend")
@@ -265,33 +205,12 @@ class GetPostController(
     fun getRecommendationList(
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
     ): GetPostListResponse {
-        /**
-         val postListResult = if (categoryIdentifier != null) {
-         getRecommendedPostUseCase.getRecommendedPostListByCategory(Identifier(categoryIdentifier))
-         } else {
-         getRecommendedPostUseCase.getRecommendedPostListRandom()
-         }
-         return GetPostListResponse.fromResult(postListResult)
-         **/
-        return GetPostListResponse(
-            listOf(
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()),
-                    BigInteger.valueOf(1L)
-                ),
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()), BigInteger.valueOf(2L)
-                ),
-                PostResponse(
-                    Identifier.generate().value, Identifier.generate().value, Identifier.generate().value, "dummy1", "dummy1", "https://velo.io",
-                    Timestamp.valueOf(LocalDateTime.now()),
-                    BigInteger.valueOf(3L)
-                )
-            ),
-            2,
-            "SamplePageToken"
-        )
+        val postListResult = if (categoryIdentifier != null) {
+            getRecommendedPostUseCase.getRecommendedPostListByCategory(Identifier(categoryIdentifier))
+        } else {
+            getRecommendedPostUseCase.getRecommendedPostListRandom()
+        }
+        return GetPostListResponse.fromResult(postListResult)
+
     }
 }

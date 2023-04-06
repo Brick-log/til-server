@@ -1,6 +1,7 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.DeletePostResponse
 import com.tenmm.tilserver.post.application.inbound.DeletePostUseCase
 import io.swagger.v3.oas.annotations.Operation
@@ -57,11 +58,7 @@ class DeletePostController(
     fun deletePost(
         @PathVariable postIdentifier: String,
     ): DeletePostResponse {
-        /**
-         val deleteResult = deletePostUseCase.deleteByIdentifier(Identifier(postIdentifier))
-         return DeletePostResponse.fromResult(deleteResult)
-         */
-
-        return DeletePostResponse(true)
+        val deleteResult = deletePostUseCase.deleteByIdentifier(Identifier(postIdentifier))
+        return DeletePostResponse.fromResult(deleteResult)
     }
 }

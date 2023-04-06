@@ -1,9 +1,11 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyPostRequest
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyPostResponse
 import com.tenmm.tilserver.post.application.inbound.ModifyPostUseCase
+import com.tenmm.tilserver.post.application.inbound.model.ModifyPostCommand
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -60,15 +62,13 @@ class ModifyPostController(
         @PathVariable postIdentifier: String,
         @RequestBody modifyPostRequest: ModifyPostRequest,
     ): ModifyPostResponse {
-        /**
-         val command = ModifyPostCommand(
-         identifier = Identifier(postIdentifier),
-         title = modifyPostRequest.title,
-         summary = modifyPostRequest.summary,
-         createdAt = modifyPostRequest.createdAt,
-         )
-         modifyPostUseCase.modifyByIdentifier(command)
-         */
-        return ModifyPostResponse(true)
+        val command = ModifyPostCommand(
+            identifier = Identifier(postIdentifier),
+            title = modifyPostRequest.title,
+            summary = modifyPostRequest.summary,
+            createdAt = modifyPostRequest.createdAt,
+        )
+        val result = modifyPostUseCase.modifyByIdentifier(command)
+        return ModifyPostResponse(result.isSuccess)
     }
 }
