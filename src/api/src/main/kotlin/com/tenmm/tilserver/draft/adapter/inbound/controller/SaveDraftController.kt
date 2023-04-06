@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SaveDraftRequest
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SaveDraftResponse
@@ -42,12 +43,12 @@ class SaveDraftController(
         ]
     )
     fun save(
+        userAuthInfo: UserAuthInfo,
         @RequestBody saveDraftRequest: SaveDraftRequest,
     ): SaveDraftResponse {
         saveDraftUseCase.saveByUserIdentifier(
-            Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
-            saveDraftRequest.data,
-            null
+            userAuthInfo.userIdentifier,
+            saveDraftRequest.data
         )
         return SaveDraftResponse(true)
     }

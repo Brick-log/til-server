@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftRequest
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftResponse
@@ -42,12 +43,10 @@ class SyncDraftController(
         ]
     )
     fun syncDraft(
+        userAuthInfo: UserAuthInfo,
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {
-        syncDraftUseCase.save(
-            Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
-            syncDraftRequest.data
-        )
+        syncDraftUseCase.syncByUser(userAuthInfo.userIdentifier, syncDraftRequest.data)
         return SyncDraftResponse(true)
     }
 }
