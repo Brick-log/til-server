@@ -1,8 +1,8 @@
 package com.tenmm.tilserver.outbound.persistence.entity
 
-import org.springframework.data.redis.core.RedisHash
+import java.sql.Timestamp
 import org.springframework.data.annotation.Id
-import java.time.LocalDateTime
+import org.springframework.data.redis.core.RedisHash
 
 @RedisHash("draft")
 data class DraftSyncEntity(
@@ -11,5 +11,5 @@ data class DraftSyncEntity(
 
     val data: String,
 
-    val updatedAt: LocalDateTime,
+    val updatedAt: Timestamp,
 )

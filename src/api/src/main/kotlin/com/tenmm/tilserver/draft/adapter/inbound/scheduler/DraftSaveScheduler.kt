@@ -11,7 +11,7 @@ class DraftSaveScheduler(
     /**
      * 10분마다 Redis에 저장되어 있는 모든 Key 값에 대한 일괄적인 저장
      */
-    @Scheduled(fixedDelay = 600000)
+    @Scheduled(fixedDelay = 60000)
     fun saveAll() {
         /**
          * Redis에 저장되어 있는 모든 Key 값에 대한 일괄적인 저장

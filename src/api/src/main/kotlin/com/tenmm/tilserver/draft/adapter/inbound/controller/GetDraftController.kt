@@ -1,20 +1,18 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.GetDraftResponse
+import com.tenmm.tilserver.draft.adapter.inbound.controller.model.toResponse
 import com.tenmm.tilserver.draft.application.inbound.GetDraftUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import com.tenmm.tilserver.draft.domain.Draft
-// import java.sql.Timestamp
-// import java.time.LocalDateTime
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import com.tenmm.tilserver.common.domain.Identifier
 
 @RestController
 @RequestMapping("/v1/my/draft")
@@ -42,16 +40,7 @@ class GetDraftController(
             )
         ]
     )
-    fun getDraft(): GetDraftResponse {
-        val draft: Draft? =
-            getDraftUseCase.getByUserIdentifier(Identifier("913115be-5b64-491e-bcfb-d5e724f25642")) // TODO token에서 가져오도록 수정
-        return GetDraftResponse(
-            data = draft?.data,
-            updatedAt = draft?.updatedAt,
-        )
-        // return GetDraftResponse(
-        //     data = "dummyData (It can be null)",
-        //     updatedAt = Timestamp.valueOf(LocalDateTime.now())
-        // )
+    fun getDraft(userAuthInfo: UserAuthInfo): GetDraftResponse {
+        return getDraftUseCase.getByUserIdentifier(userAuthInfo.userIdentifier).toResponse()
     }
 }

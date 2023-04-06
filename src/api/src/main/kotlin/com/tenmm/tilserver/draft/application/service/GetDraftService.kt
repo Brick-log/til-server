@@ -13,8 +13,6 @@ class GetDraftService(
     private val syncDraftPort: SyncDraftPort,
 ) : GetDraftUseCase {
     override fun getByUserIdentifier(userIdentifier: Identifier): Draft? {
-        syncDraftPort.findById(userIdentifier)?.let {
-            return it
-        } ?: return getDraftPort.findByUserIdentifier(userIdentifier)
+        return syncDraftPort.findByUserIdentifier(userIdentifier) ?: getDraftPort.findByUserIdentifier(userIdentifier)
     }
 }

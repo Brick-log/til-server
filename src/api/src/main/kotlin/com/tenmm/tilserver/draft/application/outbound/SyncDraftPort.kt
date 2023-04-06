@@ -5,7 +5,7 @@ import com.tenmm.tilserver.draft.domain.Draft
 
 interface SyncDraftPort {
     fun save(userIdentifier: Identifier, data: String)
-    fun findById(userIdentifier: Identifier): Draft?
-    fun findAll(): List<Draft>
-    fun deleteById(userIdentifier: Identifier)
+    fun findByUserIdentifier(userIdentifier: Identifier): Draft?
+    fun findDraftsWithCount(size: Int): List<Draft>
+    fun deleteById(userIdentifier: Identifier): Boolean
 }
