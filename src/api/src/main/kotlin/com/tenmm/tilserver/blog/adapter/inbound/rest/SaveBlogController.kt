@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.blog.adapter.inbound.rest
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.SaveBlogRequest
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.SaveBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.SaveBlogUseCase
@@ -54,12 +55,11 @@ class SaveBlogController(
             )
         ]
     )
-    fun saveBlog(@RequestBody saveBlogRequest: SaveBlogRequest): SaveBlogResponse {
+    fun saveBlog(userAuthInfo: UserAuthInfo, @RequestBody saveBlogRequest: SaveBlogRequest): SaveBlogResponse {
 
         val command = SaveBlogCommand(
             url = Url(saveBlogRequest.url),
-            userIdentifier = Identifier.generate(),
-            blogIdentifier = Identifier.generate()
+            userIdentifier = userAuthInfo.userIdentifier
         )
         return SaveBlogResponse(
             saveBlogUseCase.save(command).isSuccess

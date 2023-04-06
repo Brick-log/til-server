@@ -42,13 +42,12 @@ class GetBlogController(
     )
     fun getBlogs(@PathVariable name: String): GetBlogResponse {
         val blogList = getUserBlogUseCase.getAllByUserName(name)
-        return GetBlogResponse(
-            blogList.map {
-                BlogResult(
-                    it.blogIdentifier.value,
-                    it.url.value
-                )
-            }
-        )
+        val blogResults = blogList.map {
+            BlogResult(
+                it.blogIdentifier.value,
+                it.url.value
+            )
+        }
+        return GetBlogResponse(blogResults)
     }
 }

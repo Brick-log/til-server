@@ -6,5 +6,4 @@ import com.tenmm.tilserver.common.domain.Url
 data class SaveBlogCommand(
     val url: Url,
     val userIdentifier: Identifier,
-    val blogIdentifier: Identifier
 )

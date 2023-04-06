@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.blog.adapter.inbound.rest
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.DeleteBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.DeleteBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.DeleteBlogCommand
@@ -56,9 +57,9 @@ class DeleteBlogController(
             )
         ]
     )
-    fun deleteBlog(@PathVariable blogIdentifier: String): DeleteBlogResponse {
+    fun deleteBlog(userAuthInfo: UserAuthInfo, @PathVariable blogIdentifier: String): DeleteBlogResponse {
         val command = DeleteBlogCommand(
-            userIdentifier = Identifier.generate(),
+            userIdentifier = userAuthInfo.userIdentifier,
             blogIdentifier = Identifier(blogIdentifier)
         )
         return DeleteBlogResponse(deleteBlogUseCase.delete(command).isSuccess)

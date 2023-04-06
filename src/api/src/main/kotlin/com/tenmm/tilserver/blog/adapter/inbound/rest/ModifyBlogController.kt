@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.blog.adapter.inbound.rest
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.ModifyBlogRequest
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.ModifyBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.ModifyBlogUseCase
@@ -61,12 +62,13 @@ class ModifyBlogController(
         ]
     )
     fun modifyBlog(
+        userAuthInfo: UserAuthInfo,
         @PathVariable blogIdentifier: String,
         @RequestBody modifyBlogRequest: ModifyBlogRequest,
     ): ModifyBlogResponse {
         val command = ModifyBlogCommand(
             url = Url(modifyBlogRequest.url),
-            userIdentifier = Identifier.generate(),
+            userIdentifier = userAuthInfo.userIdentifier,
             blogIdentifier = Identifier(blogIdentifier)
         )
 
