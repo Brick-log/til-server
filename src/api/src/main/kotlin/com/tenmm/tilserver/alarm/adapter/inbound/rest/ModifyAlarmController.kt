@@ -4,24 +4,23 @@ import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.ModifyAlarmRequest
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.ModifyAlarmResponse
 import com.tenmm.tilserver.alarm.application.inbound.ModifyAlarmUseCase
 import com.tenmm.tilserver.alarm.application.inbound.model.ModifyAlarmCommand
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import java.util.UUID
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.PutMapping
 
 @RestController
 @Tag(name = "Alarm")
 @RequestMapping("/v1/my/notification")
 class ModifyAlarmController(
-    private val modifyAlarmUseCase: ModifyAlarmUseCase
+    private val modifyAlarmUseCase: ModifyAlarmUseCase,
 ) {
     @PutMapping
     @Operation(
@@ -49,12 +48,13 @@ class ModifyAlarmController(
         ]
     )
     fun modifyAlarm(
+        userAuthInfo: UserAuthInfo,
         @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
     ): ModifyAlarmResponse {
         return ModifyAlarmResponse(
             modifyAlarmUseCase.modifyAlarm(
                 ModifyAlarmCommand(
-                    userIdentifier = Identifier(UUID.randomUUID().toString()),
+                    userIdentifier = userAuthInfo.userIdentifier,
                     enable = modifyAlarmRequest.enable,
                     iteration = modifyAlarmRequest.iteration,
                 )

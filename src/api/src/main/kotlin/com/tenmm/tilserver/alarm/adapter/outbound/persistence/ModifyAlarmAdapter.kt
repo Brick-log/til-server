@@ -12,11 +12,13 @@ private val logger = KotlinLogging.logger {}
 
 @Component
 class ModifyAlarmAdapter(
-    private val alarmRepository: AlarmRepository
+    private val alarmRepository: AlarmRepository,
 ) : ModifyAlarmPort {
     @Transactional
     override fun modifyByUserIdentifier(command: ModifyAlarmCommand): Boolean {
-        val alarmEntity = alarmRepository.findByUserIdentifier(command.userIdentifier.value) ?: throw NotFoundException("Not found Alarm - userIdentifier: ${command.userIdentifier}")
+        val alarmEntity = alarmRepository.findByUserIdentifier(command.userIdentifier.value)
+            ?: throw NotFoundException("Not found Alarm - userIdentifier: ${command.userIdentifier}")
+
         val modifiedEntity = alarmEntity.copy(
             enable = command.enable,
             iteration = command.iteration

@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 class ModifyAlarmService(
     private val modifyAlarmPort: ModifyAlarmPort
 ) : ModifyAlarmUseCase {
-    @Transactional
     override fun modifyAlarm(command: ModifyAlarmCommand): OperationResult {
         return OperationResult(modifyAlarmPort.modifyByUserIdentifier(command))
     }
