@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import java.time.LocalDateTime
+import java.sql.Timestamp
 
 @Table(name = "draft")
 @Entity
@@ -22,5 +22,5 @@ data class DraftEntity(
     val data: String,
 
     @Column
-    val updatedAt: LocalDateTime,
+    val updatedAt: Timestamp,
 )

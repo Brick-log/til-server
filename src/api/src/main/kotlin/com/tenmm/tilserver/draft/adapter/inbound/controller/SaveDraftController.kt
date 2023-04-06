@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import com.tenmm.tilserver.common.domain.Identifier
 
 @RestController
 @RequestMapping("/v1/my/draft")
@@ -43,12 +44,11 @@ class SaveDraftController(
     fun save(
         @RequestBody saveDraftRequest: SaveDraftRequest,
     ): SaveDraftResponse {
-        /**
-         saveDraftUseCase.saveByUserIdentifier(
-         Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
-         saveDraftRequest.data
-         )
-         */
+        saveDraftUseCase.saveByUserIdentifier(
+            Identifier("913115be-5b64-491e-bcfb-d5e724f25642"), // TODO token에서 가져오도록 수정
+            saveDraftRequest.data,
+            null
+        )
         return SaveDraftResponse(true)
     }
 }
