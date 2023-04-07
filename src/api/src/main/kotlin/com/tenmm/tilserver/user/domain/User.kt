@@ -14,5 +14,5 @@ data class User(
 )
 
 enum class UserStatus {
-    ON_BOARDING
+    ON_BOARDING, COMPLETED
 }

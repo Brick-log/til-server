@@ -1,8 +1,7 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import io.swagger.v3.oas.annotations.Operation
@@ -10,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -46,15 +44,8 @@ class GetUserMyProfileController(
             )
         ]
     )
-    fun getUserMyProfile(): GetUserProfileResponse {
-//        val user = getUserUseCase.getByIdentifier(Identifier.generate())
-//        return GetUserProfileResponse.fromUser(user)
-        return GetUserProfileResponse(
-            name = RandomStringUtils.randomAlphabetic(10),
-            profileImgSrc = Url("https://www.naver.com/").value,
-            introduction = "안녕하세요오~",
-            categoryId = Identifier.generate().value,
-            isAuthorized = false
-        )
+    fun getUserMyProfile(userAuthInfo: UserAuthInfo): GetUserProfileResponse {
+        val user = getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier)
+        return GetUserProfileResponse.fromUser(user)
     }
 }

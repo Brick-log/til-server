@@ -1,21 +1,25 @@
 package com.tenmm.tilserver.user.application.service
 
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
+import com.tenmm.tilserver.user.application.outbound.GetUserPort
 import com.tenmm.tilserver.user.domain.User
 import org.springframework.stereotype.Service
 
 @Service
-class GetUserService : GetUserUseCase {
+class GetUserService(
+    private val getUserPort: GetUserPort,
+) : GetUserUseCase {
     override fun getByName(name: String): User {
-        TODO("Not yet implemented")
+        return getUserPort.getByName(name) ?: throw NotFoundException("")
     }
 
     override fun getByPath(path: String): User {
-        TODO("Not yet implemented")
+        return getUserPort.getByPath(path) ?: throw NotFoundException("")
     }
 
     override fun getByIdentifier(userIdentifier: Identifier): User {
-        TODO("Not yet implemented")
+        return getUserPort.getByUserIdentifier(userIdentifier) ?: throw NotFoundException("")
     }
 }

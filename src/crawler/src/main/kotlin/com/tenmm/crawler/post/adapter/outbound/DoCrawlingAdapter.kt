@@ -12,10 +12,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class DoCrawlingAdapter : DoCrawlingPort {
-    override fun crawling(
-        url: Url,
-        cssSelectorInfo: CssSelectorInfo,
-    ): Post {
+    override fun crawling(url: Url, cssSelectorInfo: CssSelectorInfo): Post {
         val document = Jsoup.parse(URL(url.value), 1000 * 10)
 
         val dateFormat = SimpleDateFormat(cssSelectorInfo.dateFormat)
