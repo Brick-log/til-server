@@ -27,7 +27,7 @@ class SavePostService(
     private val getUserUseCase: GetUserUseCase,
 ) : SavePostUseCase {
     override suspend fun requestSave(command: PostSaveRequestCommand): PostSaveRequestResult {
-        val identifier = crawlingPostPort.requestParseFromUrl(command.url)
+        val identifier = crawlingPostPort.requestParseFromUrl(command.url, command.userIdentifier)
         val result = parsedPostPort.getByIdentifier(identifier)
             ?: throw NotFoundException("Not found parsing info - $identifier")
         return PostSaveRequestResult(

@@ -7,13 +7,14 @@ option java_outer_classname = "CralerProto";
 package crawler;
 
 service CrawlerService {
-    rpc doCrawling (CrawlingRequest) returns (CrawlingResponse) {}
+  rpc doCrawling (CrawlingRequest) returns (CrawlingResponse) {}
 }
-  
+
 message CrawlingRequest {
-    string url = 1;
+  string url = 1;
+  string user_identifier = 2;
 }
-  
+
 message CrawlingResponse {
-    string identifier = 1;
+  string identifier = 1;
 }

@@ -1,10 +1,10 @@
-package com.tenmm.crawler.domain
+package com.tenmm.crawler.post.domain
 
 import java.sql.Timestamp
 
-data class Crawling(
+data class Post(
     val title: String,
     val createdAt: Timestamp?,
     val description: String,
-    val url: String,
+    val url: Url,
 )

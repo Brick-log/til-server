@@ -6,7 +6,6 @@ import com.tenmm.tilserver.blog.adapter.inbound.rest.model.SaveBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.SaveBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.SaveBlogCommand
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content

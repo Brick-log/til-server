@@ -3,8 +3,10 @@ package com.tenmm.tilserver.alarm.adapter.inbound.rest
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.ModifyAlarmResponse
-import com.tenmm.tilserver.alarm.application.inbound.ModifyAlarmUseCase
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.randomModifyAlarmRequest
+import com.tenmm.tilserver.alarm.application.inbound.ModifyAlarmUseCase
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.OperationResult
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -32,7 +34,7 @@ class ModifyAlarmControllerTest {
         every { modifyAlarmUseCase.modifyAlarm(any()) } returns OperationResult.success()
 
         // then
-        val result = sut.modifyAlarm(request)
+        val result = sut.modifyAlarm(UserAuthInfo(Identifier.generate()), request)
         val expected = ModifyAlarmResponse(OperationResult.success().isSuccess)
 
         assertThat(result).isEqualTo(expected)
@@ -55,7 +57,7 @@ class ModifyAlarmControllerTest {
         every { modifyAlarmUseCase.modifyAlarm(any()) } returns OperationResult.fail()
 
         // then
-        val result = sut.modifyAlarm(request)
+        val result = sut.modifyAlarm(UserAuthInfo(Identifier.generate()), request)
         val expected = ModifyAlarmResponse(OperationResult.fail().isSuccess)
 
         assertThat(result).isEqualTo(expected)

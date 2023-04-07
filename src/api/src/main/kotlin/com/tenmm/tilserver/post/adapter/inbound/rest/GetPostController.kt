@@ -211,6 +211,5 @@ class GetPostController(
             getRecommendedPostUseCase.getRecommendedPostListRandom()
         }
         return GetPostListResponse.fromResult(postListResult)
-
     }
 }

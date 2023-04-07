@@ -4,7 +4,7 @@ import com.tenmm.tilserver.outbound.persistence.entity.AlarmEntity
 
 fun Alarm.toEntity(): AlarmEntity {
     return AlarmEntity(
-        userIdentifier = this.userIdentifier.toString(),
+        userIdentifier = this.userIdentifier.value,
         enable = this.enable,
         iteration = this.iteration
     )
