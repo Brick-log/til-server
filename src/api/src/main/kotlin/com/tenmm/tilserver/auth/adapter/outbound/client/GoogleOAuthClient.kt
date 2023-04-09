@@ -1,8 +1,8 @@
-package com.tenmm.tilserver.auth.adapter.outbound
+package com.tenmm.tilserver.auth.adapter.outbound.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tenmm.tilserver.auth.adapter.outbound.model.GoogleOAuthLoginResponse
-import com.tenmm.tilserver.auth.adapter.outbound.model.GoogleOAuthUserInfoResponse
+import com.tenmm.tilserver.auth.adapter.outbound.client.model.GoogleOAuthLoginResponse
+import com.tenmm.tilserver.auth.adapter.outbound.client.model.GoogleOAuthUserInfoResponse
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthTokenResult
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthUserInfoResult
 import com.tenmm.tilserver.auth.domain.OAuthType
@@ -13,10 +13,12 @@ import org.springframework.http.MediaType
 import org.springframework.security.oauth2.client.registration.ClientRegistration
 import org.springframework.web.reactive.function.client.WebClient
 
-class GoogleOAuthClient : OAuthClient {
+class GoogleOAuthClient(
+    val registration: ClientRegistration
+) : OAuthClient {
 
     private val objectMapper = ObjectMapper()
-    override fun getToken(registration: ClientRegistration, authorizeCode: String): OAuthTokenResult {
+    override fun getToken(authorizeCode: String): OAuthTokenResult {
         val response =
             WebClient
                 .create()
@@ -48,7 +50,6 @@ class GoogleOAuthClient : OAuthClient {
         accessToken: String,
         refreshToken: String,
         idToken: String?,
-        registration: ClientRegistration
     ): OAuthUserInfoResult {
         if (idToken != null) {
 
@@ -58,6 +59,7 @@ class GoogleOAuthClient : OAuthClient {
             val response = objectMapper.readValue(payload, GoogleOAuthUserInfoResponse::class.java)
 
             return OAuthUserInfoResult(
+                name = response.name,
                 email = response.email
             )
         } else {
@@ -75,6 +77,7 @@ class GoogleOAuthClient : OAuthClient {
                     .bodyToMono(GoogleOAuthUserInfoResponse::class.java)
                     .block() ?: throw IllegalArgumentException("OAuth Get UserInfo Fail: Google")
             return OAuthUserInfoResult(
+                name = response.name,
                 email = response.email
             )
         }
@@ -83,8 +86,7 @@ class GoogleOAuthClient : OAuthClient {
     override fun getProvider(): OAuthType {
         return OAuthType.GOOGLE
     }
-
-    override fun getAuthorizationCodeRedirectURI(registration: ClientRegistration): String {
+    override fun getAuthorizationCodeRedirectURI(): String {
         return "${registration.providerDetails.authorizationUri}?access_type=offline&prompt=consent&client_id=${registration.clientId}&redirect_uri=${registration.redirectUri}&response_type=code&scope=${
         registration.scopes.joinToString(
             " "

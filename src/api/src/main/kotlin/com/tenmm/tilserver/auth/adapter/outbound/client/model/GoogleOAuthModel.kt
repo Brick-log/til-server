@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.auth.adapter.outbound.model
+package com.tenmm.tilserver.auth.adapter.outbound.client.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
