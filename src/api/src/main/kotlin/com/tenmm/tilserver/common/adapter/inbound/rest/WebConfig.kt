@@ -13,4 +13,3 @@ class WebConfig : WebFluxConfigurer {
             .allowCredentials(true).maxAge(3600)
     }
 }
-

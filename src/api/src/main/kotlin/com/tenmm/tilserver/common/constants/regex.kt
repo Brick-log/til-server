@@ -10,5 +10,5 @@ val URL_REGEX = URL_REGEX_VALUE.toRegex()
 const val CRON_ITERATION_REGEX_VALUE = "(@(annually|yearly|monthly|weekly|daily|hourly|reboot))|(@every (\\d+(ns|us|µs|ms|s|m|h))+)|((((\\d+,)+\\d+|(\\d+(\\/|-)\\d+)|\\d+|\\*) ?){5,7})"
 val CRON_ITERATION_REGEX = CRON_ITERATION_REGEX_VALUE.toRegex()
 
-const val EMAIL_REGEX_VALUE =  "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+\$"
+const val EMAIL_REGEX_VALUE = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+\$"
 val EMAIL_REGEX = EMAIL_REGEX_VALUE.toRegex()

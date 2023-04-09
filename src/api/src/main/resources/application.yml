@@ -8,7 +8,9 @@ spring:
   main:
     web-application-type: reactive
   config:
-    import: application-storage-${spring.profiles.active}.yml
+    import:
+      - application-storage-${spring.profiles.active}.yml
+      - application-oauth.yml
   data:
     redis:
       host: 127.0.0.1
