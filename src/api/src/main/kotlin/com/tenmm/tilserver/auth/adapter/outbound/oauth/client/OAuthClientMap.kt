@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.auth.adapter.outbound.client
+package com.tenmm.tilserver.auth.adapter.outbound.oauth.client
 
 import com.tenmm.tilserver.auth.domain.OAuthType
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository

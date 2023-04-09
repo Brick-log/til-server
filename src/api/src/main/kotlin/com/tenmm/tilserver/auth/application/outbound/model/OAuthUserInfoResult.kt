@@ -1,6 +1,7 @@
 package com.tenmm.tilserver.auth.application.outbound.model
 
+import com.tenmm.tilserver.common.domain.Email
+
 data class OAuthUserInfoResult(
-    val name: String,
-    val email: String
+    val email: Email
 )

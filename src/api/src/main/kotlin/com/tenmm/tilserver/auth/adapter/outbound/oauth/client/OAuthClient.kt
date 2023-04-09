@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.auth.adapter.outbound.client
+package com.tenmm.tilserver.auth.adapter.outbound.oauth.client
 
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthTokenResult
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthUserInfoResult

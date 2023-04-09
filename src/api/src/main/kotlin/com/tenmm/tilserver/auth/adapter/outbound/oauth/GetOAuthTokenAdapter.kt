@@ -1,6 +1,6 @@
-package com.tenmm.tilserver.auth.adapter.outbound
+package com.tenmm.tilserver.auth.adapter.outbound.oauth
 
-import com.tenmm.tilserver.auth.adapter.outbound.client.OAuthClientMap
+import com.tenmm.tilserver.auth.adapter.outbound.oauth.client.OAuthClientMap
 import com.tenmm.tilserver.auth.application.outbound.GetOAuthTokenPort
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthTokenResult
 import com.tenmm.tilserver.auth.domain.OAuthType

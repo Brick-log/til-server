@@ -1,11 +1,12 @@
-package com.tenmm.tilserver.auth.adapter.outbound.client
+package com.tenmm.tilserver.auth.adapter.outbound.oauth.client
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tenmm.tilserver.auth.adapter.outbound.client.model.GoogleOAuthLoginResponse
-import com.tenmm.tilserver.auth.adapter.outbound.client.model.GoogleOAuthUserInfoResponse
+import com.tenmm.tilserver.auth.adapter.outbound.oauth.client.model.GoogleOAuthLoginResponse
+import com.tenmm.tilserver.auth.adapter.outbound.oauth.client.model.GoogleOAuthUserInfoResponse
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthTokenResult
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthUserInfoResult
 import com.tenmm.tilserver.auth.domain.OAuthType
+import com.tenmm.tilserver.common.domain.Email
 import java.nio.charset.StandardCharsets
 import java.util.Base64
 import java.util.Collections
@@ -59,8 +60,7 @@ class GoogleOAuthClient(
             val response = objectMapper.readValue(payload, GoogleOAuthUserInfoResponse::class.java)
 
             return OAuthUserInfoResult(
-                name = response.name,
-                email = response.email
+                email = Email(response.email)
             )
         } else {
             val response =
@@ -77,8 +77,7 @@ class GoogleOAuthClient(
                     .bodyToMono(GoogleOAuthUserInfoResponse::class.java)
                     .block() ?: throw IllegalArgumentException("OAuth Get UserInfo Fail: Google")
             return OAuthUserInfoResult(
-                name = response.name,
-                email = response.email
+                email = Email(response.email)
             )
         }
     }

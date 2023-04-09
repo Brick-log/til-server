@@ -18,9 +18,6 @@ data class AccountEntity(
     val id: Long = 0,
 
     @Column
-    val oAuthIdentifier: String,
-
-    @Column
     val userIdentifier: String,
 
     @Column
@@ -29,6 +26,9 @@ data class AccountEntity(
 
     @Column
     val oAuthToken: String,
+
+    @Column
+    val email:String,
 
     @Column
     val isSpamNotificationAgreed: Boolean,

@@ -1,6 +1,6 @@
-package com.tenmm.tilserver.auth.adapter.outbound
+package com.tenmm.tilserver.auth.adapter.outbound.oauth
 
-import com.tenmm.tilserver.auth.adapter.outbound.client.OAuthClientMap
+import com.tenmm.tilserver.auth.adapter.outbound.oauth.client.OAuthClientMap
 import com.tenmm.tilserver.auth.application.outbound.GetOAuthUserInfoPort
 import com.tenmm.tilserver.auth.application.outbound.model.OAuthUserInfoResult
 import com.tenmm.tilserver.auth.domain.OAuthType
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class GetOAuthUserInfoAdapter(
-    private val clientMap : OAuthClientMap
-): GetOAuthUserInfoPort {
+    private val clientMap: OAuthClientMap
+) : GetOAuthUserInfoPort {
     override fun getUserInfo(
         accessToken: String,
         refreshToken: String,
