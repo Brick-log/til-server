@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
-import com.tenmm.tilserver.common.utils.PageTokenConverter
+import com.tenmm.tilserver.common.utils.CryptoHandler
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.ResultWithToken
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component
 @Component
 class GetPostAdapter(
     private val postRepository: PostRepository,
-    private val pageTokenConverter: PageTokenConverter,
+    private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
     override fun getPostByIdentifier(postIdentifier: Identifier): Post {
         return postRepository.findByIdentifier(postIdentifier.value)?.toModel()
@@ -50,7 +50,7 @@ class GetPostAdapter(
         size: Int,
         pageToken: String,
     ): ResultWithToken<List<Post>> {
-        val parsedPageToken = pageTokenConverter.decryptPageToken(pageToken, PageTokenSearchPostWithIdentifier::class)
+        val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchPostWithIdentifier::class)
         val result = postRepository.findAllByIdGreaterThanAndCategoryIdentifier(
             id = parsedPageToken.lastEntityId,
             categoryIdentifier = parsedPageToken.identifier.value,
@@ -98,7 +98,7 @@ class GetPostAdapter(
         size: Int,
         pageToken: String,
     ): ResultWithToken<List<Post>> {
-        val parsedPageToken = pageTokenConverter.decryptPageToken(pageToken, PageTokenSearchPostWithIdentifier::class)
+        val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchPostWithIdentifier::class)
         val result =
             postRepository.findAllByIdGreaterThanAndUserIdentifierAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(
                 id = parsedPageToken.lastEntityId,
@@ -144,7 +144,7 @@ class GetPostAdapter(
         entityId: Long,
     ): String? {
         return if (condition) {
-            pageTokenConverter.encryptPageToken(PageTokenSearchPostWithIdentifier(identifier, entityId))
+            cryptoHandler.encrypt(PageTokenSearchPostWithIdentifier(identifier, entityId))
         } else {
             null
         }

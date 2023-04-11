@@ -6,16 +6,16 @@ import kotlin.reflect.KClass
 import org.springframework.stereotype.Component
 
 @Component
-class PageTokenConverter(
+class CryptoHandler(
     private val aes128: AES128,
 ) {
 
     private val objectMapper = jacksonObjectMapper()
-    fun encryptPageToken(pageTokenObject: Any): String {
-        return aes128.encrypt(objectMapper.writeValueAsString(pageTokenObject))
+    fun encrypt(target: Any): String {
+        return aes128.encrypt(objectMapper.writeValueAsString(target))
     }
 
-    fun <T : Any> decryptPageToken(value: String, classType: KClass<T>): T {
+    fun <T : Any> decrypt(value: String, classType: KClass<T>): T {
         return objectMapper.readValue(aes128.decrypt(value), classType.java)
     }
 }
