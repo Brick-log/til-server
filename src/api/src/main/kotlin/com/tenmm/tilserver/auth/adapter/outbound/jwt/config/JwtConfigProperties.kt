@@ -11,5 +11,4 @@ data class JwtConfigProperties(
         val expire: Long,
         val secret: String
     )
-
 }
