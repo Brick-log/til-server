@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OAuthSignInService(
-    private val saveUserPort: SaveUserPort,
     private val getAccountPort: GetAccountPort,
-    private val saveAccountPort: SavePostPort,
     private val getOAuthTokenPort: GetOAuthTokenPort,
     private val getOAuthUserInfoPort: GetOAuthUserInfoPort,
 ) : OAuthSignInUseCase {
@@ -28,7 +26,12 @@ class OAuthSignInService(
             type = OAuthType.GOOGLE
         )
 
-        val account = getAccountPort.getByEmail(userInfo.email) ?:
+        val account = getAccountPort.getByEmail(userInfo.email) ?: {
+            /**
+             * TODO
+             * Account, User 계정 생성
+             */
+        }
 
         return null
     }
