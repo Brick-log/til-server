@@ -10,6 +10,5 @@ class WebConfig : WebFluxConfigurer {
         registry.addMapping("/**")
             .allowedOrigins("*")
             .allowedHeaders("*")
-            .allowCredentials(true).maxAge(3600)
     }
 }
