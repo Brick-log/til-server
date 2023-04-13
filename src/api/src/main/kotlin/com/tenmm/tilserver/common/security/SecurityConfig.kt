@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.auth.adapter.inbound.rest.config
+package com.tenmm.tilserver.common.security
 
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientPropertiesRegistrationAdapter
