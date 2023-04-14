@@ -1,6 +1,6 @@
-package com.tenmm.tilserver.auth.application.outbound
+package com.tenmm.tilserver.auth.application.outbound.oauth
 
-import com.tenmm.tilserver.auth.application.outbound.model.OAuthUserInfoResult
+import com.tenmm.tilserver.auth.application.outbound.oauth.model.OAuthUserInfoResult
 import com.tenmm.tilserver.auth.domain.OAuthType
 
 interface GetOAuthUserInfoPort {

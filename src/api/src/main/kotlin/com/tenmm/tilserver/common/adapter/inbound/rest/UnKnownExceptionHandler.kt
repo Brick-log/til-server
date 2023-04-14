@@ -15,6 +15,7 @@ class UnKnownExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Throwable::class)
     fun handleApiException(ex: Throwable): ErrorResponse {
+        ex.printStackTrace()
         return ErrorResponse("dummy")
     }
 }

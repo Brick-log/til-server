@@ -1,8 +1,8 @@
 package com.tenmm.tilserver.auth.adapter.outbound.oauth
 
-import com.tenmm.tilserver.auth.adapter.outbound.oauth.client.OAuthClientMap
-import com.tenmm.tilserver.auth.application.outbound.GetOAuthTokenPort
-import com.tenmm.tilserver.auth.application.outbound.model.OAuthTokenResult
+import com.tenmm.tilserver.auth.adapter.outbound.oauth.provider.OAuthClientMap
+import com.tenmm.tilserver.auth.application.outbound.oauth.GetOAuthTokenPort
+import com.tenmm.tilserver.auth.application.outbound.oauth.model.OAuthTokenResult
 import com.tenmm.tilserver.auth.domain.OAuthType
 import org.springframework.stereotype.Component
 

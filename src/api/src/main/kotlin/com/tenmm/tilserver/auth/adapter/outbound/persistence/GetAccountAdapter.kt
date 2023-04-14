@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.auth.adapter.outbound.persistence
 
 import com.tenmm.tilserver.auth.adapter.outbound.persistence.converters.toModel
-import com.tenmm.tilserver.auth.application.outbound.GetAccountPort
+import com.tenmm.tilserver.auth.application.outbound.persistence.GetAccountPort
 import com.tenmm.tilserver.auth.domain.Account
 import com.tenmm.tilserver.common.domain.Email
 import com.tenmm.tilserver.outbound.persistence.repository.AccountRepository

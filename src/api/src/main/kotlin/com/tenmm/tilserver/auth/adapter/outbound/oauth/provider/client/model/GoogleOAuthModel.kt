@@ -1,8 +1,9 @@
-package com.tenmm.tilserver.auth.adapter.outbound.oauth.client.model
+package com.tenmm.tilserver.auth.adapter.outbound.oauth.provider.client.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class GoogleOAuthLoginResponse(
     @JsonProperty(value = "token_type")
     val tokenType: String,
