@@ -23,20 +23,20 @@ data class UserEntity(
     val userIdentifier: String,
 
     @Column
-    val categoryIdentifier: String,
+    val categoryIdentifier: String? = null,
 
     @Column
     val introduction: String,
 
     @Column
-    val profileImgSrc: String,
+    val thumbnailUrl: String,
 
     @Column
     val path: String,
 
     @Column
     @Enumerated(EnumType.STRING)
-    val status: UserStatus,
+    val status: UserStatus = UserStatus.ON_BOARDING
 )
 
 enum class UserStatus {
