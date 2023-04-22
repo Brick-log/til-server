@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.sql.Timestamp
+import java.time.Instant
 
 @Table(name = "account")
 @Entity
@@ -18,9 +19,6 @@ data class AccountEntity(
     val id: Long = 0,
 
     @Column
-    val oAuthIdentifier: String,
-
-    @Column
     val userIdentifier: String,
 
     @Column
@@ -28,7 +26,7 @@ data class AccountEntity(
     val oAuthType: OAuthType,
 
     @Column
-    val oAuthToken: String,
+    val email:String,
 
     @Column
     val isSpamNotificationAgreed: Boolean,
@@ -38,11 +36,11 @@ data class AccountEntity(
     val status: AccountStatus,
 
     @Column
-    val createdAt: Timestamp,
+    val createdAt: Timestamp = Timestamp.from(Instant.now()),
 )
 
 enum class OAuthType {
-    KAKAO, GOOGLE
+    GOOGLE
 }
 
 enum class AccountStatus {

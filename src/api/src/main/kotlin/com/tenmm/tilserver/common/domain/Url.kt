@@ -6,7 +6,7 @@ data class Url(
     val value: String,
 ) {
     init {
-        if (!URL_REGEX.matches(value)) {
+        if (value != "" && !URL_REGEX.matches(value)) {
             throw IllegalArgumentException("Invalid URL : $value")
         }
     }
