@@ -19,7 +19,4 @@ data class CategoryEntity(
 
     @Column
     val name: String,
-
-    @Column
-    val createdAt: Long,
 )

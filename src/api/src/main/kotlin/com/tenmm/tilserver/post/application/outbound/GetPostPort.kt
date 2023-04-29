@@ -18,10 +18,9 @@ interface GetPostPort {
         from: Timestamp,
         size: Int,
     ): ResultWithToken<List<Post>>
+
     fun getPostListByUserAndCreatedAtWithPageToken(
         userIdentifier: Identifier,
-        to: Timestamp,
-        from: Timestamp,
         size: Int,
         pageToken: String,
     ): ResultWithToken<List<Post>>

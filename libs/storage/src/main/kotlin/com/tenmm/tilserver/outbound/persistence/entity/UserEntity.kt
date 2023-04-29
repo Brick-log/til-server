@@ -26,7 +26,7 @@ data class UserEntity(
     val categoryIdentifier: String? = null,
 
     @Column
-    val introduction: String,
+    val introduction: String? = null,
 
     @Column
     val thumbnailUrl: String,
@@ -36,7 +36,7 @@ data class UserEntity(
 
     @Column
     @Enumerated(EnumType.STRING)
-    val status: UserStatus = UserStatus.ON_BOARDING
+    val status: UserStatus = UserStatus.ON_BOARDING,
 )
 
 enum class UserStatus {

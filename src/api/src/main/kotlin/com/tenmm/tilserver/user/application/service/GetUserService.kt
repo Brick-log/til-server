@@ -22,4 +22,10 @@ class GetUserService(
     override fun getByIdentifier(userIdentifier: Identifier): User {
         return getUserPort.getByUserIdentifier(userIdentifier) ?: throw NotFoundException("")
     }
+
+    override fun getByIdentifierList(userIdentifiers: List<Identifier>): List<User> {
+        return userIdentifiers.map {
+            getUserPort.getByUserIdentifier(it) ?: throw NotFoundException("")
+        }
+    }
 }

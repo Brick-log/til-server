@@ -12,10 +12,10 @@ CREATE TABLE `account`
 
 CREATE TABLE `alarm`
 (
-    `id`              int          not null primary key auto_increment,
-    `user_identifier` char(36)     not null,
-    `enable`          boolean      not null default false,
-    `iteration`       varchar(128) null,
+    `id`              int      not null primary key auto_increment,
+    `user_identifier` char(36) not null,
+    `enable`          boolean  not null default false,
+    `iteration`       varchar(128)      default null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
@@ -34,7 +34,6 @@ create table `category`
     `id`         int          not null primary key auto_increment,
     `identifier` char(36)     not null,
     `name`       varchar(255) not null,
-    `createdAt`  datetime     not null,
     unique index UDX_CATEGORY_IDENTIFIER (`identifier`)
 );
 
@@ -47,6 +46,15 @@ create table `draft`
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
+CREATE TABLE `recommended_post`
+(
+    `id`                  int       not null primary key auto_increment,
+    `post_identifier`     char(36)  not null,
+    `category_identifier` char(36)  not null,
+    `created_at`          timestamp not null default now(),
+    index IDX_CATEGORY_IDENTIFIER (`category_identifier`)
+);
+
 CREATE TABLE `post`
 (
     `id`                  int          not null primary key auto_increment,
@@ -57,18 +65,9 @@ CREATE TABLE `post`
     `description`         varchar(250) not null,
     `url`                 varchar(255) not null,
     `hit_count`           int          not null,
-    `created_at`          timestamp    not null,
+    `created_at`          timestamp    not null default now(),
     unique index UDX_IDENTIFIER (`identifier`),
     index IDX_USER_IDENTIFIER (`user_identifier`)
-);
-
-CREATE TABLE `recommended_post`
-(
-    `id`                  int       not null primary key auto_increment,
-    `post_identifier`     char(36)  not null,
-    `category_identifier` char(36)  not null,
-    `created_at`          timestamp not null,
-    index IDX_CATEGORY_IDENTIFIER (`category_identifier`)
 );
 
 CREATE TABLE `user`
@@ -76,9 +75,9 @@ CREATE TABLE `user`
     `id`                  int          not null primary key auto_increment,
     `name`                varchar(30)  not null,
     `user_identifier`     char(36)     not null,
-    `category_identifier` varchar(20)  not null,
-    `introduction`        TEXT,
-    `profile_img_src`     varchar(255),
+    `category_identifier` char(36) default null,
+    `introduction`        TEXT     default null,
+    `thumbnail_url`       varchar(255) not null,
     `path`                varchar(255) not null,
     `status`              varchar(20)  not null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`),

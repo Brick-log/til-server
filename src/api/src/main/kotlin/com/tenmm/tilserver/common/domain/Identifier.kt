@@ -16,3 +16,7 @@ data class Identifier(
         fun generate() = Identifier(UUID.randomUUID().toString())
     }
 }
+
+fun String.toIdentifier(): Identifier {
+    return Identifier(this)
+}

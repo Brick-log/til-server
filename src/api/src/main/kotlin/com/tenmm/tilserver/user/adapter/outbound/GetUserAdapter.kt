@@ -18,7 +18,7 @@ class GetUserAdapter(
         return userRepository.findByName(name)?.toModel()
     }
 
-    override fun getByPath(name: String): User? {
-        return userRepository.findByPath(name)?.toModel()
+    override fun getByPath(path: String): User? {
+        return userRepository.findByPath(path)?.toModel()
     }
 }

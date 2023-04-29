@@ -7,4 +7,5 @@ interface GetUserUseCase {
     fun getByName(name: String): User
     fun getByPath(path: String): User
     fun getByIdentifier(userIdentifier: Identifier): User
+    fun getByIdentifierList(userIdentifiers: List<Identifier>): List<User>
 }

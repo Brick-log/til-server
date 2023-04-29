@@ -1,6 +1,7 @@
 package com.tenmm.tilserver.user.adapter.inbound.model
 
 import com.tenmm.tilserver.user.domain.User
+import org.apache.commons.lang3.StringUtils
 
 data class GetUserProfileResponse(
     val name: String,
@@ -14,7 +15,7 @@ data class GetUserProfileResponse(
             return GetUserProfileResponse(
                 name = user.name,
                 profileImgSrc = user.thumbnailUrl.value,
-                introduction = user.introduction,
+                introduction = user.introduction ?: StringUtils.EMPTY,
                 categoryId = user.categoryIdentifier?.value,
                 isAuthorized = false
             )

@@ -26,7 +26,7 @@ data class AccountEntity(
     val oAuthType: OAuthType,
 
     @Column
-    val email:String,
+    val email: String,
 
     @Column
     val isSpamNotificationAgreed: Boolean,

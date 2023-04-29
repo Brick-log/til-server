@@ -11,3 +11,7 @@ data class Url(
         }
     }
 }
+
+fun String.toUrl(): Url {
+    return Url(this)
+}
