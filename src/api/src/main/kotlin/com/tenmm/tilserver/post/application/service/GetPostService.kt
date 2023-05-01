@@ -2,6 +2,7 @@ package com.tenmm.tilserver.post.application.service
 
 import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.ResultWithToken
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
 import com.tenmm.tilserver.post.application.inbound.model.GetPostMetaResult
@@ -33,22 +34,8 @@ class GetPostService(
     }
 
     override fun getPostListRandom(size: Int, pageToken: String?): GetPostListResult {
-        return if (pageToken == null) {
-            val categoryIdentifier = getCategoryUseCase.getAll().random().identifier
-            val result = getPostPort.getPostListByCategoryIdentifier(categoryIdentifier, size)
-            GetPostListResult(
-                posts = result.data,
-                size = result.data.size,
-                nextPageToken = result.pageToken
-            )
-        } else {
-            val result = getPostPort.getPostListByCategoryIdentifierWithPageToken(size, pageToken)
-            GetPostListResult(
-                posts = result.data,
-                size = result.data.size,
-                nextPageToken = result.pageToken
-            )
-        }
+        val categoryIdentifier = getCategoryUseCase.getAll().random().identifier
+        return getPostListByCategoryIdentifier(categoryIdentifier, size, pageToken)
     }
 
     override fun getPostListByCategory(
@@ -56,21 +43,34 @@ class GetPostService(
         size: Int,
         pageToken: String?,
     ): GetPostListResult {
-        return if (pageToken == null) {
-            val result = getPostPort.getPostListByCategoryIdentifier(categoryIdentifier, size)
-            GetPostListResult(
-                posts = result.data,
-                size = result.data.size,
-                nextPageToken = result.pageToken
-            )
+        return getPostListByCategoryIdentifier(categoryIdentifier, size, pageToken)
+    }
+
+    private fun getPostListByCategoryIdentifier(
+        categoryIdentifier: Identifier,
+        size: Int,
+        pageToken: String?,
+    ): GetPostListResult {
+        val result = if (pageToken == null) {
+            getPostPort.getPostListByCategoryIdentifier(categoryIdentifier, size)
         } else {
-            val result = getPostPort.getPostListByCategoryIdentifierWithPageToken(size, pageToken)
-            GetPostListResult(
-                posts = result.data,
-                size = result.data.size,
-                nextPageToken = result.pageToken
-            )
+            getPostPort.getPostListByCategoryIdentifierWithPageToken(size, pageToken)
         }
+        return generatePostWithPath(result)
+    }
+
+    private fun generatePostWithPath(
+        result: ResultWithToken<List<Post>>,
+    ): GetPostListResult {
+        val userIdentifierPathMap =
+            getUserUseCase.getByIdentifierList(result.data.map { it.userIdentifier }).associate {
+                it.identifier to it.path
+            }
+        return GetPostListResult(
+            posts = result.data.map { it.setUserPath(userIdentifierPathMap[it.userIdentifier]!!) },
+            size = result.data.size,
+            nextPageToken = result.pageToken
+        )
     }
 
     override fun getPostListByNameAndDateWithPageToken(
@@ -91,14 +91,12 @@ class GetPostService(
         } else {
             getPostPort.getPostListByUserAndCreatedAtWithPageToken(
                 userIdentifier,
-                to,
-                from,
                 size,
                 pageToken
             )
         }.let {
             GetPostListResult(
-                posts = it.data,
+                posts = it.data.map { it.setUserPath(path) },
                 size = it.data.size,
                 nextPageToken = it.pageToken
             )

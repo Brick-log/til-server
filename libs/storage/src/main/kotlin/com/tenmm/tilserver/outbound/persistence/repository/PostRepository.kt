@@ -12,7 +12,7 @@ interface PostRepository : JpaRepository<PostEntity, Long> {
     fun findAllByIdentifierIn(identifiers: List<String>): List<PostEntity>
 
     fun findAllByCategoryIdentifier(identifier: String, pageable: Pageable): List<PostEntity>
-    fun findAllByIdGreaterThanAndCategoryIdentifier(
+    fun findAllByIdLessThanAndCategoryIdentifier(
         id: Long,
         categoryIdentifier: String,
         pageable: Pageable,
@@ -25,7 +25,7 @@ interface PostRepository : JpaRepository<PostEntity, Long> {
         pageable: Pageable,
     ): List<PostEntity>
 
-    fun findAllByIdGreaterThanAndUserIdentifierAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(
+    fun findAllByIdLessThanAndUserIdentifierAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(
         id: Long,
         userIdentifier: String,
         from: Timestamp,

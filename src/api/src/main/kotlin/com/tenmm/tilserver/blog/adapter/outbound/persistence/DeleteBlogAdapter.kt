@@ -8,18 +8,19 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 private val logger = KotlinLogging.logger {}
+
 @Component
 class DeleteBlogAdapter(
-    private val blogRepository: BlogRepository
+    private val blogRepository: BlogRepository,
 ) : DeleteBlogPort {
 
     @Transactional
-    override fun deleteByIdentifier(blogIdentifier: Identifier): Boolean {
+    override fun deleteAllByUserIdentifier(userIdentifier: Identifier): Boolean {
         return try {
-            blogRepository.deleteByBlogIdentifier(blogIdentifier.value)
+            blogRepository.deleteAllByUserIdentifier(userIdentifier.value)
             true
         } catch (e: Exception) {
-            logger.error(e) { "Blog Delete Fail - $blogIdentifier" }
+            logger.error(e) { "Blog Delete Fail - $userIdentifier" }
             false
         }
     }

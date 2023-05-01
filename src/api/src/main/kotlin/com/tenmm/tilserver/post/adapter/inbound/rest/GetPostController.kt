@@ -2,6 +2,7 @@ package com.tenmm.tilserver.post.adapter.inbound.rest
 
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostMetaResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostResponse
@@ -86,9 +87,9 @@ class GetPostController(
     )
     fun getPostByPath(
         @PathVariable path: String,
-        @RequestParam to: Long,
-        @RequestParam from: Long,
         @RequestParam size: Int,
+        @RequestParam(required = false) to: Long = Instant.MAX.toEpochMilli(),
+        @RequestParam(required = false) from: Long = Instant.MIN.toEpochMilli(),
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
         val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
@@ -165,12 +166,12 @@ class GetPostController(
         ]
     )
     fun getByCategory(
-        @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
         @RequestParam size: Int,
+        @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
         val postListResult = if (categoryIdentifier != null) {
-            getPostUseCase.getPostListByCategory(Identifier(categoryIdentifier), size, pageToken)
+            getPostUseCase.getPostListByCategory(categoryIdentifier.toIdentifier(), size, pageToken)
         } else {
             getPostUseCase.getPostListRandom(size, pageToken)
         }
@@ -206,7 +207,7 @@ class GetPostController(
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
     ): GetPostListResponse {
         val postListResult = if (categoryIdentifier != null) {
-            getRecommendedPostUseCase.getRecommendedPostListByCategory(Identifier(categoryIdentifier))
+            getRecommendedPostUseCase.getRecommendedPostListByCategory(categoryIdentifier.toIdentifier())
         } else {
             getRecommendedPostUseCase.getRecommendedPostListRandom()
         }

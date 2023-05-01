@@ -25,17 +25,17 @@ data class PostEntity(
     val userIdentifier: String,
 
     @Column
-    val url: String,
-
-    @Column
     val title: String,
 
     @Column
     val description: String,
 
     @Column
-    val hitCount: Int,
+    val url: String,
 
     @Column
+    val hitCount: Int,
+
+    @Column(name = "createdAt")
     val createdAt: Timestamp,
 )

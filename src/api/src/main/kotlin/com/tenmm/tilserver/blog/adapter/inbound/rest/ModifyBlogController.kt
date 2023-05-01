@@ -6,14 +6,12 @@ import com.tenmm.tilserver.blog.adapter.inbound.rest.model.ModifyBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.ModifyBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.ModifyBlogCommand
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
-import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -26,7 +24,7 @@ class ModifyBlogController(
     private val modifyBlogUseCase: ModifyBlogUseCase,
 ) {
 
-    @PutMapping("/{blogIdentifier}")
+    @PutMapping
     @Operation(
         summary = "나의 블로그 수정",
         responses = [
@@ -63,13 +61,11 @@ class ModifyBlogController(
     )
     fun modifyBlog(
         userAuthInfo: UserAuthInfo,
-        @PathVariable blogIdentifier: String,
         @RequestBody modifyBlogRequest: ModifyBlogRequest,
     ): ModifyBlogResponse {
         val command = ModifyBlogCommand(
-            url = Url(modifyBlogRequest.url),
+            urls = modifyBlogRequest.infoList.map { Url(it.url) },
             userIdentifier = userAuthInfo.userIdentifier,
-            blogIdentifier = Identifier(blogIdentifier)
         )
 
         return ModifyBlogResponse(

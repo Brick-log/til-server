@@ -8,11 +8,11 @@ data class User(
     val name: String,
     val status: UserStatus,
     val path: String,
-    val introduction: String,
+    val introduction: String?,
     val thumbnailUrl: Url,
     val categoryIdentifier: Identifier?,
 )
 
 enum class UserStatus {
-    ON_BOARDING
+    ON_BOARDING, COMPLETED
 }

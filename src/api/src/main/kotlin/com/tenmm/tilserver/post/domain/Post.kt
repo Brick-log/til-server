@@ -14,4 +14,28 @@ data class Post(
     val url: Url,
     val createdAt: Timestamp,
     val hitCount: BigInteger,
+) {
+    fun setUserPath(userPath: String): PostWithUserPath {
+        return PostWithUserPath(
+            identifier = identifier,
+            userPath = userPath,
+            categoryIdentifier = categoryIdentifier,
+            title = title,
+            description = description,
+            url = url,
+            createdAt = createdAt,
+            hitCount = hitCount
+        )
+    }
+}
+
+data class PostWithUserPath(
+    val identifier: Identifier,
+    val userPath: String,
+    val categoryIdentifier: Identifier,
+    val title: String,
+    val description: String,
+    val url: Url,
+    val createdAt: Timestamp,
+    val hitCount: BigInteger,
 )

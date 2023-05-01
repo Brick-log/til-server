@@ -1,9 +1,12 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserProfileResponse
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserRequest
 import com.tenmm.tilserver.user.application.inbound.ModifyUserUseCase
+import com.tenmm.tilserver.user.application.inbound.model.ModifyUserCommand
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -51,8 +54,16 @@ class ModifyUserProfileController(
         ]
     )
     fun modifyUserProfile(
+        userAuthInfo: UserAuthInfo,
         @RequestBody modifyUserRequest: ModifyUserRequest,
     ): ModifyUserProfileResponse {
-        return ModifyUserProfileResponse(true)
+        val command = ModifyUserCommand(
+            userIdentifier = userAuthInfo.userIdentifier,
+            categoryIdentifier = Identifier(modifyUserRequest.categoryIdentifier),
+            introduction = modifyUserRequest.introduction,
+            name = modifyUserRequest.name,
+            path = modifyUserRequest.path
+        )
+        return ModifyUserProfileResponse(modifyUserUseCase.modifyUserInfo(command).isSuccess)
     }
 }
