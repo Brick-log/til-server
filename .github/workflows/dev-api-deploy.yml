@@ -1,13 +1,15 @@
 name: deploy
 on:
-  push:
+  pull_request:
     branches: [ "main" ]
+    types: [ closed ] # when PR closed
     paths:
       - 'libs/**'
       - 'src/api/**'
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
