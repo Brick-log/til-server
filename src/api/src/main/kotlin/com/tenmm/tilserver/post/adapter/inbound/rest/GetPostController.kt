@@ -88,14 +88,14 @@ class GetPostController(
     fun getPostByPath(
         @PathVariable path: String,
         @RequestParam size: Int,
-        @RequestParam(required = false) to: Long = Instant.MAX.toEpochMilli(),
-        @RequestParam(required = false) from: Long = Instant.MIN.toEpochMilli(),
+        @RequestParam(required = false) to: Long? = null,
+        @RequestParam(required = false) from: Long? = null,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
         val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
             path = path,
-            to = Timestamp.from(Instant.ofEpochMilli(to)),
-            from = Timestamp.from(Instant.ofEpochMilli(from)),
+            to = to?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MAX),
+            from = from?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MAX),
             size = size,
             pageToken = pageToken
         )
