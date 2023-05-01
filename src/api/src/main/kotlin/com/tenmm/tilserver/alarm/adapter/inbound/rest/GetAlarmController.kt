@@ -4,6 +4,7 @@ import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.GetAlarmResponse
 import com.tenmm.tilserver.alarm.application.inbound.GetAlarmUseCase
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -44,6 +45,7 @@ class GetAlarmController(
             )
         ]
     )
+    @RequiredAuthentication
     fun getAlarm(userAuthInfo: UserAuthInfo): GetAlarmResponse {
         val alarm = getAlarmUseCase.getAlarmByUserId(userAuthInfo.userIdentifier)
         return GetAlarmResponse(

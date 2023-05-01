@@ -1,17 +1,17 @@
 package com.tenmm.tilserver.auth.adapter.inboud
 
-import com.tenmm.tilserver.auth.application.jwt.service.GenerateTokenService
-import com.tenmm.tilserver.auth.application.jwt.inbound.VerifyRefreshTokenUseCase
-import com.tenmm.tilserver.auth.adapter.inboud.model.TokenResModel
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import com.tenmm.tilserver.auth.adapter.inboud.model.RefreshTokenReqModel
+import com.tenmm.tilserver.auth.adapter.inboud.model.TokenResModel
 import com.tenmm.tilserver.auth.adapter.outbound.jwt.config.JwtConfigProperties
+import com.tenmm.tilserver.auth.application.jwt.inbound.VerifyRefreshTokenUseCase
+import com.tenmm.tilserver.auth.application.jwt.service.GenerateTokenService
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import javax.crypto.SecretKey
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RestController
 
 @RestController("/api/auth")
 class RefreshTokenController(

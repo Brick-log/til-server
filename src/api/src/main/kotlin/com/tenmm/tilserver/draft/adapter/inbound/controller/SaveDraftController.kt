@@ -2,6 +2,7 @@ package com.tenmm.tilserver.draft.adapter.inbound.controller
 
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SaveDraftRequest
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SaveDraftResponse
 import com.tenmm.tilserver.draft.application.inbound.SaveDraftUseCase
@@ -41,6 +42,7 @@ class SaveDraftController(
             )
         ]
     )
+    @RequiredAuthentication
     fun save(
         userAuthInfo: UserAuthInfo,
         @RequestBody saveDraftRequest: SaveDraftRequest,

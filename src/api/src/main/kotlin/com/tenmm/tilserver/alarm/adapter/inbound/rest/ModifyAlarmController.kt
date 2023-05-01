@@ -6,6 +6,7 @@ import com.tenmm.tilserver.alarm.application.inbound.ModifyAlarmUseCase
 import com.tenmm.tilserver.alarm.application.inbound.model.ModifyAlarmCommand
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -47,6 +48,7 @@ class ModifyAlarmController(
             )
         ]
     )
+    @RequiredAuthentication
     fun modifyAlarm(
         userAuthInfo: UserAuthInfo,
         @RequestBody modifyAlarmRequest: ModifyAlarmRequest,
