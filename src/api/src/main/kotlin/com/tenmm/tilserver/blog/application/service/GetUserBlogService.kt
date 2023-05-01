@@ -13,8 +13,8 @@ class GetUserBlogService(
     private val getBlogPort: GetBlogPort,
 ) : GetUserBlogUseCase {
     @Transactional(readOnly = true)
-    override fun getAllByUserName(name: String): List<GetBlogResult> {
-        val user = getUserUseCase.getByName(name)
+    override fun getAllByUserPath(path: String): List<GetBlogResult> {
+        val user = getUserUseCase.getByPath(path)
         val blogs = getBlogPort.getByUserIdentifier(user.identifier)
 
         return blogs.map {

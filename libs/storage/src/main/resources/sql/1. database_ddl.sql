@@ -1,12 +1,12 @@
 CREATE TABLE `account`
 (
-    `id`                           int          not null primary key auto_increment,
-    `oauth_identifier`             varchar(100) not null,
-    `user_identifier`              char(36)     not null,
-    `oauth_type`                   varchar(20)  not null,
-    `is_spam_notification_aggreed` boolean      not null,
-    `status`                       varchar(20)  not null,
-    `created_at`                   timestamp    not null,
+    `id`                          int          not null primary key auto_increment,
+    `user_identifier`             char(36)     not null,
+    `o_auth_type`                 varchar(20)  not null,
+    `is_spam_notification_agreed` boolean      not null,
+    `status`                      varchar(20)  not null,
+    `email`                       varchar(100) not null,
+    `created_at`                  timestamp    not null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
@@ -73,7 +73,7 @@ CREATE TABLE `post`
 CREATE TABLE `user`
 (
     `id`                  int          not null primary key auto_increment,
-    `name`                varchar(30)  not null,
+    `name`                varchar(255)  not null,
     `user_identifier`     char(36)     not null,
     `category_identifier` char(36) default null,
     `introduction`        TEXT     default null,
