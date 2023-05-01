@@ -1,13 +1,11 @@
 name: deploy
 on:
-  push:
-    branches: [ "dev-ci-cd" ]
- # pull_request:
- #   types: [ closed ]
- #   branches: [ deploy-test ]
- #   paths:
- #     - 'libs/**'
- #     - 'src/api/**'
+ pull_request:
+    types: [ closed ]
+    branches: [ deploy-test ]
+    paths:
+      - 'libs/**'
+      - 'src/api/**'
 jobs:
   build:
     runs-on: ubuntu-latest
