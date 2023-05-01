@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/v1/auth")
 @Tag(name = "Auth")
 class LogInController(
-    private val oAuthLogInUseCase: OAuthLogInUseCase
+    private val oAuthLogInUseCase: OAuthLogInUseCase,
 ) {
 
     @PostMapping("/login")
@@ -37,9 +37,8 @@ class LogInController(
         ]
     )
     fun login(
-        @RequestBody req: LogInRequest
+        @RequestBody req: LogInRequest,
     ): LogInResponse {
-
         val result = oAuthLogInUseCase.logIn(
             authorizeCode = req.token,
             type = req.type
