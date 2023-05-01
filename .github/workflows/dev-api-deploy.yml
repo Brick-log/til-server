@@ -1,8 +1,7 @@
 name: deploy
 on:
- pull_request:
-    types: [ closed ]
-    branches: [ main ]
+  push:
+    branches: [ "feature/dev-ci-cd" ]
     paths:
       - 'libs/**'
       - 'src/api/**'
@@ -50,4 +49,5 @@ jobs:
               kill "$pid"
               echo "Delete Prev Version"
             fi
+            chmod 777 /api/src/api/build/libs/*/**
             nohup java -Dspring.profiles.active=dev -jar ./api/src/api/build/libs/api.jar &
