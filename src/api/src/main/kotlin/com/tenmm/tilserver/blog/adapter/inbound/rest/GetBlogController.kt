@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 class GetBlogController(
     private val getUserBlogUseCase: GetUserBlogUseCase,
 ) {
-    @GetMapping("/{name}")
+    @GetMapping("/{path}")
     @Operation(
         summary = "나의 블로그 가져오기",
         responses = [
@@ -40,8 +40,8 @@ class GetBlogController(
             )
         ]
     )
-    fun getBlogs(@PathVariable name: String): GetBlogResponse {
-        val blogList = getUserBlogUseCase.getAllByUserName(name)
+    fun getBlogs(@PathVariable path: String): GetBlogResponse {
+        val blogList = getUserBlogUseCase.getAllByUserPath(path)
         val blogResults = blogList.map {
             BlogResult(
                 it.blogIdentifier.value,
