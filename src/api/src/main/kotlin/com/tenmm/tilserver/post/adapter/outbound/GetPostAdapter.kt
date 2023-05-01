@@ -37,14 +37,15 @@ class GetPostAdapter(
             generatePageRequest(size + 1)
         )
         val minOfSize = minOf(size, result.size)
+        val resultList = result.subList(0, minOfSize)
 
         val pageToken = generatePageToken(
             result.size == size + 1,
             categoryIdentifier,
-            result[minOfSize - 1].id
+            resultList.lastOrNull()?.id ?: 0
         ).toString()
         return ResultWithToken(
-            data = result.subList(0, minOfSize).map { it.toModel() },
+            data = resultList.map { it.toModel() },
             pageToken = pageToken
         )
     }
@@ -60,15 +61,16 @@ class GetPostAdapter(
             pageable = generatePageRequest(size + 1)
         )
         val minOfSize = minOf(size, result.size)
+        val resultList = result.subList(0, minOfSize)
 
         val nextPageToken = generatePageToken(
             result.size == size + 1,
             parsedPageToken.categoryIdentifier,
-            result[minOfSize - 1].id
+            resultList.lastOrNull()?.id ?: 0
         ).toString()
 
         return ResultWithToken(
-            data = result.subList(0, minOfSize).map { it.toModel() },
+            data = resultList.map { it.toModel() },
             pageToken = nextPageToken
         )
     }
@@ -86,15 +88,16 @@ class GetPostAdapter(
             generatePageRequest(size + 1)
         )
         val minOfSize = minOf(size, result.size)
+        val resultList = result.subList(0, minOfSize)
         val pageToken = generatePageToken(
             result.size == size + 1,
             userIdentifier,
             from.time,
             to.time,
-            result[minOfSize - 1].id
+            resultList.lastOrNull()?.id ?: 0
         ).toString()
         return ResultWithToken(
-            data = result.subList(0, minOfSize).map { it.toModel() },
+            data = resultList.map { it.toModel() },
             pageToken = pageToken
         )
     }
@@ -116,16 +119,17 @@ class GetPostAdapter(
             )
 
         val minOfSize = minOf(size, result.size)
+        val resultList = result.subList(0, minOfSize)
         val nextPageToken = generatePageToken(
             result.size == size + 1,
             parsedPageToken.categoryIdentifier,
             parsedPageToken.from,
             parsedPageToken.to,
-            result[minOfSize - 1].id
+            resultList.lastOrNull()?.id ?: 0
         ).toString()
 
         return ResultWithToken(
-            data = result.subList(0, minOfSize).map { it.toModel() },
+            data = resultList.map { it.toModel() },
             pageToken = nextPageToken
         )
     }
