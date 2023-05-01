@@ -31,8 +31,6 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew :api:build -x test
-      - name: kill prev-version
-        run:
       - name: copy file via ssh key
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -49,10 +47,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ubuntu/
-            pid=`ps -ef | grep "yourssu-ground-application" | grep -v 'grep' | awk '{print $2}'`
+            pid=`ps -ef | grep "api.jar" | grep -v 'grep' | awk '{print $2}'`
             if [ $pid ]
             then
             kill $pid
             echo "Delete Prev Version"
             fi
-            java -Dspring.profiles.active=dev -jar api.jar
+            java -Dspring.profiles.active=dev -jar api.jar &
