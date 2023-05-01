@@ -87,9 +87,9 @@ class GetPostController(
     )
     fun getPostByPath(
         @PathVariable path: String,
-        @RequestParam to: Long,
-        @RequestParam from: Long,
         @RequestParam size: Int,
+        @RequestParam(required = false) to: Long = Instant.MAX.toEpochMilli(),
+        @RequestParam(required = false) from: Long = Instant.MIN.toEpochMilli(),
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
         val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
