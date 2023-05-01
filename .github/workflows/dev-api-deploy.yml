@@ -1,11 +1,13 @@
 name: deploy
 on:
-  pull_request:
-    types: [ closed ]
-    branches: [ deploy-test ]
-    paths:
-      - 'libs/**'
-      - 'src/api/**'
+  push:
+    branches: [ "feature/dev-ci-cd" ]
+ # pull_request:
+ #   types: [ closed ]
+ #   branches: [ deploy-test ]
+ #   paths:
+ #     - 'libs/**'
+ #     - 'src/api/**'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,17 +36,17 @@ jobs:
       - name: copy file via ssh key
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.REMOTE_DEV_HOST }}
+          username: ${{ secrets.REMOTE_DEV_USERNAME }}
+          key: ${{ secrets.SSH_DEV_KEY }}
           source: "./src/api/build/libs/api.jar"
           target: "home/ubuntu/"
       - name: Run JAR file
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.REMOTE_DEV_HOST }}
+          username: ${{ secrets.REMOTE_DEV_USERNAME }}
+          key: ${{ secrets.SSH_DEV_KEY }}
           script: |
             cd /home/ubuntu/
             pid=`ps -ef | grep "api.jar" | grep -v 'grep' | awk '{print $2}'`
