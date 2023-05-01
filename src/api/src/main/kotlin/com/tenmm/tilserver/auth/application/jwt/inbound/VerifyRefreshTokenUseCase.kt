@@ -1,5 +1,5 @@
 package com.tenmm.tilserver.auth.application.jwt.inbound
 
-interface VerifyRefreshTokenUsecase {
+interface VerifyRefreshTokenUseCase {
     fun verify(accessToken: String, refreshToken: String): Boolean
 }

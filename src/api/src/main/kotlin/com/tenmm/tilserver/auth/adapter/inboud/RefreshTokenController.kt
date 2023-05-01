@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.auth.adapter.inboud
 
 import com.tenmm.tilserver.auth.application.jwt.service.GenerateTokenService
-import com.tenmm.tilserver.auth.application.jwt.inbound.VerifyRefreshTokenUsecase
+import com.tenmm.tilserver.auth.application.jwt.inbound.VerifyRefreshTokenUseCase
 import com.tenmm.tilserver.auth.adapter.inboud.model.TokenResModel
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
@@ -16,7 +16,7 @@ import javax.crypto.SecretKey
 @RestController("/api/auth")
 class RefreshTokenController(
     private val generateTokenService: GenerateTokenService,
-    private val verifyRefreshTokenUsecase: VerifyRefreshTokenUsecase,
+    private val verifyRefreshTokenUsecase: VerifyRefreshTokenUseCase,
     private val jwtConfigProperties: JwtConfigProperties
 ) {
     @PostMapping("/refresh")
