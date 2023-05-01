@@ -46,11 +46,10 @@ jobs:
           username: ${{ secrets.REMOTE_DEV_USERNAME }}
           key: ${{ secrets.SSH_DEV_KEY }}
           script: |
-            cd /
-            pid=`ps -ef | grep "api.jar" | grep -v 'grep' | awk '{print $2}'`
-            if [ $pid ]
+            pid=$(ps -ef | grep "api.jar" | grep -v 'grep' | awk '{print $2}')
+            if [ "$pid" ]
             then
-            kill $pid
-            echo "Delete Prev Version"
+              kill "$pid"
+              echo "Delete Prev Version"
             fi
             java -Dspring.profiles.active=dev -jar ./src/api/build/libs/api.jar &
