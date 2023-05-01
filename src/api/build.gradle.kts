@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     kotlin("jvm")
 }
@@ -21,4 +23,12 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     // security
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+}
+
+tasks.named<BootJar>("bootJar") {
+    archiveFileName.set("api.jar")
+}
+
+tasks.named<Jar>("jar") {
+    enabled = false
 }
