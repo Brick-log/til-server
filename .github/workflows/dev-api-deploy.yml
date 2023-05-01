@@ -49,5 +49,5 @@ jobs:
               kill "$pid"
               echo "Delete Prev Version"
             fi
-            chmod 777 /api/src/api/build/libs/*/**
+            chmod 777 ./api/src/api/build/libs/api.jar
             nohup java -Dspring.profiles.active=dev -jar ./api/src/api/build/libs/api.jar &
