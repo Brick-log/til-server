@@ -2,6 +2,7 @@ package com.tenmm.tilserver.user.adapter.inbound
 
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import io.swagger.v3.oas.annotations.Operation
@@ -44,6 +45,7 @@ class GetUserMyProfileController(
             )
         ]
     )
+    @RequiredAuthentication
     fun getUserMyProfile(userAuthInfo: UserAuthInfo): GetUserProfileResponse {
         val user = getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier)
         return GetUserProfileResponse.fromUser(user)

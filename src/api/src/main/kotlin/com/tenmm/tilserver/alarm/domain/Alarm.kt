@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.alarm.domain
 
-import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.constants.CRON_ITERATION_REGEX
+import com.tenmm.tilserver.common.domain.Identifier
 
 data class Alarm(
     val userIdentifier: Identifier,

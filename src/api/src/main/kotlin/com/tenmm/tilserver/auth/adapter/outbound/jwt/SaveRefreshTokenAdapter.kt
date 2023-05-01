@@ -1,8 +1,8 @@
 package com.tenmm.tilserver.auth.adapter.outbound.jwt
 
 import com.tenmm.tilserver.auth.application.jwt.SaveRefreshTokenPort
-import com.tenmm.tilserver.outbound.persistence.repository.RefreshTokenRepository
 import com.tenmm.tilserver.outbound.persistence.entity.RefreshTokenEntity
+import com.tenmm.tilserver.outbound.persistence.repository.RefreshTokenRepository
 import org.springframework.stereotype.Component
 
 @Component

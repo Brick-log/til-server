@@ -2,6 +2,7 @@ package com.tenmm.tilserver.draft.adapter.inbound.controller
 
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.GetDraftResponse
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.toResponse
 import com.tenmm.tilserver.draft.application.inbound.GetDraftUseCase
@@ -40,6 +41,7 @@ class GetDraftController(
             )
         ]
     )
+    @RequiredAuthentication
     fun getDraft(userAuthInfo: UserAuthInfo): GetDraftResponse {
         return getDraftUseCase.getByUserIdentifier(userAuthInfo.userIdentifier).toResponse()
     }

@@ -1,11 +1,11 @@
 package com.tenmm.tilserver.auth.application.jwt.service
 
-import com.tenmm.tilserver.auth.application.jwt.inbound.GenerateTokenUsecase
+import com.tenmm.tilserver.auth.adapter.inboud.model.TokenResModel
 import com.tenmm.tilserver.auth.application.jwt.GenerateTokenPort
+import com.tenmm.tilserver.auth.application.jwt.SaveRefreshTokenPort
+import com.tenmm.tilserver.auth.application.jwt.inbound.GenerateTokenUsecase
 import com.tenmm.tilserver.auth.domain.TokenType
 import org.springframework.stereotype.Service
-import com.tenmm.tilserver.auth.application.jwt.SaveRefreshTokenPort
-import com.tenmm.tilserver.auth.adapter.inboud.model.TokenResModel
 
 @Service
 class GenerateTokenService(

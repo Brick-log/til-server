@@ -3,6 +3,7 @@ package com.tenmm.tilserver.user.adapter.inbound
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserProfileResponse
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserRequest
 import com.tenmm.tilserver.user.application.inbound.ModifyUserUseCase
@@ -53,6 +54,7 @@ class ModifyUserProfileController(
             )
         ]
     )
+    @RequiredAuthentication
     fun modifyUserProfile(
         userAuthInfo: UserAuthInfo,
         @RequestBody modifyUserRequest: ModifyUserRequest,
