@@ -1,7 +1,7 @@
 name: deploy
 on:
  pull_request:
-    types: [ closed ]
+    types: [ open ]
     branches: [ deploy-test ]
     paths:
       - 'libs/**'
