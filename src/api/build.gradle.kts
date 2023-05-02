@@ -21,7 +21,6 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2")
     implementation("org.jetbrains:annotations:23.0.0")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-    // security
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 }
 
