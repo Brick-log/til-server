@@ -8,5 +8,5 @@ interface GetOAuthUserInfoPort {
         refreshToken: String,
         idToken: String?,
         type: OAuthType
-    ): OAuthUserInfoResult
+    ): OAuthUserInfo
 }

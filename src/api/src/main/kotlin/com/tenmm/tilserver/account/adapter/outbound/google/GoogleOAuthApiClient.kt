@@ -1,7 +1,7 @@
-package com.tenmm.tilserver.account.adapter.outbound.oauth.provider.client
+package com.tenmm.tilserver.account.adapter.outbound.google
 
-import com.tenmm.tilserver.account.adapter.outbound.oauth.provider.client.model.GoogleOAuthLoginResponse
-import com.tenmm.tilserver.account.adapter.outbound.oauth.provider.client.model.GoogleOAuthUserInfoResponse
+import com.tenmm.tilserver.account.adapter.outbound.google.model.GoogleOAuthLoginResponse
+import com.tenmm.tilserver.account.adapter.outbound.google.model.GoogleOAuthUserInfoResponse
 import feign.Headers
 import feign.Param
 import org.springframework.cloud.openfeign.FeignClient
