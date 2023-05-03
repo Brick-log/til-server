@@ -21,7 +21,7 @@ class GenerateTokenService(
     private val cryptoHandler: CryptoHandler,
     private val jwtConfigProperties: JwtConfigProperties,
 ) : GenerateTokenUseCase {
-    override fun generate(userIdentifier: Identifier): SecurityToken {
+    override suspend fun generate(userIdentifier: Identifier): SecurityToken {
         val accessToken = generateToken(userIdentifier, SecurityTokenType.ACCESS)
         val refreshToken = generateToken(userIdentifier, SecurityTokenType.REFRESH)
         saveRefreshTokenPort.save(userIdentifier, accessToken, refreshToken)

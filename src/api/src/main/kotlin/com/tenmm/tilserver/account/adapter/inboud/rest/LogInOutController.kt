@@ -40,7 +40,7 @@ class LogInOutController(
             )
         ]
     )
-    fun login(
+    suspend fun login(
         @RequestBody req: LogInRequest,
     ): LogInResponse {
         val result = logInUseCase.logIn(

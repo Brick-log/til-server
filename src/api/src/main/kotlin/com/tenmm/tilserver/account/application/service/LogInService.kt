@@ -14,7 +14,6 @@ import com.tenmm.tilserver.user.application.inbound.CreateUserUseCase
 import com.tenmm.tilserver.user.application.inbound.model.CreateUserCommand
 import java.util.UUID
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class LogInService(
@@ -25,8 +24,7 @@ class LogInService(
     private val getOAuthUserInfoPort: GetOAuthUserInfoPort,
     private val generateTokenUseCase: GenerateTokenUseCase,
 ) : LogInUseCase {
-    @Transactional
-    override fun logIn(command: LogInCommand): LogInResult {
+    override suspend fun logIn(command: LogInCommand): LogInResult {
         val tokens = getOAuthTokenPort.getOAuthTokens(command.authorizeCode, command.type)
         val userInfo = getOAuthUserInfoPort.getUserInfo(
             accessToken = tokens.accessToken,
