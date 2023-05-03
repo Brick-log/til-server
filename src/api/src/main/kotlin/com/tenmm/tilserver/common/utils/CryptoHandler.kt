@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component
 class CryptoHandler(
     private val aes128: AES128,
 ) {
-
     private val objectMapper = jacksonObjectMapper()
     fun encrypt(target: Any): String {
         return aes128.encrypt(objectMapper.writeValueAsString(target))

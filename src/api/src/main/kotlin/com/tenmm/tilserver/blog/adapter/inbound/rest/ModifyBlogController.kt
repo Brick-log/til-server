@@ -5,7 +5,7 @@ import com.tenmm.tilserver.blog.adapter.inbound.rest.model.ModifyBlogRequest
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.ModifyBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.ModifyBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.ModifyBlogCommand
-import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import io.swagger.v3.oas.annotations.Operation

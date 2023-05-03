@@ -1,6 +1,5 @@
-package com.tenmm.tilserver.common.adapter.inbound.rest
+package com.tenmm.tilserver.common.exception
 
-import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
@@ -15,7 +14,6 @@ class UnKnownExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Throwable::class)
     fun handleApiException(ex: Throwable): ErrorResponse {
-        ex.printStackTrace()
-        return ErrorResponse("dummy")
+        return ErrorResponse(ex.message ?: ex.localizedMessage)
     }
 }

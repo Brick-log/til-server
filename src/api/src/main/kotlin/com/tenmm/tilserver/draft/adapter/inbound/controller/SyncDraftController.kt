@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
-import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftRequest
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SyncDraftResponse

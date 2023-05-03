@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.adapter.outbound.rest
+package com.tenmm.tilserver.common.config.rest
 
 import feign.codec.Decoder
 import feign.codec.Encoder

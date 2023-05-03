@@ -39,7 +39,7 @@ class TokenGenerateTest {
     fun generateTokenTest() {
         val id = Identifier.generate()
 
-        val accessToken = generateTokenAdapter.generateToken(id.value, TokenType.ACCESS)
+        val accessToken = generateTokenAdapter.generateToken(id, TokenType.ACCESS)
 
         println(id)
         println(accessToken)

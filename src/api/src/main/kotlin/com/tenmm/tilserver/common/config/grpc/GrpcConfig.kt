@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.adapter.outbound.grpc
+package com.tenmm.tilserver.common.config.grpc
 
 import com.tenmm.tilserver.protocol.CrawlerServiceGrpcKt
 import io.grpc.ManagedChannel

@@ -61,11 +61,11 @@ class OAuthLogInService(
 
         return LogInResult(
             accessToken = generateTokenPort.generateToken(
-                userIdentifier = account.userIdentifier.value,
+                userIdentifier = account.userIdentifier,
                 tokenType = TokenType.ACCESS
             ),
             refreshToken = generateTokenPort.generateToken(
-                userIdentifier = account.userIdentifier.value,
+                userIdentifier = account.userIdentifier,
                 tokenType = TokenType.REFRESH
             )
         )

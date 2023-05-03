@@ -3,9 +3,9 @@ package com.tenmm.tilserver.outbound.persistence.entity
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 
-@RedisHash("draft")
+@RedisHash("auth-token")
 data class RefreshTokenEntity(
     @Id
-    val userIdentifier: String,
+    val key: String,
     val refreshToken: String,
 )
