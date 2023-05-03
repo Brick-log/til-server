@@ -2,8 +2,12 @@ package com.tenmm.tilserver.auth.adapter.outbound.persistence
 
 import com.tenmm.tilserver.auth.adapter.outbound.persistence.converters.toModel
 import com.tenmm.tilserver.auth.application.inbound.model.CreateAccountCommand
+import com.tenmm.tilserver.auth.application.outbound.persistence.ModifyAccountPort
 import com.tenmm.tilserver.auth.application.outbound.persistence.SaveAccountPort
 import com.tenmm.tilserver.auth.domain.Account
+import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.NotFoundException
+import com.tenmm.tilserver.common.domain.OperationResult
 import com.tenmm.tilserver.outbound.persistence.entity.AccountEntity
 import com.tenmm.tilserver.outbound.persistence.entity.AccountStatus
 import com.tenmm.tilserver.outbound.persistence.entity.OAuthType
@@ -12,10 +16,11 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Component
 
 private val logger = KotlinLogging.logger {}
+
 @Component
 class SaveAccountAdapter(
-    private val accountRepository: AccountRepository
-) : SaveAccountPort {
+    private val accountRepository: AccountRepository,
+) : SaveAccountPort, ModifyAccountPort {
 
     override fun save(command: CreateAccountCommand): Account? {
         return try {
@@ -33,5 +38,18 @@ class SaveAccountAdapter(
             logger.error(e) { "Account save Fail - $command" }
             null
         }
+    }
+
+    override fun modifyMailAgreement(userIdentifier: Identifier, isAgree: Boolean): OperationResult {
+        val account = accountRepository.findByUserIdentifier(userIdentifier = userIdentifier.value)
+            ?: throw NotFoundException("ZZ")
+
+        val newAccount = account.copy(
+            isSpamNotificationAgreed = isAgree
+        )
+
+        accountRepository.save(newAccount)
+
+        return OperationResult.success()
     }
 }

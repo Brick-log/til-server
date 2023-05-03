@@ -2,6 +2,7 @@ package com.tenmm.tilserver.user.adapter.outbound
 
 import com.tenmm.tilserver.outbound.persistence.repository.UserRepository
 import com.tenmm.tilserver.user.application.inbound.model.ModifyUserCommand
+import com.tenmm.tilserver.user.application.inbound.model.OnBoardingUserCommand
 import com.tenmm.tilserver.user.application.outbound.ModifyUserPort
 import org.springframework.stereotype.Component
 
@@ -17,6 +18,17 @@ class ModifyUserAdapter(
             path = command.path,
             name = command.name,
             introduction = command.introduction,
+            categoryIdentifier = command.categoryIdentifier.value
+        )
+        userRepository.save(modifiedUserEntity)
+        return true
+    }
+
+    override fun modifyUserInfo(command: OnBoardingUserCommand): Boolean {
+        val userEntity = userRepository.findByUserIdentifier(command.userIdentifier.value)
+            ?: return false
+
+        val modifiedUserEntity = userEntity.copy(
             categoryIdentifier = command.categoryIdentifier.value
         )
 
