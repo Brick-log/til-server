@@ -1,8 +1,8 @@
 package com.tenmm.tilserver.common.security.annotation
 
-import com.tenmm.tilserver.auth.application.jwt.ResolveTokenPort
-import com.tenmm.tilserver.auth.domain.TokenType
-import com.tenmm.tilserver.auth.domain.UserAuthInfo
+import com.tenmm.tilserver.security.application.inbound.ResolveTokenUseCase
+import com.tenmm.tilserver.security.domain.SecurityTokenType
+import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.domain.Identifier
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -14,7 +14,7 @@ import reactor.kotlin.core.publisher.toMono
 
 @Component
 class UserArgumentResolver(
-    private val resolveTokenPort: ResolveTokenPort,
+    private val resolveTokenUseCase: ResolveTokenUseCase,
 ) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasMethodAnnotation(RequiredAuthentication::class.java)
@@ -28,7 +28,7 @@ class UserArgumentResolver(
         val tokenWithBearer = exchange.request.headers["Authorization"]!![0]
 
         val token = tokenWithBearer.substringAfter("Bearer ")
-        val userIdentifier = resolveTokenPort.resolveToken(token, TokenType.ACCESS)
+        val userIdentifier = resolveTokenUseCase.resolveToken(token, SecurityTokenType.ACCESS)
         return UserAuthInfo(Identifier(userIdentifier)).toMono()
     }
 }

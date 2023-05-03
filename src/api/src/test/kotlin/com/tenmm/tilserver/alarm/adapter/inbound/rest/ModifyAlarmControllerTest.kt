@@ -5,7 +5,7 @@ import assertk.assertions.isEqualTo
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.ModifyAlarmResponse
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.randomModifyAlarmRequest
 import com.tenmm.tilserver.alarm.application.inbound.ModifyAlarmUseCase
-import com.tenmm.tilserver.auth.domain.UserAuthInfo
+import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.OperationResult
 import io.mockk.every
