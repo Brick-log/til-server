@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.account.adapter.outbound.oauth.provider.client.model
+package com.tenmm.tilserver.account.adapter.outbound.google.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty

@@ -1,11 +1,11 @@
-package com.tenmm.tilserver.account.adapter.outbound.oauth.provider
+package com.tenmm.tilserver.account.adapter.outbound.google
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.tenmm.tilserver.account.adapter.outbound.oauth.provider.client.GoogleGetOAuthTokenApi
-import com.tenmm.tilserver.account.adapter.outbound.oauth.provider.client.GoogleGetOAuthUserInfoApi
-import com.tenmm.tilserver.account.adapter.outbound.oauth.provider.client.model.GoogleOAuthUserInfoResponse
+import com.tenmm.tilserver.account.adapter.outbound.google.model.GoogleOAuthUserInfoResponse
+import com.tenmm.tilserver.account.application.outbound.GetOAuthTokenPort
+import com.tenmm.tilserver.account.application.outbound.GetOAuthUserInfoPort
 import com.tenmm.tilserver.account.application.outbound.OAuthTokenResult
-import com.tenmm.tilserver.account.application.outbound.OAuthUserInfoResult
+import com.tenmm.tilserver.account.application.outbound.OAuthUserInfo
 import com.tenmm.tilserver.account.domain.OAuthType
 import com.tenmm.tilserver.common.domain.Email
 import com.tenmm.tilserver.common.domain.Url
@@ -17,11 +17,13 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 
 @Component
-class GoogleOAuthProvider(
+class GetGoogleOAuthAdapter(
     private val getTokenApi: GoogleGetOAuthTokenApi,
     private val getUserInfoApi: GoogleGetOAuthUserInfoApi,
     private val clientRegistrationRepository: ReactiveClientRegistrationRepository
-) : OAuthProvider {
+) : GetOAuthTokenPort, GetOAuthUserInfoPort {
+
+    private val objectMapper = ObjectMapper()
 
     lateinit var registration: ClientRegistration
 
@@ -34,8 +36,10 @@ class GoogleOAuthProvider(
             .block()!!
     }
 
-    private val objectMapper = ObjectMapper()
-    override fun getToken(authorizeCode: String): OAuthTokenResult {
+    override fun getOAuthTokens(
+        authorizeCode: String,
+        type: OAuthType
+    ): OAuthTokenResult {
         val response = getTokenApi.getToken(
             authorizeCode = authorizeCode,
             clientId = registration.clientId,
@@ -55,30 +59,29 @@ class GoogleOAuthProvider(
         accessToken: String,
         refreshToken: String,
         idToken: String?,
-    ): OAuthUserInfoResult {
+        type: OAuthType,
+    ): OAuthUserInfo {
         if (idToken != null) {
             val base64EncodedPayload = idToken.split(".")[1]
             val base64DecodedPayload = Base64.getDecoder().decode(base64EncodedPayload)
             val payload = String(base64DecodedPayload, Charsets.UTF_8)
             val response = objectMapper.readValue(payload, GoogleOAuthUserInfoResponse::class.java)
 
-            return OAuthUserInfoResult(
+            return OAuthUserInfo(
                 name = response.name,
                 email = Email(response.email),
-                profileImgUrl = Url(response.picture)
+                profileImgUrl = Url(response.picture),
+                type = type
             )
         } else {
             val response =
                 getUserInfoApi.getUserInfo(accessToken)
-            return OAuthUserInfoResult(
+            return OAuthUserInfo(
                 name = response.name,
                 email = Email(response.email),
-                profileImgUrl = Url(response.picture)
+                profileImgUrl = Url(response.picture),
+                type = type
             )
         }
-    }
-
-    override fun getProvider(): OAuthType {
-        return OAuthType.GOOGLE
     }
 }
