@@ -2,6 +2,7 @@ package com.tenmm.tilserver.user.adapter.inbound
 
 import com.tenmm.tilserver.auth.domain.UserAuthInfo
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserProfileResponse
@@ -9,6 +10,7 @@ import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserRequest
 import com.tenmm.tilserver.user.adapter.inbound.model.OnBoardingUserRequest
 import com.tenmm.tilserver.user.application.inbound.ModifyUserUseCase
 import com.tenmm.tilserver.user.application.inbound.model.ModifyUserCommand
+import com.tenmm.tilserver.user.application.inbound.model.OnBoardingUserCommand
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -59,16 +61,14 @@ class ModifyUserProfileController(
     @RequiredAuthentication
     fun onBoardingUserProfile(
         userAuthInfo: UserAuthInfo,
-        @RequestBody modifyUserRequest: OnBoardingUserRequest,
+        @RequestBody onBoardingUserRequest: OnBoardingUserRequest,
     ): ModifyUserProfileResponse {
-//        val command = ModifyUserCommand(
-//            userIdentifier = userAuthInfo.userIdentifier,
-//            categoryIdentifier = Identifier(modifyUserRequest.categoryIdentifier),
-//            introduction = modifyUserRequest.introduction,
-//            name = modifyUserRequest.name,
-//            path = modifyUserRequest.path
-//        )
-        return ModifyUserProfileResponse(true)
+        val command = OnBoardingUserCommand(
+            userIdentifier = userAuthInfo.userIdentifier,
+            categoryIdentifier = onBoardingUserRequest.categoryIdentifier.toIdentifier(),
+            mailAgreement = onBoardingUserRequest.mailAgreement
+        )
+        return ModifyUserProfileResponse(modifyUserUseCase.onBoardingUserInfo(command).isSuccess)
     }
 
     @PutMapping
@@ -111,7 +111,8 @@ class ModifyUserProfileController(
             categoryIdentifier = Identifier(modifyUserRequest.categoryIdentifier),
             introduction = modifyUserRequest.introduction,
             name = modifyUserRequest.name,
-            path = modifyUserRequest.path
+            path = modifyUserRequest.path,
+            mailAgreement = modifyUserRequest.mailAgreement
         )
         return ModifyUserProfileResponse(modifyUserUseCase.modifyUserInfo(command).isSuccess)
     }
