@@ -6,5 +6,5 @@ import com.tenmm.tilserver.outbound.persistence.entity.RefreshTokenEntity
 
 @Repository
 interface RefreshTokenRepository : CrudRepository<RefreshTokenEntity, String> {
-    fun findByUserIdentifier(userIdentifier: String): RefreshTokenEntity?
+    fun findByKey(key: String): RefreshTokenEntity?
 }

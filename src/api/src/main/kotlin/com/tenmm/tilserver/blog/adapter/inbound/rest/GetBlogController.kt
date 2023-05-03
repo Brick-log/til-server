@@ -3,7 +3,7 @@ package com.tenmm.tilserver.blog.adapter.inbound.rest
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.BlogResult
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.GetBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.GetUserBlogUseCase
-import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.exception.ErrorResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema

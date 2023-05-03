@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.adapter.inbound.rest
+package com.tenmm.tilserver.common.config.rest
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.config.CorsRegistry

@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.ModifyRecommendedPostResponse
 import com.tenmm.tilserver.post.application.inbound.AddRecommendedPostUseCase

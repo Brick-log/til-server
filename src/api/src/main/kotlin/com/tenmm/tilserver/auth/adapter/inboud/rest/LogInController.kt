@@ -2,8 +2,11 @@ package com.tenmm.tilserver.auth.adapter.inboud.rest
 
 import com.tenmm.tilserver.auth.adapter.inboud.rest.model.LogInRequest
 import com.tenmm.tilserver.auth.adapter.inboud.rest.model.LogInResponse
+import com.tenmm.tilserver.auth.adapter.inboud.rest.model.LogOutResponse
 import com.tenmm.tilserver.auth.application.inbound.OAuthLogInUseCase
-import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.auth.domain.UserAuthInfo
+import com.tenmm.tilserver.common.exception.ErrorResponse
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -44,5 +47,27 @@ class LogInController(
             type = req.type
         )
         return LogInResponse.fromResult(result)
+    }
+
+    @RequiredAuthentication
+    @PostMapping("/logout")
+    @Operation(
+        summary = "로그인",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "로그인 성공"
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "서버에러",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            )
+        ]
+    )
+    fun logout(
+        userAuthInfo: UserAuthInfo,
+    ): LogOutResponse {
+        return LogOutResponse(true)
     }
 }

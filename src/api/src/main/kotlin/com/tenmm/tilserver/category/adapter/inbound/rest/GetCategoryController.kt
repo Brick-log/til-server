@@ -3,7 +3,7 @@ package com.tenmm.tilserver.category.adapter.inbound.rest
 import com.tenmm.tilserver.category.adapter.inbound.rest.model.GetCategoriesResponse
 import com.tenmm.tilserver.category.adapter.inbound.rest.model.toResult
 import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
-import com.tenmm.tilserver.common.adapter.inbound.rest.model.ErrorResponse
+import com.tenmm.tilserver.common.exception.ErrorResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema

@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.adapter.inbound.rest
+package com.tenmm.tilserver.common.exception
 
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
