@@ -20,7 +20,7 @@ class RefreshTokenController(
 ) {
     @RequiredAuthentication
     @PostMapping("/refresh")
-    fun refreshToken(
+    suspend fun refreshToken(
         userAuthInfo: UserAuthInfo,
         @RequestBody refreshTokenRequest: RefreshTokenRequest,
     ): RefreshTokenResponse {
