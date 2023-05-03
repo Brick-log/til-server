@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.draft.adapter.inbound.controller
 
-import com.tenmm.tilserver.auth.domain.UserAuthInfo
+import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.draft.adapter.inbound.controller.model.SaveDraftRequest

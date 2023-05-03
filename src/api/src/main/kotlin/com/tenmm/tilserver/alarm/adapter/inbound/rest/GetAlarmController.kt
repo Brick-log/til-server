@@ -2,7 +2,7 @@ package com.tenmm.tilserver.alarm.adapter.inbound.rest
 
 import com.tenmm.tilserver.alarm.adapter.inbound.rest.model.GetAlarmResponse
 import com.tenmm.tilserver.alarm.application.inbound.GetAlarmUseCase
-import com.tenmm.tilserver.auth.domain.UserAuthInfo
+import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import io.swagger.v3.oas.annotations.Operation

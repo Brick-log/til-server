@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.user.application.service
 
-import com.tenmm.tilserver.auth.application.inbound.ModifyAccountUseCase
+import com.tenmm.tilserver.account.application.inbound.ModifyAccountUseCase
 import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.OperationResult
 import com.tenmm.tilserver.user.application.inbound.ModifyUserUseCase
