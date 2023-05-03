@@ -1,10 +1,10 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
-import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
+import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserProfileResponse
 import com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserRequest
 import com.tenmm.tilserver.user.adapter.inbound.model.OnBoardingUserRequest
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController
 class ModifyUserProfileController(
     private val modifyUserUseCase: ModifyUserUseCase,
 ) {
-    @PostMapping
+    @PostMapping("/onboarding")
     @Operation(
         summary = "사용자 정보 업데이트",
         responses = [
