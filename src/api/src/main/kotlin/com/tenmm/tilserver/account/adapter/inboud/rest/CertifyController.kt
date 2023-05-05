@@ -31,8 +31,8 @@ class CertifyController(
 ) {
 
     @GetMapping("/callback")
-    fun callback(@RequestParam code: String) {
-        println(code)
+    fun callback(@RequestParam code: String): String {
+        return code
     }
 
     @PostMapping("/login")
