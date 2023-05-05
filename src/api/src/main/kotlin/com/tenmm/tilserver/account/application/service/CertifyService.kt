@@ -17,6 +17,7 @@ import com.tenmm.tilserver.user.application.inbound.CreateUserUseCase
 import com.tenmm.tilserver.user.application.inbound.model.CreateUserCommand
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CertifyService(
@@ -27,6 +28,8 @@ class CertifyService(
     private val generateTokenUseCase: GenerateTokenUseCase,
     private val deleteTokenUseCase: DeleteTokenUseCase,
 ) : LogInUseCase, LogOutUseCase {
+
+    @Transactional
     override suspend fun logIn(command: LogInCommand): LogInResult {
         val oAuthUserInfo = getGoogleOAuthUserInfoService.getByOAuthToken(command.authorizeCode)
 
@@ -41,10 +44,9 @@ class CertifyService(
 
     private fun register(userInfo: OAuthUserInfo): Account {
         val userIdentifier = Identifier.generate()
-        val initialName = RandomStringUtils.random(10)
 
         val createUserCommand = CreateUserCommand(
-            name = initialName,
+            name = userInfo.name,
             userIdentifier = userIdentifier
         )
         val createAccountCommand = CreateAccountCommand(
