@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.tenmm.tilserver.account.adapter.outbound.google.model.GoogleOAuthUserInfoResponse
 import com.tenmm.tilserver.account.application.outbound.GetOAuthTokenPort
 import com.tenmm.tilserver.account.application.outbound.GetOAuthUserInfoPort
-import com.tenmm.tilserver.account.application.outbound.OAuthTokenResult
-import com.tenmm.tilserver.account.application.outbound.OAuthUserInfo
+import com.tenmm.tilserver.account.application.model.OAuthTokenResult
+import com.tenmm.tilserver.account.application.model.OAuthUserInfo
 import com.tenmm.tilserver.account.domain.OAuthType
 import com.tenmm.tilserver.common.domain.Email
 import com.tenmm.tilserver.common.domain.Url

@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.security.application.service
 
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.security.JwtConfigProperties
 import com.tenmm.tilserver.security.application.inbound.ResolveTokenUseCase
 import com.tenmm.tilserver.security.domain.SecurityTokenType
@@ -14,7 +15,7 @@ class ResolveTokenService(
     private val cryptoHandler: CryptoHandler,
     private val jwtConfigProperties: JwtConfigProperties
 ) : ResolveTokenUseCase {
-    override fun resolveToken(token: String, securityTokenType: SecurityTokenType): String {
+    override fun resolveToken(token: String, securityTokenType: SecurityTokenType): Identifier {
         val properties =
             if (securityTokenType == SecurityTokenType.ACCESS) jwtConfigProperties.access else jwtConfigProperties.refresh
         val key: SecretKey = Keys.hmacShaKeyFor(properties.secret.toByteArray())
@@ -25,6 +26,6 @@ class ResolveTokenService(
             .parseClaimsJws(jwt)
             .body
 
-        return claims["id"].toString()
+        return Identifier(claims["id"].toString())
     }
 }

@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.account.application.inbound
 
-import com.tenmm.tilserver.account.application.outbound.OAuthUserInfo
+import com.tenmm.tilserver.account.application.model.OAuthUserInfo
 import com.tenmm.tilserver.account.domain.OAuthType
 
 interface GetOAuthUserInfoUseCase {

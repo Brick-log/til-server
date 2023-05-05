@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.account.application.outbound
+package com.tenmm.tilserver.account.application.model
 
 import com.tenmm.tilserver.account.domain.OAuthType
 import com.tenmm.tilserver.common.domain.Email
