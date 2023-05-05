@@ -13,6 +13,7 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import toEntity
 
 @ExtendWith(MockKExtension::class)
 class ModifyAlarmAdapterTest {
@@ -29,7 +30,7 @@ class ModifyAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = command.userIdentifier.value,
             enable = command.enable,
-            iteration = command.iteration
+            iteration = command.iteration.toEntity()
         )
 
         // when
@@ -53,7 +54,7 @@ class ModifyAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = command.userIdentifier.value,
             enable = command.enable,
-            iteration = command.iteration
+            iteration = command.iteration.toEntity()
         )
 
         // when

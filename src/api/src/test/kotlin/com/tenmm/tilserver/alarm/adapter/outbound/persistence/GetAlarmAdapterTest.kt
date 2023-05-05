@@ -6,6 +6,7 @@ import assertk.assertions.isNotNull
 import assertk.assertions.isNull
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.outbound.persistence.entity.AlarmEntity
+import com.tenmm.tilserver.outbound.persistence.entity.AlarmIteration
 import com.tenmm.tilserver.outbound.persistence.repository.AlarmRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -32,7 +33,7 @@ class GetAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = userIdentifier.value,
             enable = true,
-            iteration = "* * * * * *"
+            iteration = AlarmIteration.valueOf("DAY")
         )
 
         // when

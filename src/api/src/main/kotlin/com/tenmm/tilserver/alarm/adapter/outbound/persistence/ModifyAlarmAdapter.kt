@@ -7,6 +7,7 @@ import com.tenmm.tilserver.outbound.persistence.repository.AlarmRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import toEntity
 
 private val logger = KotlinLogging.logger {}
 
@@ -21,7 +22,7 @@ class ModifyAlarmAdapter(
 
         val modifiedEntity = alarmEntity.copy(
             enable = command.enable,
-            iteration = command.iteration
+            iteration = command.iteration.toEntity()
         )
 
         return try {
