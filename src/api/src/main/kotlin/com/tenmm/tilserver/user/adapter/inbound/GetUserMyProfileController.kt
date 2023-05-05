@@ -51,6 +51,6 @@ class GetUserMyProfileController(
     fun getUserMyProfile(userAuthInfo: UserAuthInfo): GetUserProfileResponse {
         val user = getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier)
         val category = user.categoryIdentifier?.let { getCategoryUseCase.getByIdentifier(it) }
-        return GetUserProfileResponse.fromUser(user, category)
+        return GetUserProfileResponse.fromUser(user, category, true)
     }
 }
