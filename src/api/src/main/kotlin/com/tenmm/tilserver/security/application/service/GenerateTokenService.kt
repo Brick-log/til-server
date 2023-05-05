@@ -38,7 +38,6 @@ class GenerateTokenService(
                 jwtConfigProperties.refresh
             }
         }
-        
         val key: SecretKey = Keys.hmacShaKeyFor(properties.secret.toByteArray())
         val now = getNowTimestamp().time
         val expiredAt = now + properties.expire

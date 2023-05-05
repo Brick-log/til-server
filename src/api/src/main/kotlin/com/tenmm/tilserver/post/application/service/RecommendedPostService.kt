@@ -48,11 +48,9 @@ class RecommendedPostService(
         result: List<Post>,
     ): GetPostListResult {
         val userIdentifierPathMap =
-            getUserUseCase.getByIdentifierList(result.map { it.userIdentifier }).associate {
-                it.identifier to it.path
-            }
+            getUserUseCase.getByIdentifierList(result.map { it.userIdentifier }).associateBy { it.identifier }
         return GetPostListResult(
-            posts = result.map { it.setUserPath(userIdentifierPathMap[it.identifier]!!) },
+            posts = result.map { it.setUserInfo(userIdentifierPathMap[it.identifier]!!) },
             size = result.size,
             nextPageToken = StringUtils.EMPTY
         )

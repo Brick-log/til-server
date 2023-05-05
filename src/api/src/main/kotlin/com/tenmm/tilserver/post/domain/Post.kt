@@ -2,6 +2,7 @@ package com.tenmm.tilserver.post.domain
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
+import com.tenmm.tilserver.user.domain.User
 import java.math.BigInteger
 import java.sql.Timestamp
 
@@ -15,10 +16,11 @@ data class Post(
     val createdAt: Timestamp,
     val hitCount: BigInteger,
 ) {
-    fun setUserPath(userPath: String): PostWithUserPath {
-        return PostWithUserPath(
+    fun setUserInfo(user: User): PostWithUserInfo {
+        return PostWithUserInfo(
             identifier = identifier,
-            userPath = userPath,
+            userPath = user.path,
+            userProfileSrc = user.thumbnailUrl,
             categoryIdentifier = categoryIdentifier,
             title = title,
             description = description,
@@ -29,9 +31,10 @@ data class Post(
     }
 }
 
-data class PostWithUserPath(
+data class PostWithUserInfo(
     val identifier: Identifier,
     val userPath: String,
+    val userProfileSrc: Url,
     val categoryIdentifier: Identifier,
     val title: String,
     val description: String,
