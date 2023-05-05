@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
+import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "Profile")
 class GetUserProfileController(
     private val getUserUseCase: GetUserUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase,
 ) {
     @GetMapping
     @Operation(
@@ -48,6 +50,7 @@ class GetUserProfileController(
         @PathVariable path: String,
     ): GetUserProfileResponse {
         val user = getUserUseCase.getByPath(path)
-        return GetUserProfileResponse.fromUser(user)
+        val category = user.categoryIdentifier?.let { getCategoryUseCase.getByIdentifier(it) }
+        return GetUserProfileResponse.fromUser(user, category)
     }
 }
