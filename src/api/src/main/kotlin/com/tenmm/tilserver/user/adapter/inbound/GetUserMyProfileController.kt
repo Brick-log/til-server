@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
+import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "Profile")
 class GetUserMyProfileController(
     private val getUserUseCase: GetUserUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase,
 ) {
     @GetMapping
     @Operation(
@@ -48,6 +50,7 @@ class GetUserMyProfileController(
     @RequiredAuthentication
     fun getUserMyProfile(userAuthInfo: UserAuthInfo): GetUserProfileResponse {
         val user = getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier)
-        return GetUserProfileResponse.fromUser(user)
+        val category = user.categoryIdentifier?.let { getCategoryUseCase.getByIdentifier(it) }
+        return GetUserProfileResponse.fromUser(user, category)
     }
 }
