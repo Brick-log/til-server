@@ -29,7 +29,7 @@ class ModifyAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = command.userIdentifier.value,
             enable = command.enable,
-            iteration = command.iteration
+            iteration = command.iteration.name
         )
 
         // when
@@ -53,7 +53,7 @@ class ModifyAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = command.userIdentifier.value,
             enable = command.enable,
-            iteration = command.iteration
+            iteration = command.iteration.name
         )
 
         // when

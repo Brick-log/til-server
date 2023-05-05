@@ -21,7 +21,7 @@ class ModifyAlarmAdapter(
 
         val modifiedEntity = alarmEntity.copy(
             enable = command.enable,
-            iteration = command.iteration
+            iteration = command.iteration.name
         )
 
         return try {

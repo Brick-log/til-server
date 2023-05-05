@@ -32,7 +32,8 @@ class GetAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = userIdentifier.value,
             enable = true,
-            iteration = "* * * * * *"
+            iteration = "DAY"
+            // iteration = "* * * * * *"
         )
 
         // when
