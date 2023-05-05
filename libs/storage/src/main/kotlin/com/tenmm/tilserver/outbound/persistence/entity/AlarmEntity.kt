@@ -28,5 +28,5 @@ data class AlarmEntity(
 )
 
 enum class AlarmIteration {
-    MONHT, WEEK, DAY, NONE
+    MONTH, WEEK, DAY, NONE
 }
