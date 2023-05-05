@@ -1,8 +1,8 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.toIdentifier
+import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostMetaResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostResponse
@@ -28,6 +28,7 @@ class GetPostController(
     private val getPostUseCase: GetPostUseCase,
     private val getRecommendedPostUseCase: GetRecommendedPostUseCase,
 ) {
+
     @GetMapping("/{postIdentifier}")
     @Operation(
         summary = "포스트 주소 요청",
