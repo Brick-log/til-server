@@ -43,7 +43,7 @@ class SyncDraftController(
         ]
     )
     @RequiredAuthentication
-    fun syncDraft(
+    suspend fun syncDraft(
         userAuthInfo: UserAuthInfo,
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {

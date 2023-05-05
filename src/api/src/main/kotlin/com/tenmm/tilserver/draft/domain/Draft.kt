@@ -6,7 +6,7 @@ import java.sql.Timestamp
 data class Draft(
     val userIdentifier: Identifier,
     val data: String,
-    val updatedAt: Timestamp,
+    val updatedAt: Timestamp? = null,
 ) {
     companion object {
         const val DRAFT_MAX_LENGTH = 2000

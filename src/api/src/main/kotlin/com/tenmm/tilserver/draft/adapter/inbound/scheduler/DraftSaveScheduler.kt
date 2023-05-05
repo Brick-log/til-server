@@ -1,9 +1,15 @@
 package com.tenmm.tilserver.draft.adapter.inbound.scheduler
 
 import com.tenmm.tilserver.draft.application.inbound.SyncDraftUseCase
+import java.time.LocalDateTime
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import mu.KotlinLogging
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
+private val logger = KotlinLogging.logger {}
 @Service
 class DraftSaveScheduler(
     private val syncDraftUseCase: SyncDraftUseCase,
@@ -18,6 +24,9 @@ class DraftSaveScheduler(
          * Redis에 저장되어 있는 Key 값은 삭제
          * Redis -> RDB
          */
-        syncDraftUseCase.sync()
+        logger.info("Draft Sync Start -> ${LocalDateTime.now()}")
+        CoroutineScope(Dispatchers.Default).launch {
+            syncDraftUseCase.sync()
+        }
     }
 }
