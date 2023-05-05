@@ -5,6 +5,7 @@ import assertk.assertions.isEqualTo
 import com.tenmm.tilserver.alarm.adapter.outbound.persistence.model.randomModifyAlarmCommand
 import com.tenmm.tilserver.common.domain.OperationResult
 import com.tenmm.tilserver.outbound.persistence.entity.AlarmEntity
+import com.tenmm.tilserver.outbound.persistence.entity.AlarmIteration
 import com.tenmm.tilserver.outbound.persistence.repository.AlarmRepository
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -29,7 +30,7 @@ class ModifyAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = command.userIdentifier.value,
             enable = command.enable,
-            iteration = command.iteration.name
+            iteration = AlarmIteration.valueOf(command.iteration.name)
         )
 
         // when
@@ -53,7 +54,7 @@ class ModifyAlarmAdapterTest {
         val entity = AlarmEntity(
             userIdentifier = command.userIdentifier.value,
             enable = command.enable,
-            iteration = command.iteration.name
+            iteration = AlarmIteration.valueOf(command.iteration.name)
         )
 
         // when
