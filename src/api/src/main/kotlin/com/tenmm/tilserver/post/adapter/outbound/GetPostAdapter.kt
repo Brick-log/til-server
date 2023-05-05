@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.ResultWithToken
 import com.tenmm.tilserver.common.utils.CryptoHandler
 import com.tenmm.tilserver.outbound.persistence.repository.PostRepository
