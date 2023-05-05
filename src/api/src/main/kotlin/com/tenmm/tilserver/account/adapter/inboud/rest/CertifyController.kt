@@ -4,7 +4,8 @@ import com.tenmm.tilserver.account.adapter.inboud.rest.model.LogInRequest
 import com.tenmm.tilserver.account.adapter.inboud.rest.model.LogInResponse
 import com.tenmm.tilserver.account.adapter.inboud.rest.model.LogOutResponse
 import com.tenmm.tilserver.account.application.inbound.LogInUseCase
-import com.tenmm.tilserver.account.application.inbound.model.LogInCommand
+import com.tenmm.tilserver.account.application.inbound.LogOutUseCase
+import com.tenmm.tilserver.account.application.model.LogInCommand
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.security.domain.UserAuthInfo
@@ -15,14 +16,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/auth")
 @Tag(name = "Auth")
-class LogInOutController(
+class CertifyController(
     private val logInUseCase: LogInUseCase,
+    private val logOutUseCase: LogOutUseCase,
 ) {
 
     @PostMapping("/login")
@@ -68,9 +71,15 @@ class LogInOutController(
             )
         ]
     )
-    fun logout(
+    suspend fun logout(
         userAuthInfo: UserAuthInfo,
+        @RequestHeader("Authorization") accessTokenWithBearer: String,
     ): LogOutResponse {
+        val accessToken = accessTokenWithBearer.substringAfter("Bearer ")
+        logOutUseCase.logOut(
+            userIdentifier = userAuthInfo.userIdentifier,
+            accessToken = accessToken
+        )
         return LogOutResponse(true)
     }
 }

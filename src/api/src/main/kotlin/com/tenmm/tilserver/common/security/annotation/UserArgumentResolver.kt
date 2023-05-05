@@ -29,6 +29,6 @@ class UserArgumentResolver(
 
         val token = tokenWithBearer.substringAfter("Bearer ")
         val userIdentifier = resolveTokenUseCase.resolveToken(token, SecurityTokenType.ACCESS)
-        return UserAuthInfo(Identifier(userIdentifier)).toMono()
+        return UserAuthInfo(userIdentifier).toMono()
     }
 }

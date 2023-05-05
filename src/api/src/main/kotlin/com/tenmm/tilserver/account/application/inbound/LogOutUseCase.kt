@@ -1,8 +1,7 @@
 package com.tenmm.tilserver.account.application.inbound
 
-import com.tenmm.tilserver.account.application.inbound.model.LogInResult
-import org.hibernate.boot.model.naming.Identifier
+import com.tenmm.tilserver.common.domain.Identifier
 
 interface LogOutUseCase {
-    fun logOut(userIdentifier: Identifier): LogInResult
+    suspend fun logOut(userIdentifier: Identifier, accessToken: String)
 }

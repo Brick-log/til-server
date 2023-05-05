@@ -3,7 +3,7 @@ package com.tenmm.tilserver.account.application.service
 import com.tenmm.tilserver.account.application.inbound.GetOAuthUserInfoUseCase
 import com.tenmm.tilserver.account.application.outbound.GetOAuthTokenPort
 import com.tenmm.tilserver.account.application.outbound.GetOAuthUserInfoPort
-import com.tenmm.tilserver.account.application.outbound.OAuthUserInfo
+import com.tenmm.tilserver.account.application.model.OAuthUserInfo
 import com.tenmm.tilserver.account.domain.OAuthType
 import org.springframework.stereotype.Service
 

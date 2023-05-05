@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.account.adapter.outbound.persistence
 
 import com.tenmm.tilserver.account.adapter.outbound.persistence.converters.toModel
-import com.tenmm.tilserver.account.application.inbound.model.CreateAccountCommand
+import com.tenmm.tilserver.account.application.model.CreateAccountCommand
 import com.tenmm.tilserver.account.application.outbound.ModifyAccountPort
 import com.tenmm.tilserver.account.application.outbound.SaveAccountPort
 import com.tenmm.tilserver.account.domain.Account

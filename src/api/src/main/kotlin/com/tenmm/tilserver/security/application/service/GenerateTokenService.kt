@@ -29,9 +29,16 @@ class GenerateTokenService(
     }
 
     private fun generateToken(userIdentifier: Identifier, securityTokenType: SecurityTokenType): String {
-        val properties =
-            if (securityTokenType == SecurityTokenType.ACCESS) jwtConfigProperties.access else jwtConfigProperties.refresh
+        val properties = when (securityTokenType) {
+            SecurityTokenType.ACCESS -> {
+                jwtConfigProperties.access
+            }
 
+            SecurityTokenType.REFRESH -> {
+                jwtConfigProperties.refresh
+            }
+        }
+        
         val key: SecretKey = Keys.hmacShaKeyFor(properties.secret.toByteArray())
         val now = getNowTimestamp().time
         val expiredAt = now + properties.expire

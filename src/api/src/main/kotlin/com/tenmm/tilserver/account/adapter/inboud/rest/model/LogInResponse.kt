@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.account.adapter.inboud.rest.model
 
-import com.tenmm.tilserver.account.application.inbound.model.LogInResult
+import com.tenmm.tilserver.account.application.model.LogInResult
 
 data class LogInResponse(
     val accessToken: String,

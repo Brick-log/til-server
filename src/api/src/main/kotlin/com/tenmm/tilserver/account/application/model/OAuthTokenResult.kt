@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.account.application.outbound
+package com.tenmm.tilserver.account.application.model
 
 data class OAuthTokenResult(
     val accessToken: String,
