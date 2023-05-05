@@ -29,6 +29,6 @@ class SyncDraftService(
             }.toList()
         logger.info("RDB Sync Success Size: ${saveSucceedDrafts.size}")
 
-      syncDraftPort.delete(saveSucceedDrafts)
+        syncDraftPort.delete(saveSucceedDrafts)
     }
 }

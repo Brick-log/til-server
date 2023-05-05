@@ -15,7 +15,6 @@ import com.tenmm.tilserver.security.application.inbound.DeleteTokenUseCase
 import com.tenmm.tilserver.security.application.inbound.GenerateTokenUseCase
 import com.tenmm.tilserver.user.application.inbound.CreateUserUseCase
 import com.tenmm.tilserver.user.application.inbound.model.CreateUserCommand
-import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

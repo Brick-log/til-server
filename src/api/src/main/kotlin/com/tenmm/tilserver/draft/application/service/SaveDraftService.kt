@@ -15,7 +15,7 @@ class SaveDraftService(
     override suspend fun saveByUserIdentifier(userIdentifier: Identifier, data: String): Boolean {
         val draft = Draft(
             data = data,
-            userIdentifier  = userIdentifier
+            userIdentifier = userIdentifier
 
         )
         val isSyncSuccess = saveDraftPort.upsert(draft)

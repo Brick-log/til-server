@@ -49,7 +49,7 @@ class SyncDraftAdapter(
             .collectList()
             .awaitFirstOrNull() ?: emptyList<String>()
 
-        if(keys.isEmpty()){
+        if (keys.isEmpty()) {
             return emptyList()
         }
         val values = ops.multiGet(keys).awaitFirstOrNull() ?: emptyList()
@@ -70,7 +70,7 @@ class SyncDraftAdapter(
     }
 
     override suspend fun delete(drafts: List<Draft>): Boolean {
-        if(drafts.isEmpty()){
+        if (drafts.isEmpty()) {
             logger.info("Delete Sync Draft Target Size: Empty")
             return true
         }

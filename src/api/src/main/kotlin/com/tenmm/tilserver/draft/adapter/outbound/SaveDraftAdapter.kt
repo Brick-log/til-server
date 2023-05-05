@@ -5,9 +5,7 @@ import com.tenmm.tilserver.draft.application.outbound.SaveDraftPort
 import com.tenmm.tilserver.draft.domain.Draft
 import com.tenmm.tilserver.outbound.persistence.entity.DraftEntity
 import com.tenmm.tilserver.outbound.persistence.repository.DraftRepository
-import java.time.LocalDateTime
 import mu.KotlinLogging
-import org.springframework.data.redis.core.TimeoutUtils
 import org.springframework.stereotype.Component
 
 private val logger = KotlinLogging.logger {}

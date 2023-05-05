@@ -2,7 +2,6 @@ package com.tenmm.tilserver.draft.adapter.inbound.scheduler
 
 import com.tenmm.tilserver.draft.application.inbound.SyncDraftUseCase
 import java.time.LocalDateTime
-import java.util.concurrent.CompletableFuture
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +28,5 @@ class DraftSaveScheduler(
         CoroutineScope(Dispatchers.Default).launch {
             syncDraftUseCase.sync()
         }
-
     }
 }
