@@ -1,15 +1,17 @@
 package com.tenmm.tilserver.common.config.rest
 
-import com.tenmm.tilserver.common.security.annotation.UserArgumentResolver
+import com.tenmm.tilserver.common.security.annotation.OptionalUserArgumentResolver
+import com.tenmm.tilserver.common.security.annotation.RequiredUserArgumentResolver
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.config.WebFluxConfigurer
 import org.springframework.web.reactive.result.method.annotation.ArgumentResolverConfigurer
 
 @Configuration
 class WebFluxConfig(
-    private val userArgumentResolver: UserArgumentResolver,
+    private val requiredUserArgumentResolver: RequiredUserArgumentResolver,
+    private val optionalUserArgumentResolver: OptionalUserArgumentResolver,
 ) : WebFluxConfigurer {
     override fun configureArgumentResolvers(configurer: ArgumentResolverConfigurer) {
-        configurer.addCustomResolver(userArgumentResolver)
+        configurer.addCustomResolver(requiredUserArgumentResolver, optionalUserArgumentResolver)
     }
 }
