@@ -34,7 +34,7 @@ class ModifyPostAdapter(
         val modifiedEntity = postEntity.copy(
             title = command.title,
             description = command.summary,
-            createdAt = Timestamp.from(Instant.ofEpochMilli(command.createdAt))
+            createdAt = Timestamp.from(Instant.ofEpochSecond(command.createdAt))
         )
 
         return try {

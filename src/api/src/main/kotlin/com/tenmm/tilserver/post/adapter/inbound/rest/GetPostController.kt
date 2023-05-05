@@ -94,8 +94,8 @@ class GetPostController(
     ): GetPostListResponse {
         val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
             path = path,
-            to = to?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MAX),
-            from = from?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MIN),
+            to = to?.let { Timestamp.from(Instant.ofEpochSecond(it)) } ?: Timestamp.from(Instant.MAX),
+            from = from?.let { Timestamp.from(Instant.ofEpochSecond(it)) } ?: Timestamp.from(Instant.MIN),
             size = size,
             pageToken = pageToken
         )
@@ -134,8 +134,8 @@ class GetPostController(
     ): GetPostMetaResponse {
         val postMetaResult = getPostUseCase.getPostMetaListByNameAndDate(
             path = path,
-            to = Timestamp.from(Instant.ofEpochMilli(to)),
-            from = Timestamp.from(Instant.ofEpochMilli(from))
+            to = Timestamp.from(Instant.ofEpochSecond(to)),
+            from = Timestamp.from(Instant.ofEpochSecond(from))
         )
         return GetPostMetaResponse.fromResult(postMetaResult)
     }
