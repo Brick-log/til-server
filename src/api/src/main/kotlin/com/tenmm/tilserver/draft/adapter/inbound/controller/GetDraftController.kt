@@ -42,7 +42,7 @@ class GetDraftController(
         ]
     )
     @RequiredAuthentication
-    fun getDraft(userAuthInfo: UserAuthInfo): GetDraftResponse {
+    suspend fun getDraft(userAuthInfo: UserAuthInfo): GetDraftResponse {
         return getDraftUseCase.getByUserIdentifier(userAuthInfo.userIdentifier).toResponse()
     }
 }

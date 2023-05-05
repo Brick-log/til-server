@@ -21,4 +21,8 @@ class RedisConfig {
     fun securityTokenRedisTemplate(connectionFactory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
         return ReactiveRedisTemplate(connectionFactory, RedisSerializationContext.string())
     }
+    @Bean
+    fun draftRedisTemplate(connectionFactory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
+        return ReactiveRedisTemplate(connectionFactory, RedisSerializationContext.string())
+    }
 }

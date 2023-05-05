@@ -12,7 +12,7 @@ class GetDraftService(
     private val getDraftPort: GetDraftPort,
     private val syncDraftPort: SyncDraftPort,
 ) : GetDraftUseCase {
-    override fun getByUserIdentifier(userIdentifier: Identifier): Draft? {
+    override suspend fun getByUserIdentifier(userIdentifier: Identifier): Draft? {
         return syncDraftPort.findByUserIdentifier(userIdentifier) ?: getDraftPort.findByUserIdentifier(userIdentifier)
     }
 }
