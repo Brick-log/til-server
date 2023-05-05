@@ -1,8 +1,6 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
-import ch.qos.logback.core.util.TimeUtil
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.utils.getNowTimestamp
 import com.tenmm.tilserver.outbound.persistence.repository.PostRepository
 import com.tenmm.tilserver.post.application.inbound.model.ModifyPostCommand
 import com.tenmm.tilserver.post.application.outbound.DeletePostPort
@@ -11,7 +9,6 @@ import com.tenmm.tilserver.post.application.outbound.SavePostPort
 import com.tenmm.tilserver.post.domain.Post
 import java.sql.Timestamp
 import java.time.Instant
-import java.time.LocalDateTime
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 
@@ -37,7 +34,7 @@ class ModifyPostAdapter(
         val modifiedEntity = postEntity.copy(
             title = command.title,
             description = command.summary,
-            createdAt = getNowTimestamp()
+            createdAt = Timestamp.from(Instant.ofEpochSecond(command.createdAt))
         )
 
         return try {

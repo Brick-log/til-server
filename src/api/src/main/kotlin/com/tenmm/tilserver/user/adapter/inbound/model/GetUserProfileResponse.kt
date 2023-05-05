@@ -14,7 +14,7 @@ data class GetUserProfileResponse(
     val isAuthorized: Boolean,
 ) {
     companion object {
-        fun fromUser(user: User, category: Category?): GetUserProfileResponse {
+        fun fromUser(user: User, category: Category?, isAuthorized: Boolean): GetUserProfileResponse {
             return GetUserProfileResponse(
                 name = user.name,
                 path = user.path,
@@ -22,7 +22,7 @@ data class GetUserProfileResponse(
                 introduction = user.introduction ?: StringUtils.EMPTY,
                 categoryIdentifier = user.categoryIdentifier?.value,
                 categoryName = category?.name,
-                isAuthorized = false
+                isAuthorized = isAuthorized
             )
         }
     }

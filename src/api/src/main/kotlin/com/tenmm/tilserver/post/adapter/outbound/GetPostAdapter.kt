@@ -111,8 +111,8 @@ class GetPostAdapter(
             postRepository.findAllByIdLessThanAndUserIdentifierAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(
                 id = parsedPageToken.lastEntityId,
                 userIdentifier = parsedPageToken.categoryIdentifier.value,
-                from = Timestamp.from(Instant.ofEpochMilli(parsedPageToken.from)),
-                to = Timestamp.from(Instant.ofEpochMilli(parsedPageToken.to)),
+                from = Timestamp.from(Instant.ofEpochSecond(parsedPageToken.from)),
+                to = Timestamp.from(Instant.ofEpochSecond(parsedPageToken.to)),
                 pageable = generatePageRequest(size + 1)
             )
 

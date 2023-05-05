@@ -47,10 +47,11 @@ class RecommendedPostService(
     private fun generatePostWithPath(
         result: List<Post>,
     ): GetPostListResult {
-        val userIdentifierPathMap =
-            getUserUseCase.getByIdentifierList(result.map { it.userIdentifier }).associateBy { it.identifier }
+        val userIdentifierPath =
+            getUserUseCase.getByIdentifierList(result.map { it.userIdentifier })
+        val userIdentifierPathMap = userIdentifierPath.associateBy { it.identifier }
         return GetPostListResult(
-            posts = result.map { it.setUserInfo(userIdentifierPathMap[it.identifier]!!) },
+            posts = result.map { it.setUserInfo(userIdentifierPathMap[it.userIdentifier]!!) },
             size = result.size,
             nextPageToken = StringUtils.EMPTY
         )
