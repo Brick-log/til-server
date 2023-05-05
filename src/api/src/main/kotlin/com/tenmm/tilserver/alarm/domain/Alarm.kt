@@ -9,11 +9,5 @@ data class Alarm(
     val iteration: AlarmIteration,
 ) {
     init {
-        /*
-         * crontab 형식으로 iteration 받으려던 것 enum으로 변경
-         */
-        /*if (!CRON_ITERATION_REGEX.matches(iteration)) {
-            throw IllegalArgumentException("Invalid iteration: $iteration")
-        }*/
     }
 }

@@ -33,7 +33,6 @@ class GetAlarmAdapterTest {
             userIdentifier = userIdentifier.value,
             enable = true,
             iteration = "DAY"
-            // iteration = "* * * * * *"
         )
 
         // when

@@ -6,6 +6,5 @@ fun randomModifyAlarmRequest(isEnable: Boolean = true): ModifyAlarmRequest {
     return ModifyAlarmRequest(
         enable = isEnable,
         iteration = AlarmIteration.valueOf("DAY")
-        // iteration = "* * * * * *"
     )
 }

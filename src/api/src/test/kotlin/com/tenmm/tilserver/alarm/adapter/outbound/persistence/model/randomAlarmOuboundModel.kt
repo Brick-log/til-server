@@ -9,6 +9,5 @@ fun randomModifyAlarmCommand(userIdentifier: Identifier = Identifier.generate(),
         userIdentifier = userIdentifier,
         enable = isEnable,
         iteration = AlarmIteration.valueOf("DAY")
-        // iteration = "* * * * * *"
     )
 }
