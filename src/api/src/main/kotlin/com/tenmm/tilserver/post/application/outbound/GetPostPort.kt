@@ -6,7 +6,7 @@ import com.tenmm.tilserver.post.domain.Post
 import java.sql.Timestamp
 
 interface GetPostPort {
-    fun getPostByIdentifier(postIdentifier: Identifier): Post
+    fun getPostByIdentifier(postIdentifier: Identifier): Post?
     fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post>
 
     fun getPostListByCategoryIdentifier(categoryIdentifier: Identifier, size: Int): ResultWithToken<List<Post>>

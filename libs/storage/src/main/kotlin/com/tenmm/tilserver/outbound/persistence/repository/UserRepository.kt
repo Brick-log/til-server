@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface UserRepository : JpaRepository<UserEntity, Long> {
     fun findByUserIdentifier(userIdentifier: String): UserEntity?
+    fun findByUserIdentifierIn(userIdentifier: List<String>): List<UserEntity>
     fun findByPath(path: String): UserEntity?
     fun findByName(name: String): UserEntity?
 }

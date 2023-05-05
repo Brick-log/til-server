@@ -19,9 +19,8 @@ class GetPostAdapter(
     private val postRepository: PostRepository,
     private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
-    override fun getPostByIdentifier(postIdentifier: Identifier): Post {
+    override fun getPostByIdentifier(postIdentifier: Identifier): Post? {
         return postRepository.findByIdentifier(postIdentifier.value)?.toModel()
-            ?: throw NotFoundException("Not found post - $postIdentifier")
     }
 
     override fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post> {

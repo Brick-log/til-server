@@ -13,9 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 class GetBlogAdapter(
     private val blogRepository: BlogRepository
 ) : GetBlogPort {
-    override fun getByBlogIdentifier(blogIdentifier: Identifier): Blog {
-        val entity = blogRepository.findByBlogIdentifier(blogIdentifier.value) ?: throw NotFoundException("Not found Blog - $blogIdentifier")
-        return entity.toModel()
+    override fun getByBlogIdentifier(blogIdentifier: Identifier): Blog? {
+        return blogRepository.findByBlogIdentifier(blogIdentifier.value)?.toModel()
     }
 
     @Transactional(readOnly = true)

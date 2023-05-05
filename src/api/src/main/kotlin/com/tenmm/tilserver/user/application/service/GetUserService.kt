@@ -12,20 +12,18 @@ class GetUserService(
     private val getUserPort: GetUserPort,
 ) : GetUserUseCase {
     override fun getByName(name: String): User {
-        return getUserPort.getByName(name) ?: throw NotFoundException("")
+        return getUserPort.getByName(name) ?: throw NotFoundException("User not found")
     }
 
     override fun getByPath(path: String): User {
-        return getUserPort.getByPath(path) ?: throw NotFoundException("")
+        return getUserPort.getByPath(path) ?: throw NotFoundException("User not found")
     }
 
     override fun getByIdentifier(userIdentifier: Identifier): User {
-        return getUserPort.getByUserIdentifier(userIdentifier) ?: throw NotFoundException("")
+        return getUserPort.getByUserIdentifier(userIdentifier) ?: throw NotFoundException("User not found")
     }
 
     override fun getByIdentifierList(userIdentifiers: List<Identifier>): List<User> {
-        return userIdentifiers.map {
-            getUserPort.getByUserIdentifier(it) ?: throw NotFoundException("")
-        }
+        return getUserPort.getByUserIdentifierBulk(identifiers = userIdentifiers)
     }
 }
