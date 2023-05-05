@@ -3,7 +3,6 @@ package com.tenmm.tilserver.common.security.annotation
 import com.tenmm.tilserver.security.application.inbound.ResolveTokenUseCase
 import com.tenmm.tilserver.security.domain.SecurityTokenType
 import com.tenmm.tilserver.security.domain.UserAuthInfo
-import com.tenmm.tilserver.common.domain.Identifier
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.BindingContext

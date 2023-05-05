@@ -63,11 +63,9 @@ class GetPostService(
         result: ResultWithToken<List<Post>>,
     ): GetPostListResult {
         val userIdentifierPathMap =
-            getUserUseCase.getByIdentifierList(result.data.map { it.userIdentifier }).associate {
-                it.identifier to it.path
-            }
+            getUserUseCase.getByIdentifierList(result.data.map { it.userIdentifier }).associateBy { it.identifier }
         return GetPostListResult(
-            posts = result.data.map { it.setUserPath(userIdentifierPathMap[it.userIdentifier]!!) },
+            posts = result.data.map { it.setUserInfo(userIdentifierPathMap[it.userIdentifier]!!) },
             size = result.data.size,
             nextPageToken = result.pageToken
         )
@@ -80,23 +78,23 @@ class GetPostService(
         size: Int,
         pageToken: String?,
     ): GetPostListResult {
-        val userIdentifier = getUserUseCase.getByPath(path).identifier
+        val userInfo = getUserUseCase.getByPath(path)
         return if (pageToken == null) {
             getPostPort.getPostListByUserAndCreatedAt(
-                userIdentifier,
+                userInfo.identifier,
                 to,
                 from,
                 size
             )
         } else {
             getPostPort.getPostListByUserAndCreatedAtWithPageToken(
-                userIdentifier,
+                userInfo.identifier,
                 size,
                 pageToken
             )
         }.let {
             GetPostListResult(
-                posts = it.data.map { it.setUserPath(path) },
+                posts = it.data.map { it.setUserInfo(userInfo) },
                 size = it.data.size,
                 nextPageToken = it.pageToken
             )
