@@ -95,7 +95,7 @@ class GetPostController(
         val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
             path = path,
             to = to?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MAX),
-            from = from?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MAX),
+            from = from?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MIN),
             size = size,
             pageToken = pageToken
         )
