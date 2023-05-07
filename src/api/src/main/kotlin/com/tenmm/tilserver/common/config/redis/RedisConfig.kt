@@ -7,6 +7,8 @@ import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.serializer.RedisSerializationContext
+import org.springframework.data.redis.core.convert.RedisCustomConversions
+import java.util.Arrays
 
 @Configuration
 class RedisConfig {
@@ -20,5 +22,10 @@ class RedisConfig {
     @Bean
     fun securityTokenRedisTemplate(connectionFactory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
         return ReactiveRedisTemplate(connectionFactory, RedisSerializationContext.string())
+    }
+
+    @Bean
+    fun redisCustomConversions(byteToTimestamp: BytesToTimestampConverter): RedisCustomConversions {
+        return RedisCustomConversions(Arrays.asList(byteToTimestamp))
     }
 }
