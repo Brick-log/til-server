@@ -19,7 +19,10 @@ class GetPostAdapter(
     private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
     override fun getPostByIdentifier(postIdentifier: Identifier): Post? {
-        return postRepository.findByIdentifier(postIdentifier.value)?.toModel()
+        return postRepository.findByIdentifier(postIdentifier.value)?.let {
+            it.hitCount++
+            postRepository.save(it)
+        }?.toModel()
     }
 
     override fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post> {
