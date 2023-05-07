@@ -13,9 +13,9 @@ private val logger = KotlinLogging.logger {}
 class ParsedPostAdapter(
     private val parsedPostRepository: ParsedPostRepository,
 ) : ParsedPostPort {
-    override fun getByIdentifier(identifier: Identifier): ParsedPostResult? {
+    override fun findById(identifier: Identifier): ParsedPostResult? {
         return try {
-            parsedPostRepository.findByIdentifier(identifier = identifier.value)?.toResult()
+            parsedPostRepository.findById(identifier.value).orElse(null).toResult()
         } catch (e: Exception) {
             logger.error(e) { "ParsedPost get Fail - $identifier" }
             null
