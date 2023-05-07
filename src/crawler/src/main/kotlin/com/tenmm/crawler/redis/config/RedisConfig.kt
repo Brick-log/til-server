@@ -1,4 +1,4 @@
-package com.tenmm.crawler.common.config.redis
+package com.tenmm.crawler.config.redis
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
