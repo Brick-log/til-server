@@ -1,4 +1,4 @@
-package com.tenmm.tilserver.common.config.redis
+package com.tenmm.crawler.common.config.redis
 
 import org.springframework.core.convert.converter.Converter
 import java.nio.ByteBuffer
