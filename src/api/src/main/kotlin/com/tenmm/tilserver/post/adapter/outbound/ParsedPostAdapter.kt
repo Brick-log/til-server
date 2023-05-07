@@ -22,9 +22,9 @@ class ParsedPostAdapter(
         }
     }
 
-    override fun deleteByIdentifier(identifier: Identifier): Boolean {
+    override fun deleteById(identifier: Identifier): Boolean {
         return try {
-            parsedPostRepository.deleteByIdentifier(identifier = identifier.value)
+            parsedPostRepository.deleteById(identifier.value) != null
         } catch (e: Exception) {
             logger.error(e) { "ParsedPost delete Fail - $identifier" }
             false

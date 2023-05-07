@@ -69,7 +69,7 @@ class SavePostService(
                 monthlyPublishCount = 0
             )
         }.apply {
-            parsedPostPort.deleteByIdentifier(command.saveIdentifier)
+            parsedPostPort.deleteById(command.saveIdentifier)
         }
     }
 }

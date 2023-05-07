@@ -5,5 +5,5 @@ import com.tenmm.tilserver.post.application.outbound.model.ParsedPostResult
 
 interface ParsedPostPort {
     fun findById(identifier: Identifier): ParsedPostResult?
-    fun deleteByIdentifier(identifier: Identifier): Boolean
+    fun deleteById(identifier: Identifier): Boolean
 }
