@@ -23,7 +23,7 @@ class RedisConfig {
     fun securityTokenRedisTemplate(connectionFactory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
         return ReactiveRedisTemplate(connectionFactory, RedisSerializationContext.string())
     }
-    
+
     @Bean
     fun redisCustomConversions(bytesToTimestamp: BytesToTimestampConverter, timestampToBytes: TimestampToBytesConverter): RedisCustomConversions {
         return RedisCustomConversions(Arrays.asList(bytesToTimestamp, timestampToBytes))
