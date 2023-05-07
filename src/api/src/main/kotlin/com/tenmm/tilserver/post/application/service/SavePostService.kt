@@ -28,7 +28,7 @@ class SavePostService(
 ) : SavePostUseCase {
     override suspend fun requestSave(command: PostSaveRequestCommand): PostSaveRequestResult {
         val identifier = crawlingPostPort.requestParseFromUrl(command.url, command.userIdentifier)
-        val result = parsedPostPort.getByIdentifier(identifier)
+        val result = parsedPostPort.findById(identifier)
             ?: throw NotFoundException("Not found parsing info - $identifier")
         return PostSaveRequestResult(
             saveIdentifier = identifier,
@@ -40,7 +40,7 @@ class SavePostService(
     }
 
     override fun confirmSave(command: PostSaveConfirmCommand): PostSaveConfirmResult {
-        val parsedResult = parsedPostPort.getByIdentifier(command.saveIdentifier)
+        val parsedResult = parsedPostPort.findById(command.saveIdentifier)
             ?: throw NotFoundException("Not found parsing info - ${command.saveIdentifier}")
         val userInfo = getUserUseCase.getByIdentifier(parsedResult.userIdentifier)
         val generatedPost = Post(
@@ -69,7 +69,7 @@ class SavePostService(
                 monthlyPublishCount = 0
             )
         }.apply {
-            parsedPostPort.deleteByIdentifier(command.saveIdentifier)
+            parsedPostPort.deleteById(command.saveIdentifier)
         }
     }
 }
