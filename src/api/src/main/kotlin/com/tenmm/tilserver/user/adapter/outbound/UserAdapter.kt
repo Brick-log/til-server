@@ -3,12 +3,12 @@ package com.tenmm.tilserver.user.adapter.outbound
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.outbound.persistence.entity.UserEntity
 import com.tenmm.tilserver.outbound.persistence.repository.UserRepository
-import com.tenmm.tilserver.user.application.inbound.model.CreateUserCommand
 import com.tenmm.tilserver.user.application.inbound.model.ModifyUserCommand
 import com.tenmm.tilserver.user.application.inbound.model.OnBoardingUserCommand
 import com.tenmm.tilserver.user.application.outbound.GetUserPort
 import com.tenmm.tilserver.user.application.outbound.ModifyUserPort
 import com.tenmm.tilserver.user.application.outbound.SaveUserPort
+import com.tenmm.tilserver.user.application.outbound.model.CreateUserRequest
 import com.tenmm.tilserver.user.domain.User
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
@@ -43,7 +43,8 @@ class UserAdapter(
             path = command.path,
             name = command.name,
             introduction = command.introduction,
-            categoryIdentifier = command.categoryIdentifier.value
+            categoryIdentifier = command.categoryIdentifier.value,
+            thumbnailUrl = command.profileImgSrc.value
         )
         userRepository.save(modifiedUserEntity)
         return true
@@ -61,15 +62,14 @@ class UserAdapter(
         return true
     }
 
-    override fun save(command: CreateUserCommand): User? {
+    override fun save(command: CreateUserRequest): User? {
         return try {
             val user = userRepository.save(
                 UserEntity(
                     name = command.name,
                     userIdentifier = command.userIdentifier.value,
-                    introduction = command.introduction,
-                    thumbnailUrl = command.thumbnailUrl.value,
-                    path = command.name
+                    path = command.name,
+                    thumbnailUrl = command.profileImgSrc.value
                 )
             )
             user.toModel()
