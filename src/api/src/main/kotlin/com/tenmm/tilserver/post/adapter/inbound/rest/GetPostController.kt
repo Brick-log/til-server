@@ -106,6 +106,7 @@ class GetPostController(
         )
         return GetPostListResponse.fromResult(postListResult)
     }
+
     @GetMapping("/user/{path}/meta")
     @Operation(
         summary = "사용자 포스트 잔디 기록 요청",
