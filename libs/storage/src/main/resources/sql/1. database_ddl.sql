@@ -73,10 +73,10 @@ CREATE TABLE `post`
 CREATE TABLE `user`
 (
     `id`                  int          not null primary key auto_increment,
-    `name`                varchar(255)  not null,
+    `name`                varchar(255) not null,
     `user_identifier`     char(36)     not null,
-    `category_identifier` char(36) default null,
-    `introduction`        TEXT     default null,
+    `category_identifier` char(36)     null,
+    `introduction`        TEXT         null,
     `thumbnail_url`       varchar(255) not null,
     `path`                varchar(255) not null,
     `status`              varchar(20)  not null,

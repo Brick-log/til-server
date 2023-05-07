@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.outbound.persistence.entity
 
 import java.sql.Timestamp
-import java.time.LocalDateTime
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 
