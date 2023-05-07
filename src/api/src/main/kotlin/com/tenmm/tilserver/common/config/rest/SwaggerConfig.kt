@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.common.config.rest
 
+import com.tenmm.tilserver.security.domain.UserAuthInfo
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
@@ -7,6 +8,7 @@ import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.security.SecurityRequirement
+import org.springdoc.core.utils.SpringDocUtils
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -20,6 +22,11 @@ import org.springframework.context.annotation.Configuration
     paramName = "Authorization"
 )
 class SwaggerConfig {
+
+    init {
+        val ignoreTypes = setOf<Class<*>>(UserAuthInfo::class.java).toTypedArray()
+        SpringDocUtils.getConfig().addRequestWrapperToIgnore(*ignoreTypes)
+    }
 
     @Bean
     fun customOpenAPI(): OpenAPI {

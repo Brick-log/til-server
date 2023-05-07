@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.common.security
 
+import java.lang.RuntimeException
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.util.Base64
@@ -28,21 +29,29 @@ class AES128(
     }
 
     fun encrypt(str: String): String {
-        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec)
-        val encrypted: ByteArray = cipher.doFinal(str.toByteArray(ENCODING_TYPE))
-        return String(Base64.getEncoder().encode(encrypted), ENCODING_TYPE)
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec)
+            val encrypted: ByteArray = cipher.doFinal(str.toByteArray(ENCODING_TYPE))
+            return String(Base64.getEncoder().encode(encrypted), ENCODING_TYPE)
+        } catch (e: Exception) {
+            throw RuntimeException("Encrypt Fail: $str")
+        }
     }
 
     fun decrypt(str: String): String {
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec)
-        val decoded: ByteArray = Base64.getDecoder().decode(str.toByteArray(ENCODING_TYPE))
-        return String(cipher.doFinal(decoded), ENCODING_TYPE)
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec)
+            val decoded: ByteArray = Base64.getDecoder().decode(str.toByteArray(ENCODING_TYPE))
+            return String(cipher.doFinal(decoded), ENCODING_TYPE)
+        } catch (e: Exception) {
+            throw RuntimeException("Decrypt Fail: $str")
+        }
     }
 
     private fun validation(key: String) {
         Optional.ofNullable(key)
             .filter(Predicate.not { obj: String -> obj.isBlank() })
             .filter(Predicate.not { s -> s.length != 16 })
-            .orElseThrow { IllegalArgumentException() }
+            .orElseThrow { IllegalArgumentException("Validation Fail: $key") }
     }
 }
