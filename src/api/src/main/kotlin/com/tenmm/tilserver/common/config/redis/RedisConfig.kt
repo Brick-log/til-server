@@ -25,7 +25,7 @@ class RedisConfig {
     }
 
     @Bean
-    fun redisCustomConversions(byteToTimestamp: BytesToTimestampConverter): RedisCustomConversions {
-        return RedisCustomConversions(Arrays.asList(byteToTimestamp))
+    fun redisCustomConversions(bytesToTimestamp: BytesToTimestampConverter, timestampToBytes: TimestampToBytesConverter): RedisCustomConversions {
+        return RedisCustomConversions(Arrays.asList(bytesToTimestamp, timestampToBytes))
     }
 }
