@@ -2,9 +2,9 @@ package com.tenmm.tilserver.security.application.service
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.security.JwtConfigProperties
+import com.tenmm.tilserver.common.utils.CryptoHandler
 import com.tenmm.tilserver.security.application.inbound.ResolveTokenUseCase
 import com.tenmm.tilserver.security.domain.SecurityTokenType
-import com.tenmm.tilserver.common.utils.CryptoHandler
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import javax.crypto.SecretKey
@@ -16,8 +16,15 @@ class ResolveTokenService(
     private val jwtConfigProperties: JwtConfigProperties
 ) : ResolveTokenUseCase {
     override fun resolveToken(token: String, securityTokenType: SecurityTokenType): Identifier {
-        val properties =
-            if (securityTokenType == SecurityTokenType.ACCESS) jwtConfigProperties.access else jwtConfigProperties.refresh
+        val properties = when (securityTokenType) {
+            SecurityTokenType.ACCESS -> {
+                jwtConfigProperties.access
+            }
+
+            SecurityTokenType.REFRESH -> {
+                jwtConfigProperties.refresh
+            }
+        }
         val key: SecretKey = Keys.hmacShaKeyFor(properties.secret.toByteArray())
         val jwt = cryptoHandler.decrypt(token, String::class)
 

@@ -1,6 +1,7 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
@@ -112,7 +113,8 @@ class ModifyUserProfileController(
             introduction = modifyUserRequest.introduction,
             name = modifyUserRequest.name,
             path = modifyUserRequest.path,
-            mailAgreement = modifyUserRequest.mailAgreement
+            mailAgreement = modifyUserRequest.mailAgreement,
+            profileImgSrc = Url(modifyUserRequest.profileImgSrc)
         )
         return ModifyUserProfileResponse(modifyUserUseCase.modifyUserInfo(command).isSuccess)
     }

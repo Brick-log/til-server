@@ -12,5 +12,5 @@ data class ParsedPostEntity(
     val url: String,
     val title: String,
     val description: String?,
-    val createdAt: Timestamp?,
+    val createdAt: Timestamp?
 )

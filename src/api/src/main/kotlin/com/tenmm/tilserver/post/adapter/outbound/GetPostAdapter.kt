@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.ResultWithToken
 import com.tenmm.tilserver.common.utils.CryptoHandler
 import com.tenmm.tilserver.outbound.persistence.repository.PostRepository
@@ -19,9 +18,8 @@ class GetPostAdapter(
     private val postRepository: PostRepository,
     private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
-    override fun getPostByIdentifier(postIdentifier: Identifier): Post {
+    override fun getPostByIdentifier(postIdentifier: Identifier): Post? {
         return postRepository.findByIdentifier(postIdentifier.value)?.toModel()
-            ?: throw NotFoundException("Not found post - $postIdentifier")
     }
 
     override fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post> {
@@ -113,8 +111,8 @@ class GetPostAdapter(
             postRepository.findAllByIdLessThanAndUserIdentifierAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(
                 id = parsedPageToken.lastEntityId,
                 userIdentifier = parsedPageToken.categoryIdentifier.value,
-                from = Timestamp.from(Instant.ofEpochMilli(parsedPageToken.from)),
-                to = Timestamp.from(Instant.ofEpochMilli(parsedPageToken.to)),
+                from = Timestamp.from(Instant.ofEpochSecond(parsedPageToken.from)),
+                to = Timestamp.from(Instant.ofEpochSecond(parsedPageToken.to)),
                 pageable = generatePageRequest(size + 1)
             )
 

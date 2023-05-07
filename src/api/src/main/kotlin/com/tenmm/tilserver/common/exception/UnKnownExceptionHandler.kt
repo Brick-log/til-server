@@ -1,6 +1,5 @@
 package com.tenmm.tilserver.common.exception
 
-import io.jsonwebtoken.ExpiredJwtException
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
@@ -15,12 +14,7 @@ class UnKnownExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Throwable::class)
     fun handleApiException(ex: Throwable): ErrorResponse {
+        ex.printStackTrace()
         return ErrorResponse(ex.message ?: ex.localizedMessage)
-    }
-
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    @ExceptionHandler(ExpiredJwtException::class)
-    fun handleExpiredJwtException(e: ExpiredJwtException): ErrorResponse {
-        return ErrorResponse("Access Token is Expired")
     }
 }

@@ -43,7 +43,7 @@ class SaveDraftController(
         ]
     )
     @RequiredAuthentication
-    fun save(
+    suspend fun save(
         userAuthInfo: UserAuthInfo,
         @RequestBody saveDraftRequest: SaveDraftRequest,
     ): SaveDraftResponse {

@@ -18,16 +18,22 @@ class ModifyUserService(
 ) : ModifyUserUseCase {
     override fun modifyUserInfo(command: ModifyUserCommand): OperationResult {
         getUserPort.getByUserIdentifier(command.userIdentifier)
-            ?: throw NotFoundException("ZZ")
+            ?: throw NotFoundException("User not found")
 
         modifyUserPort.modifyUserInfo(command)
-        modifyAccountUseCase.modifyMailAgreement(userIdentifier = command.userIdentifier, isOn = command.mailAgreement)
+        modifyAccountUseCase.modifyMailAgreement(
+            userIdentifier = command.userIdentifier,
+            isOn = command.mailAgreement
+        )
         return OperationResult.success()
     }
 
     override fun onBoardingUserInfo(command: OnBoardingUserCommand): OperationResult {
         modifyUserPort.modifyUserInfo(command)
-        modifyAccountUseCase.modifyMailAgreement(userIdentifier = command.userIdentifier, isOn = command.mailAgreement)
+        modifyAccountUseCase.modifyMailAgreement(
+            userIdentifier = command.userIdentifier,
+            isOn = command.mailAgreement
+        )
         return OperationResult.success()
     }
 }

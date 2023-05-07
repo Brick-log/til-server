@@ -12,11 +12,11 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 
 @Component
-class UserArgumentResolver(
+class OptionalUserArgumentResolver(
     private val resolveTokenUseCase: ResolveTokenUseCase,
 ) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasMethodAnnotation(RequiredAuthentication::class.java)
+        return parameter.hasMethodAnnotation(OptionalAuthentication::class.java)
     }
 
     override fun resolveArgument(
@@ -24,10 +24,14 @@ class UserArgumentResolver(
         bindingContext: BindingContext,
         exchange: ServerWebExchange,
     ): Mono<Any> {
-        val tokenWithBearer = exchange.request.headers["Authorization"]!![0]
-
-        val token = tokenWithBearer.substringAfter("Bearer ")
-        val userIdentifier = resolveTokenUseCase.resolveToken(token, SecurityTokenType.ACCESS)
-        return UserAuthInfo(userIdentifier).toMono()
+        val authFromHeader = exchange.request.headers["Authorization"]
+        return if (authFromHeader == null) {
+            null.toMono()
+        } else {
+            val tokenWithBearer = authFromHeader[0]
+            val token = tokenWithBearer.substringAfter("Bearer ")
+            val userIdentifier = resolveTokenUseCase.resolveToken(token, SecurityTokenType.ACCESS)
+            UserAuthInfo(userIdentifier).toMono()
+        }
     }
 }

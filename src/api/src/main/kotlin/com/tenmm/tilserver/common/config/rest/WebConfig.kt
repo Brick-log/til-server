@@ -10,5 +10,6 @@ class WebConfig : WebFluxConfigurer {
         registry.addMapping("/**")
             .allowedOrigins("*")
             .allowedHeaders("*")
+            .allowedMethods("*")
     }
 }

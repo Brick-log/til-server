@@ -1,8 +1,8 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.toIdentifier
+import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostMetaResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostResponse
@@ -28,6 +28,7 @@ class GetPostController(
     private val getPostUseCase: GetPostUseCase,
     private val getRecommendedPostUseCase: GetRecommendedPostUseCase,
 ) {
+
     @GetMapping("/{postIdentifier}")
     @Operation(
         summary = "포스트 주소 요청",
@@ -94,8 +95,8 @@ class GetPostController(
     ): GetPostListResponse {
         val postListResult = getPostUseCase.getPostListByNameAndDateWithPageToken(
             path = path,
-            to = to?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MAX),
-            from = from?.let { Timestamp.from(Instant.ofEpochMilli(it)) } ?: Timestamp.from(Instant.MAX),
+            to = to?.let { Timestamp.from(Instant.ofEpochSecond(it)) } ?: Timestamp.from(Instant.MAX),
+            from = from?.let { Timestamp.from(Instant.ofEpochSecond(it)) } ?: Timestamp.from(Instant.MIN),
             size = size,
             pageToken = pageToken
         )
@@ -134,8 +135,8 @@ class GetPostController(
     ): GetPostMetaResponse {
         val postMetaResult = getPostUseCase.getPostMetaListByNameAndDate(
             path = path,
-            to = Timestamp.from(Instant.ofEpochMilli(to)),
-            from = Timestamp.from(Instant.ofEpochMilli(from))
+            to = Timestamp.from(Instant.ofEpochSecond(to)),
+            from = Timestamp.from(Instant.ofEpochSecond(from))
         )
         return GetPostMetaResponse.fromResult(postMetaResult)
     }

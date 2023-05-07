@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.outbound.persistence.repository.PostRepository
 import com.tenmm.tilserver.post.application.inbound.model.ModifyPostCommand
 import com.tenmm.tilserver.post.application.outbound.DeletePostPort
@@ -30,12 +29,12 @@ class ModifyPostAdapter(
 
     override fun modifyByIdentifier(command: ModifyPostCommand): Boolean {
         val postEntity = postRepository.findByIdentifier(command.identifier.value)
-            ?: throw NotFoundException("Not found Post - ${command.identifier}")
+            ?: return false
 
         val modifiedEntity = postEntity.copy(
             title = command.title,
             description = command.summary,
-            createdAt = Timestamp.from(Instant.ofEpochMilli(command.createdAt))
+            createdAt = Timestamp.from(Instant.ofEpochSecond(command.createdAt))
         )
 
         return try {
