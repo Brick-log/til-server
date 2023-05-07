@@ -1,14 +1,14 @@
 package com.tenmm.tilserver.common.config.redis
 
+import java.util.Arrays
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.ReactiveRedisTemplate
-import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.core.convert.RedisCustomConversions
-import java.util.Arrays
+import org.springframework.data.redis.serializer.RedisSerializationContext
 
 @Configuration
 class RedisConfig {
@@ -23,9 +23,17 @@ class RedisConfig {
     fun securityTokenRedisTemplate(connectionFactory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
         return ReactiveRedisTemplate(connectionFactory, RedisSerializationContext.string())
     }
-    
+
     @Bean
-    fun redisCustomConversions(bytesToTimestamp: BytesToTimestampConverter, timestampToBytes: TimestampToBytesConverter): RedisCustomConversions {
+    fun draftRedisTemplate(connectionFactory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
+        return ReactiveRedisTemplate(connectionFactory, RedisSerializationContext.string())
+    }
+
+    @Bean
+    fun redisCustomConversions(
+        bytesToTimestamp: BytesToTimestampConverter,
+        timestampToBytes: TimestampToBytesConverter,
+    ): RedisCustomConversions {
         return RedisCustomConversions(Arrays.asList(bytesToTimestamp, timestampToBytes))
     }
 }

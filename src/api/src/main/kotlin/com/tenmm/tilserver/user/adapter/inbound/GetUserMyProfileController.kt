@@ -1,10 +1,11 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
+import com.tenmm.tilserver.account.application.inbound.GetAccountUseCase
 import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
-import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
-import com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse
+import com.tenmm.tilserver.security.domain.UserAuthInfo
+import com.tenmm.tilserver.user.adapter.inbound.model.GetMyProfileResponse
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/v1/my/user")
 @Tag(name = "Profile")
 class GetUserMyProfileController(
+    private val getAccountUseCase: GetAccountUseCase,
     private val getUserUseCase: GetUserUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
 ) {
@@ -48,9 +50,10 @@ class GetUserMyProfileController(
         ]
     )
     @RequiredAuthentication
-    fun getUserMyProfile(userAuthInfo: UserAuthInfo): GetUserProfileResponse {
+    fun getUserMyProfile(userAuthInfo: UserAuthInfo): GetMyProfileResponse {
         val user = getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier)
         val category = user.categoryIdentifier?.let { getCategoryUseCase.getByIdentifier(it) }
-        return GetUserProfileResponse.fromUser(user, category, true)
+        val account = getAccountUseCase.getByUserIdentifier(userAuthInfo.userIdentifier)
+        return GetMyProfileResponse.fromUser(user, category, account.isSpamNotificationAgreed)
     }
 }
