@@ -1,5 +1,7 @@
 package com.tenmm.tilserver.common.config.rest
 
+import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
+import com.tenmm.tilserver.security.domain.UserAuthInfo
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
@@ -7,6 +9,7 @@ import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.security.SecurityRequirement
+import org.springdoc.core.customizers.OperationCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -20,7 +23,6 @@ import org.springframework.context.annotation.Configuration
     paramName = "Authorization"
 )
 class SwaggerConfig {
-
     @Bean
     fun customOpenAPI(): OpenAPI {
         val securityRequirement = SecurityRequirement().addList("BearerAuth")
@@ -31,5 +33,21 @@ class SwaggerConfig {
                 Info().title("Brick-Log")
             )
             .addSecurityItem(securityRequirement)
+    }
+
+    @Bean
+    fun ignoreUserAuthInfoCustomizer(): OperationCustomizer {
+        return OperationCustomizer { operation, handlerMethod ->
+
+            handlerMethod.getMethodAnnotation(RequiredAuthentication::class.java)
+                ?.let {
+                    operation.parameters.removeIf {
+                        handlerMethod.methodParameters.any { methodParameter ->
+                            methodParameter.parameterType == UserAuthInfo::class.java
+                        }
+                    }
+                }
+            operation
+        }
     }
 }
