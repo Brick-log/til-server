@@ -55,4 +55,10 @@ class ModifyPostAdapter(
             false
         }
     }
+
+    override fun increasePostHitCount(postIdentifier: Identifier) {
+        val postEntity = postRepository.findByIdentifier(identifier = postIdentifier.value) ?: return
+
+        postRepository.save(postEntity.copy(hitCount = postEntity.hitCount + 1))
+    }
 }

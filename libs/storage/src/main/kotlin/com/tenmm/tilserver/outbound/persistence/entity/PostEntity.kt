@@ -34,7 +34,7 @@ data class PostEntity(
     val url: String,
 
     @Column
-    var hitCount: Int,
+    val hitCount: Int,
 
     @Column(name = "createdAt")
     val createdAt: Timestamp,
