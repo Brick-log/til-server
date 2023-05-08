@@ -2,8 +2,8 @@ package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
-import com.tenmm.tilserver.outbound.persistence.entity.ParsedPostEntity
 import com.tenmm.tilserver.outbound.persistence.entity.PostEntity
+import com.tenmm.tilserver.outbound.redis.entity.ParsedPostEntity
 import com.tenmm.tilserver.post.application.outbound.model.ParsedPostResult
 import com.tenmm.tilserver.post.domain.Post
 

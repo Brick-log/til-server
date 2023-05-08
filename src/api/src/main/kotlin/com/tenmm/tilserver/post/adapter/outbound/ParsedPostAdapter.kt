@@ -1,33 +1,41 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.outbound.persistence.repository.ParsedPostRepository
-import com.tenmm.tilserver.post.application.outbound.ParsedPostPort
+import com.tenmm.tilserver.outbound.redis.entity.ParsedPostEntity
+import com.tenmm.tilserver.post.application.outbound.DeleteParsedPostPort
+import com.tenmm.tilserver.post.application.outbound.GetParsedPostPort
 import com.tenmm.tilserver.post.application.outbound.model.ParsedPostResult
-import mu.KotlinLogging
+import org.springframework.data.redis.core.ReactiveRedisTemplate
+import org.springframework.data.redis.core.deleteAndAwait
+import org.springframework.data.redis.core.getAndAwait
 import org.springframework.stereotype.Component
-
-private val logger = KotlinLogging.logger {}
 
 @Component
 class ParsedPostAdapter(
-    private val parsedPostRepository: ParsedPostRepository,
-) : ParsedPostPort {
-    override fun findById(identifier: Identifier): ParsedPostResult? {
-        return try {
-            parsedPostRepository.findById(identifier.value).orElse(null).toResult()
-        } catch (e: Exception) {
-            logger.error(e) { "ParsedPost get Fail - $identifier" }
-            null
-        }
+    parsedPostRedisTemplate: ReactiveRedisTemplate<String, ParsedPostEntity>,
+) : GetParsedPostPort, DeleteParsedPostPort {
+
+    private val ops = parsedPostRedisTemplate.opsForValue()
+
+    override suspend fun findByIdentifier(
+        userIdentifier: Identifier,
+        parsedPostIdentifier: Identifier,
+    ): ParsedPostResult? {
+        val key = ParsedPostEntity.generateKey(
+            userIdentifier = userIdentifier.value,
+            identifier = parsedPostIdentifier.value
+        )
+        return ops.getAndAwait(key)?.toResult()
     }
 
-    override fun deleteById(identifier: Identifier): Boolean {
-        return try {
-            parsedPostRepository.deleteById(identifier.value) != null
-        } catch (e: Exception) {
-            logger.error(e) { "ParsedPost delete Fail - $identifier" }
-            false
-        }
+    override suspend fun deleteByIdentifier(
+        userIdentifier: Identifier,
+        parsedPostIdentifier: Identifier,
+    ): Boolean {
+        val key = ParsedPostEntity.generateKey(
+            userIdentifier = userIdentifier.value,
+            identifier = parsedPostIdentifier.value
+        )
+        return ops.deleteAndAwait(key)
     }
 }
