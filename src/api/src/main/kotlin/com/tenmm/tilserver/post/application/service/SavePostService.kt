@@ -10,7 +10,8 @@ import com.tenmm.tilserver.post.application.inbound.model.PostSaveConfirmResult
 import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestCommand
 import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestResult
 import com.tenmm.tilserver.post.application.outbound.CrawlingPostPort
-import com.tenmm.tilserver.post.application.outbound.ParsedPostPort
+import com.tenmm.tilserver.post.application.outbound.DeleteParsedPostPort
+import com.tenmm.tilserver.post.application.outbound.GetParsedPostPort
 import com.tenmm.tilserver.post.application.outbound.SavePostPort
 import com.tenmm.tilserver.post.domain.Post
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
@@ -21,17 +22,18 @@ import org.springframework.stereotype.Service
 @Service
 class SavePostService(
     private val crawlingPostPort: CrawlingPostPort,
-    private val parsedPostPort: ParsedPostPort,
+    private val getParsedPostPort: GetParsedPostPort,
+    private val deleteParsedPostPort: DeleteParsedPostPort,
     private val savePostPort: SavePostPort,
     private val getPostUseCase: GetPostUseCase,
     private val getUserUseCase: GetUserUseCase,
 ) : SavePostUseCase {
     override suspend fun requestSave(command: PostSaveRequestCommand): PostSaveRequestResult {
-        val identifier = crawlingPostPort.requestParseFromUrl(command.url, command.userIdentifier)
-        val result = parsedPostPort.findById(identifier)
-            ?: throw NotFoundException("Not found parsing info - $identifier")
+        val parsedPostIdentifier = crawlingPostPort.requestParseFromUrl(command.url, command.userIdentifier)
+        val result = getParsedPostPort.findByIdentifier(command.userIdentifier, parsedPostIdentifier)
+            ?: throw NotFoundException("Not found parsing info - $parsedPostIdentifier")
         return PostSaveRequestResult(
-            saveIdentifier = identifier,
+            saveIdentifier = parsedPostIdentifier,
             url = command.url,
             title = result.title,
             description = result.description,
@@ -39,9 +41,11 @@ class SavePostService(
         )
     }
 
-    override fun confirmSave(command: PostSaveConfirmCommand): PostSaveConfirmResult {
-        val parsedResult = parsedPostPort.findById(command.saveIdentifier)
-            ?: throw NotFoundException("Not found parsing info - ${command.saveIdentifier}")
+    override suspend fun confirmSave(command: PostSaveConfirmCommand): PostSaveConfirmResult {
+        val parsedResult = getParsedPostPort.findByIdentifier(
+            command.userIdentifier,
+            command.saveIdentifier
+        ) ?: throw NotFoundException("Not found parsing info - ${command.saveIdentifier}")
         val userInfo = getUserUseCase.getByIdentifier(parsedResult.userIdentifier)
         val generatedPost = Post(
             identifier = Identifier.generate(),
@@ -69,7 +73,7 @@ class SavePostService(
                 monthlyPublishCount = 0
             )
         }.apply {
-            parsedPostPort.deleteById(command.saveIdentifier)
+            deleteParsedPostPort.deleteByIdentifier(command.userIdentifier, command.saveIdentifier)
         }
     }
 }

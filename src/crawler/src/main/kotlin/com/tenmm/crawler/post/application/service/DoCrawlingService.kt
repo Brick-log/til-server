@@ -15,7 +15,7 @@ class DoCrawlingService(
     private val doCrawlingPort: DoCrawlingPort,
     private val saveCrawlingPort: SaveCrawlingPort,
 ) : DoCrawlingUseCase {
-    override fun invoke(url: Url, userIdentifier: Identifier): Identifier {
+    override suspend fun invoke(url: Url, userIdentifier: Identifier): Identifier {
         val type = UrlCheck.getType(url)
         val cssSelectorInfo = crawlerMap[type]!!.getMeta()
 

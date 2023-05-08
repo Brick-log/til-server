@@ -4,5 +4,5 @@ import com.tenmm.crawler.post.domain.Identifier
 import com.tenmm.crawler.post.domain.Url
 
 interface DoCrawlingUseCase {
-    fun invoke(url: Url, userIdentifier: Identifier): Identifier
+    suspend fun invoke(url: Url, userIdentifier: Identifier): Identifier
 }
