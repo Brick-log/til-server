@@ -18,11 +18,14 @@ class GetPostAdapter(
     private val postRepository: PostRepository,
     private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
+    override fun totalPostCount(userIdentifier: Identifier): Int {
+        return postRepository.countAllByUserIdentifier(
+            userIdentifier = userIdentifier.value
+        )
+    }
+
     override fun getPostByIdentifier(postIdentifier: Identifier): Post? {
-        return postRepository.findByIdentifier(postIdentifier.value)?.let {
-            it.hitCount++
-            postRepository.save(it)
-        }?.toModel()
+        return postRepository.findByIdentifier(postIdentifier.value)?.toModel()
     }
 
     override fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post> {

@@ -45,4 +45,6 @@ interface PostRepository : JpaRepository<PostEntity, Long> {
         from: Timestamp,
         to: Timestamp,
     ): Int
+
+    fun countAllByUserIdentifier(userIdentifier: String): Int
 }

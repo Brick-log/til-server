@@ -9,6 +9,7 @@ import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
 import com.tenmm.tilserver.post.application.inbound.model.GetPostMetaResult
 import com.tenmm.tilserver.post.application.inbound.model.GetPostResult
 import com.tenmm.tilserver.post.application.outbound.GetPostPort
+import com.tenmm.tilserver.post.application.outbound.ModifyPostPort
 import com.tenmm.tilserver.post.domain.Post
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import java.sql.Timestamp
@@ -19,11 +20,13 @@ import org.springframework.stereotype.Service
 @Service
 class GetPostService(
     private val getPostPort: GetPostPort,
+    private val modifyPostPort: ModifyPostPort,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getUserUseCase: GetUserUseCase,
 ) : GetPostUseCase {
     override fun showPostByIdentifier(postIdentifier: Identifier): GetPostResult {
         val post = getPostPort.getPostByIdentifier(postIdentifier) ?: throw NotFoundException("Post not found")
+        modifyPostPort.increasePostHitCount(post.identifier)
         return GetPostResult(url = post.url)
     }
 
@@ -81,6 +84,7 @@ class GetPostService(
         pageToken: String?,
     ): GetPostListResult {
         val userInfo = getUserUseCase.getByPath(path)
+        val totalCount = getPostPort.totalPostCount(userIdentifier = userInfo.identifier)
         return if (pageToken == null) {
             getPostPort.getPostListByUserAndCreatedAt(
                 userInfo.identifier,
@@ -97,7 +101,7 @@ class GetPostService(
         }.let {
             GetPostListResult(
                 posts = it.data.map { it.setUserInfo(userInfo) },
-                size = it.data.size,
+                size = totalCount,
                 nextPageToken = it.pageToken
             )
         }
