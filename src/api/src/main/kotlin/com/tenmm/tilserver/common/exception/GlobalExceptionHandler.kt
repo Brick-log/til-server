@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.common.exception
 
+import com.tenmm.tilserver.common.domain.NotFoundException
 import io.jsonwebtoken.ExpiredJwtException
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
@@ -15,6 +16,12 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RuntimeException::class)
     fun handleApiException(e: RuntimeException): ErrorResponse {
+        return ErrorResponse(e.message ?: "")
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNotFoundException(e: NotFoundException): ErrorResponse {
         return ErrorResponse(e.message ?: "")
     }
 
