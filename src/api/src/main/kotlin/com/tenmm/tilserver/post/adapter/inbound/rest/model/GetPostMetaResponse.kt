@@ -4,12 +4,12 @@ import com.tenmm.tilserver.post.application.inbound.model.GetPostMetaResult
 import java.time.format.DateTimeFormatter
 
 data class GetPostMetaResponse(
-    val dateList: List<String>,
+    val metas: List<String>,
 ) {
     companion object {
         fun fromResult(result: GetPostMetaResult): GetPostMetaResponse {
             return GetPostMetaResponse(
-                dateList = result.dateList.map {
+                metas = result.dateList.map {
                     it.format(postMetaTimeFormatter)
                 }
             )

@@ -39,7 +39,8 @@ interface PostRepository : JpaRepository<PostEntity, Long> {
         to: Timestamp,
     ): List<PostEntity>
 
-    fun deleteByIdentifier(identifier: String): Boolean
+    fun deleteByIdentifier(identifier: String): Int
+
     fun countAllByUserIdentifierAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(
         userIdentifier: String,
         from: Timestamp,

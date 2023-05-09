@@ -6,5 +6,5 @@ data class ModifyUserRequest(
     val name: String,
     val path: String,
     val profileImgSrc: String,
-    val mailAgreement: Boolean,
+    val isMailAgreement: Boolean,
 )

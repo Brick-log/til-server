@@ -4,17 +4,17 @@ import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestResult
 import java.sql.Timestamp
 
 data class RequestUploadPostResponse(
-    val saveIdentifier: String,
+    val identifier: String,
     val title: String,
-    val description: String?,
+    val summary: String?,
     val createdAt: Timestamp?,
 ) {
     companion object {
         fun fromResult(result: PostSaveRequestResult): RequestUploadPostResponse {
             return RequestUploadPostResponse(
-                saveIdentifier = result.saveIdentifier.value,
+                identifier = result.saveIdentifier.value,
                 title = result.title,
-                description = result.description,
+                summary = result.description,
                 createdAt = result.createdAt,
             )
         }
