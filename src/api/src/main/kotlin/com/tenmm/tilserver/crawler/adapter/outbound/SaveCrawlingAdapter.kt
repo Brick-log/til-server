@@ -1,8 +1,8 @@
-package com.tenmm.crawler.post.adapter.outbound
+package com.tenmm.tilserver.crawler.adapter.outbound
 
-import com.tenmm.crawler.post.application.outbound.SaveCrawlingPort
-import com.tenmm.crawler.post.domain.Identifier
-import com.tenmm.crawler.post.domain.Post
+import com.tenmm.tilserver.crawler.application.outbound.SaveCrawlingPort
+import com.tenmm.tilserver.crawler.domain.Identifier
+import com.tenmm.tilserver.crawler.domain.Post
 import com.tenmm.tilserver.outbound.redis.entity.ParsedPostEntity
 import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.setAndAwait

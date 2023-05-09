@@ -1,9 +1,9 @@
-package com.tenmm.crawler.post.adapter.outbound
+package com.tenmm.tilserver.crawler.adapter.outbound
 
-import com.tenmm.crawler.post.application.outbound.DoCrawlingPort
-import com.tenmm.crawler.post.domain.CssSelectorInfo
-import com.tenmm.crawler.post.domain.Post
-import com.tenmm.crawler.post.domain.Url
+import com.tenmm.tilserver.crawler.application.outbound.DoCrawlingPort
+import com.tenmm.tilserver.crawler.domain.CssSelectorInfo
+import com.tenmm.tilserver.crawler.domain.Post
+import com.tenmm.tilserver.crawler.domain.Url
 import java.net.URL
 import java.sql.Timestamp
 import java.text.SimpleDateFormat

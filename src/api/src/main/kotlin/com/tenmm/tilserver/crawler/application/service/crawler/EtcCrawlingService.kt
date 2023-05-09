@@ -1,6 +1,6 @@
-package com.tenmm.crawler.post.application.service.crawler
+package com.tenmm.tilserver.crawler.application.service.crawler
 
-class TistoryCrawlingService : CrawlerMetaService() {
+class EtcCrawlingService : CrawlerMetaService() {
     override fun getTitleCssSelector(): String {
         return "meta[property=og:title]"
     }

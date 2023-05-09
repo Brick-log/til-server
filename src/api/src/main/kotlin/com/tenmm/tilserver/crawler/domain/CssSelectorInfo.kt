@@ -1,4 +1,4 @@
-package com.tenmm.crawler.post.domain
+package com.tenmm.tilserver.crawler.domain
 
 data class CssSelectorInfo(
     val titleCssSelector: String,

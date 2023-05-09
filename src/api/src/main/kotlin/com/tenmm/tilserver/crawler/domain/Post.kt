@@ -1,4 +1,4 @@
-package com.tenmm.crawler.post.domain
+package com.tenmm.tilserver.crawler.domain
 
 import java.sql.Timestamp
 

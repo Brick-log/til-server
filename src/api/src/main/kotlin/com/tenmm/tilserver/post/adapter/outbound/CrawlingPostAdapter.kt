@@ -5,9 +5,8 @@ import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.post.application.outbound.CrawlingPostPort
 import com.tenmm.tilserver.protocol.CrawlerServiceGrpcKt
 import com.tenmm.tilserver.protocol.CrawlingRequest
-import org.springframework.stereotype.Component
 
-@Component
+// @Component
 class CrawlingPostAdapter(
     private val crawlerServiceCoroutineStub: CrawlerServiceGrpcKt.CrawlerServiceCoroutineStub,
 ) : CrawlingPostPort {

@@ -1,6 +1,6 @@
-package com.tenmm.crawler.post.application.service.crawler
+package com.tenmm.tilserver.crawler.application.service.crawler
 
-import com.tenmm.crawler.util.UrlType
+import com.tenmm.tilserver.crawler.util.UrlType
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

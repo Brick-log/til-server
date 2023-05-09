@@ -1,6 +1,6 @@
-package com.tenmm.crawler.post.application.service.crawler
+package com.tenmm.tilserver.crawler.application.service.crawler
 
-import com.tenmm.crawler.post.domain.CssSelectorInfo
+import com.tenmm.tilserver.crawler.domain.CssSelectorInfo
 
 abstract class CrawlerMetaService {
     fun getMeta(): CssSelectorInfo {
