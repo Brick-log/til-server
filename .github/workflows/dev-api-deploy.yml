@@ -8,6 +8,7 @@ on:
     paths:
       - 'libs/**'
       - 'src/api/**'
+      - 'src/crawler/**'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,9 +31,11 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
+      - name: Build api server with Gradle
         run: ./gradlew :api:build -x test
-      - name: copy file via ssh key
+      - name: Build crawler server with Gradle
+        run: ./gradlew :crawler:build -x test
+      - name: copy api server file via ssh key
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.REMOTE_DEV_HOST }}
@@ -40,7 +43,15 @@ jobs:
           key: ${{ secrets.SSH_DEV_KEY }}
           source: "./src/api/build/libs/api.jar"
           target: "./api"
-      - name: Run JAR file
+      - name: copy crawler server file via ssh key
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.REMOTE_DEV_HOST }}
+          username: ${{ secrets.REMOTE_DEV_USERNAME }}
+          key: ${{ secrets.SSH_DEV_KEY }}
+          source: "./src/crawler/build/libs/crawler.jar"
+          target: "./crawler"
+      - name: Run api JAR file
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_DEV_HOST }}
@@ -55,3 +66,18 @@ jobs:
             fi
             chmod 777 ./api/src/api/build/libs/api.jar
             nohup java -Dspring.profiles.active=dev -jar ./api/src/api/build/libs/api.jar > nohup.out 2> nohup.err < /dev/null &
+      - name: Run crawler JAR file
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_DEV_HOST }}
+          username: ${{ secrets.REMOTE_DEV_USERNAME }}
+          key: ${{ secrets.SSH_DEV_KEY }}
+          script: |
+            pid=$(ps -ef | grep "crawler" | grep -v 'grep' | awk '{print $2}')
+            if [ "$pid" ]
+            then
+              kill "$pid"
+              echo "Delete Prev Version"
+            fi
+            chmod 777 ./crawler/src/crawler/build/libs/crawler.jar
+            nohup java -Dspring.profiles.active=dev -jar ./crawler/src/crawler/build/libs/crawler.jar > nohup.out 2> nohup.err < /dev/null &
