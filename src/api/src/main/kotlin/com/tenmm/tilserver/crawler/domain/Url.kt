@@ -1,4 +1,4 @@
-package com.tenmm.crawler.post.domain
+package com.tenmm.tilserver.crawler.domain
 
 data class Url(
     val value: String,

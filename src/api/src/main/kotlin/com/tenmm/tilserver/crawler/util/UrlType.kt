@@ -1,4 +1,4 @@
-package com.tenmm.crawler.util
+package com.tenmm.tilserver.crawler.util
 
 enum class UrlType {
     TISTORY,

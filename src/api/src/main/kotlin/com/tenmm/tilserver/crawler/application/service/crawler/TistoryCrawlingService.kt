@@ -1,6 +1,6 @@
-package com.tenmm.crawler.post.application.service.crawler
+package com.tenmm.tilserver.crawler.application.service.crawler
 
-class VelogCrawlingService : CrawlerMetaService() {
+class TistoryCrawlingService : CrawlerMetaService() {
     override fun getTitleCssSelector(): String {
         return "meta[property=og:title]"
     }
@@ -10,10 +10,10 @@ class VelogCrawlingService : CrawlerMetaService() {
     }
 
     override fun getCreatedAtCssSelector(): String {
-        return "div.information > span:nth-child(3)"
+        return "meta[property=article:published_time]"
     }
 
     override fun getDateFormat(): String {
-        return "yyyy년 MM월 dd일"
+        return "yyyy-MM-dd'T'HH:mm:ssXXX"
     }
 }

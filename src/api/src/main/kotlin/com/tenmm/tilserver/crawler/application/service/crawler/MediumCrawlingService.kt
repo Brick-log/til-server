@@ -1,6 +1,6 @@
-package com.tenmm.crawler.post.application.service.crawler
+package com.tenmm.tilserver.crawler.application.service.crawler
 
-class NaverCrawlingService : CrawlerMetaService() {
+class MediumCrawlingService : CrawlerMetaService() {
     override fun getTitleCssSelector(): String {
         return "meta[property=og:title]"
     }
@@ -14,6 +14,6 @@ class NaverCrawlingService : CrawlerMetaService() {
     }
 
     override fun getDateFormat(): String {
-        return "yyyy. MM. dd. HH:mm"
+        return "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     }
 }
