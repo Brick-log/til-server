@@ -113,9 +113,9 @@ class SavePostController(
     ): ConfirmUploadPostResponse {
         val confirmCommand = PostSaveConfirmCommand(
             userIdentifier = userAuthInfo.userIdentifier,
-            saveIdentifier = Identifier(confirmUploadPostRequest.saveIdentifier),
+            saveIdentifier = Identifier(confirmUploadPostRequest.identifier),
             title = confirmUploadPostRequest.title,
-            description = confirmUploadPostRequest.description,
+            description = confirmUploadPostRequest.summary,
             createdAt = confirmUploadPostRequest.createdAt,
         )
         val result = savePostUseCase.confirmSave(confirmCommand)

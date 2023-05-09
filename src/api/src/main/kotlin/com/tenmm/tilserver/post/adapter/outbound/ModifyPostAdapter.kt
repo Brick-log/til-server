@@ -11,6 +11,7 @@ import java.sql.Timestamp
 import java.time.Instant
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 private val logger = KotlinLogging.logger {}
 
@@ -18,9 +19,10 @@ private val logger = KotlinLogging.logger {}
 class ModifyPostAdapter(
     private val postRepository: PostRepository,
 ) : SavePostPort, ModifyPostPort, DeletePostPort {
+    @Transactional
     override fun deleteByIdentifier(identifier: Identifier): Boolean {
         return try {
-            postRepository.deleteByIdentifier(identifier = identifier.value)
+            postRepository.deleteByIdentifier(identifier = identifier.value) == 1
         } catch (e: Exception) {
             logger.error(e) { "Post Delete Fail - $identifier" }
             false

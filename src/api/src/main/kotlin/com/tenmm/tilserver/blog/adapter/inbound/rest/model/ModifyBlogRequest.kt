@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.blog.adapter.inbound.rest.model
 
 data class ModifyBlogRequest(
-    val infoList: List<ModifyBlogInfoRequest>,
+    val blogs: List<ModifyBlogInfoRequest>,
 )
 
 data class ModifyBlogInfoRequest(

@@ -66,7 +66,7 @@ class ModifyBlogController(
         @RequestBody modifyBlogRequest: ModifyBlogRequest,
     ): ModifyBlogResponse {
         val command = ModifyBlogCommand(
-            urls = modifyBlogRequest.infoList.map { Url(it.url) },
+            urls = modifyBlogRequest.blogs.map { Url(it.url) },
             userIdentifier = userAuthInfo.userIdentifier,
         )
 

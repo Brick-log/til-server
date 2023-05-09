@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository
 interface BlogRepository : JpaRepository<BlogEntity, Long> {
     fun findByBlogIdentifier(blogIdentifier: String): BlogEntity?
     fun findAllByUserIdentifier(userIdentifier: String): List<BlogEntity>
-    fun deleteAllByUserIdentifier(userIdentifier: String)
+    fun deleteAllByUserIdentifier(userIdentifier: String): Int
 }
