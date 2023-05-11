@@ -1,6 +1,7 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.outbound.persistence.entity.RecommendPostEntity
 import com.tenmm.tilserver.outbound.persistence.repository.RecommendPostRepository
 import com.tenmm.tilserver.post.application.outbound.AddRecommendedPostPort
@@ -17,6 +18,10 @@ private val logger = KotlinLogging.logger {}
 class RecommendedPostAdapter(
     private val recommendPostRepository: RecommendPostRepository,
 ) : AddRecommendedPostPort, GetRecommendedPostPort {
+    override fun getRandom(size: Int): List<Identifier> {
+        return recommendPostRepository.findByRandom(size).map { it.postIdentifier.toIdentifier() }
+    }
+
     override fun addByPostIdentifier(
         categoryIdentifier: Identifier,
         postIdentifier: Identifier,

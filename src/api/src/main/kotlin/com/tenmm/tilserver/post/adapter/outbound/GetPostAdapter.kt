@@ -18,6 +18,9 @@ class GetPostAdapter(
     private val postRepository: PostRepository,
     private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
+    override fun getPostRandom(size: Int): List<Post> {
+        return postRepository.findByRandom(size).map { it.toModel() }
+    }
     override fun totalPostCount(userIdentifier: Identifier): Int {
         return postRepository.countAllByUserIdentifier(
             userIdentifier = userIdentifier.value

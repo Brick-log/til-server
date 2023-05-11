@@ -10,6 +10,7 @@ import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
 import com.tenmm.tilserver.post.application.outbound.AddRecommendedPostPort
 import com.tenmm.tilserver.post.application.outbound.GetRecommendedPostPort
 import com.tenmm.tilserver.post.domain.Post
+import com.tenmm.tilserver.post.domain.PostDetail
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import org.apache.commons.lang3.StringUtils
 import org.springframework.stereotype.Service
@@ -33,8 +34,10 @@ class RecommendedPostService(
     }
 
     override fun getRecommendedPostListRandom(): GetPostListResult {
-        val category = getCategoryUseCase.getAll().random()
-        return getRecommendedPostListByCategory(category.identifier)
+        val postIdentifiers = getRecommendedPostPort.getRandom(3)
+        val postList = getPostUseCase.getPostListByIdentifiers(postIdentifiers)
+
+        return generatePostWithPath(postList)
     }
 
     override fun getRecommendedPostListByCategory(categoryIdentifier: Identifier): GetPostListResult {
@@ -50,8 +53,15 @@ class RecommendedPostService(
         val userIdentifierPath =
             getUserUseCase.getByIdentifierList(result.map { it.userIdentifier })
         val userIdentifierPathMap = userIdentifierPath.associateBy { it.identifier }
+        val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
         return GetPostListResult(
-            posts = result.map { it.setUserInfo(userIdentifierPathMap[it.userIdentifier]!!) },
+            posts = result.map {
+                PostDetail.generate(
+                    post = it,
+                    user = userIdentifierPathMap[it.userIdentifier]!!,
+                    category = categoryMap[it.categoryIdentifier]!!
+                )
+            },
             size = result.size,
             nextPageToken = StringUtils.EMPTY
         )

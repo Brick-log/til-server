@@ -178,7 +178,7 @@ class GetPostController(
         val postListResult = if (categoryIdentifier != null) {
             getPostUseCase.getPostListByCategory(categoryIdentifier.toIdentifier(), size, pageToken)
         } else {
-            getPostUseCase.getPostListRandom(size, pageToken)
+            getPostUseCase.getPostListRandom(size)
         }
         return GetPostListResponse.fromResult(postListResult)
     }

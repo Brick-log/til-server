@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest.model
 
 import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
-import com.tenmm.tilserver.post.domain.PostWithUserInfo
+import com.tenmm.tilserver.post.domain.PostDetail
 import java.math.BigInteger
 import java.sql.Timestamp
 import org.apache.logging.log4j.util.Strings
@@ -27,6 +27,7 @@ data class PostResponse(
     val userPath: String,
     val profileImgSrc: String,
     val categoryIdentifier: String,
+    val categoryName: String,
     val title: String,
     val summary: String,
     val url: String,
@@ -34,12 +35,13 @@ data class PostResponse(
     val hitCount: BigInteger,
 ) {
     companion object {
-        fun fromDomain(post: PostWithUserInfo): PostResponse {
+        fun fromDomain(post: PostDetail): PostResponse {
             return PostResponse(
                 identifier = post.identifier.value,
                 userPath = post.userPath,
                 profileImgSrc = post.userProfileSrc.value,
                 categoryIdentifier = post.categoryIdentifier.value,
+                categoryName = post.categoryName,
                 title = post.title,
                 summary = post.description,
                 url = post.url.value,
