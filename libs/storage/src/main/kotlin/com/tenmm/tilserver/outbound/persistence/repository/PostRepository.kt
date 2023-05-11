@@ -4,10 +4,14 @@ import com.tenmm.tilserver.outbound.persistence.entity.PostEntity
 import java.sql.Timestamp
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
 interface PostRepository : JpaRepository<PostEntity, Long> {
+    @Query(value = "SELECT * FROM post order by RAND() limit :size", nativeQuery = true)
+    fun findByRandom(size: Int): List<PostEntity>
+
     fun findByIdentifier(identifier: String): PostEntity?
     fun findAllByIdentifierIn(identifiers: List<String>): List<PostEntity>
 

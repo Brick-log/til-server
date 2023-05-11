@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.post.domain
 
+import com.tenmm.tilserver.category.domain.Category
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.user.domain.User
@@ -15,30 +16,34 @@ data class Post(
     val url: Url,
     val createdAt: Timestamp,
     val hitCount: BigInteger,
-) {
-    fun setUserInfo(user: User): PostWithUserInfo {
-        return PostWithUserInfo(
-            identifier = identifier,
-            userPath = user.path,
-            userProfileSrc = user.thumbnailUrl,
-            categoryIdentifier = categoryIdentifier,
-            title = title,
-            description = description,
-            url = url,
-            createdAt = createdAt,
-            hitCount = hitCount
-        )
-    }
-}
+)
 
-data class PostWithUserInfo(
+data class PostDetail(
     val identifier: Identifier,
     val userPath: String,
     val userProfileSrc: Url,
     val categoryIdentifier: Identifier,
+    val categoryName: String,
     val title: String,
     val description: String,
     val url: Url,
     val createdAt: Timestamp,
     val hitCount: BigInteger,
-)
+) {
+    companion object {
+        fun generate(post: Post, user: User, category: Category): PostDetail {
+            return PostDetail(
+                identifier = post.identifier,
+                userPath = user.path,
+                userProfileSrc = user.thumbnailUrl,
+                categoryIdentifier = category.identifier,
+                categoryName = category.name,
+                title = post.title,
+                description = post.description,
+                url = post.url,
+                createdAt = post.createdAt,
+                hitCount = post.hitCount
+            )
+        }
+    }
+}

@@ -6,6 +6,7 @@ import com.tenmm.tilserver.post.domain.Post
 import java.sql.Timestamp
 
 interface GetPostPort {
+    fun getPostRandom(size: Int): List<Post>
     fun getPostByIdentifier(postIdentifier: Identifier): Post?
     fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post>
 
