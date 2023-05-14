@@ -3,70 +3,64 @@ package com.tenmm.tilserver.draft.adapter.outbound
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.draft.application.outbound.SyncDraftPort
 import com.tenmm.tilserver.draft.domain.Draft
-import kotlinx.coroutines.reactive.awaitFirstOrNull
 import mu.KotlinLogging
-import org.springframework.data.redis.core.ReactiveRedisTemplate
-import org.springframework.data.redis.core.ScanOptions
-import org.springframework.data.redis.core.deleteAndAwait
-import org.springframework.data.redis.core.getAndAwait
-import org.springframework.data.redis.core.setAndAwait
 import org.springframework.stereotype.Component
+import com.tenmm.tilserver.outbound.persistence.entity.SyncDraftEntity
+import com.tenmm.tilserver.outbound.persistence.repository.SyncDraftRepository
+import org.springframework.data.domain.PageRequest
 
 private val logger = KotlinLogging.logger {}
 @Component
 class SyncDraftAdapter(
-    private val draftRedisTemplate: ReactiveRedisTemplate<String, String>,
+    private val syncDraftRepository: SyncDraftRepository,
 ) : SyncDraftPort {
 
-    private val ops = draftRedisTemplate.opsForValue()
-    private val keyPrefix = "draft:"
-
-    private fun generateKey(userIdentifier: Identifier): String {
-        return "${keyPrefix}${userIdentifier.value}"
-    }
     override suspend fun save(userIdentifier: Identifier, data: String): Boolean {
-        val key = generateKey(userIdentifier)
-        return ops.setAndAwait(key, data)
+        return this.syncDraftRepository.save(
+            SyncDraftEntity(
+                userIdentifier = userIdentifier.value,
+                data = data
+            )
+        ) != null
     }
 
     override suspend fun findByUserIdentifier(userIdentifier: Identifier): Draft? {
-        val key = generateKey(userIdentifier)
-        val data = ops.getAndAwait(key)
-
-        return data?.let {
-            return Draft(
-                data = it,
-                userIdentifier = userIdentifier
+        return this.syncDraftRepository.findByUserIdentifier(userIdentifier.value)?.let {
+            Draft(
+                userIdentifier = Identifier(it.userIdentifier),
+                data = it.data
             )
         }
     }
 
     override suspend fun findDraftsWithCount(size: Int): List<Draft> {
-        val scanOptions: ScanOptions = ScanOptions.scanOptions().match("$keyPrefix*").count(size.toLong()).build()
+        // get draft with count
+        val pageRequest = PageRequest.of(0, size)
+        this.syncDraftRepository.findAll(pageRequest).let { syncDraftEntityList ->
+            if (syncDraftEntityList.isEmpty()) {
+                return emptyList()
+            }
 
-        val keys = draftRedisTemplate
-            .scan(scanOptions)
-            .collectList()
-            .awaitFirstOrNull() ?: emptyList<String>()
-
-        if (keys.isEmpty()) {
-            return emptyList()
-        }
-        val values = ops.multiGet(keys).awaitFirstOrNull() ?: emptyList()
-
-        return keys.indices.map { index ->
-            val userIdentifier = keys[index].substringAfter(keyPrefix)
-            val value = values[index]
-            Draft(
-                userIdentifier = Identifier(userIdentifier),
-                data = value
-            )
+            return syncDraftEntityList.map {
+                Draft(
+                    userIdentifier = Identifier(it.userIdentifier),
+                    data = it.data
+                )
+            }.toList()
         }
     }
 
     override suspend fun delete(draft: Draft): Boolean {
-        val key = "${keyPrefix}${draft.userIdentifier.value}"
-        return draftRedisTemplate.deleteAndAwait(key).toInt() == 1
+        return this.syncDraftRepository.findByUserIdentifier(draft.userIdentifier.value).let(
+            fun(syncDraftEntity: SyncDraftEntity?): SyncDraftEntity? {
+                return if (syncDraftEntity != null) {
+                    this.syncDraftRepository.delete(syncDraftEntity)
+                    syncDraftEntity
+                } else {
+                    null
+                }
+            }
+        ) != null
     }
 
     override suspend fun delete(drafts: List<Draft>): Boolean {
@@ -75,8 +69,8 @@ class SyncDraftAdapter(
             return true
         }
 
-        val keys = drafts.map { draft -> "${keyPrefix}${draft.userIdentifier.value}" }.toTypedArray()
-        val deletedKeySize = draftRedisTemplate.deleteAndAwait(*keys).toInt()
+        val keys = drafts.map { draft -> this.delete(draft) }
+        val deletedKeySize = keys.filter { it }.size
 
         logger.info("Delete Sync Draft Target Size: $deletedKeySize")
 
