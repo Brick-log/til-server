@@ -2,28 +2,30 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     kotlin("jvm")
+    id("com.google.cloud.tools.jib")
 }
+apply(from = "jib.gradle")
 
 dependencies {
     api(project(":protocol"))
-    api("io.github.openfeign:feign-okhttp:12.3")
+    api("io.github.openfeign:feign-okhttp:${property("okHttpVersion")}")
 
-    runtimeOnly("io.grpc:grpc-netty:1.53.0")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.10.7")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.10.7")
+    runtimeOnly("io.grpc:grpc-netty:${property("gRpcNettyVersion")}")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:${property("jsonWebTokenVersion")}")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:${property("jsonWebTokenVersion")}")
 
     implementation(project(":storage"))
+    implementation("io.grpc:grpc-protobuf:${property("gRpcProtoBufferVersion")}")
 
-    implementation("org.jsoup:jsoup:1.15.3")
-    implementation("io.grpc:grpc-protobuf:1.53.0")
-    implementation("io.grpc:grpc-kotlin-stub:1.3.0")
-    implementation("io.jsonwebtoken:jjwt-api:0.10.5")
-    implementation("com.google.protobuf:protobuf-kotlin:3.22.0")
+
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2")
-    implementation("org.jetbrains:annotations:23.0.0")
+    implementation("org.jsoup:jsoup:${property("jSoupVersion")}")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("io.jsonwebtoken:jjwt-api:${property("jjwtApiVersion")}")
+    implementation("io.grpc:grpc-kotlin-stub:${property("gRpcKotlinStubVersion")}")
+    implementation("com.google.protobuf:protobuf-kotlin:${property("protoBufferKotlinVersion")}")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${property("openApiVersion")}")
 }
 
 tasks.named<BootJar>("bootJar") {

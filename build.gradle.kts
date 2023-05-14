@@ -2,11 +2,11 @@ import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("org.springframework.boot") version "3.0.0"
-    id("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.8.0"
-    kotlin("plugin.spring") version "1.8.0"
+    id("org.jlleitschuh.gradle.ktlint")
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
+    kotlin("jvm")
+    kotlin("plugin.spring")
 }
 
 allprojects {
@@ -23,7 +23,7 @@ allprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.2")
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
         }
     }
 
@@ -32,25 +32,22 @@ allprojects {
     }
 
     dependencies {
-        // https://mvnrepository.com/artifact/io.github.microutils/kotlin-logging-jvm
-        implementation("io.github.microutils:kotlin-logging:3.0.5")
-
-        implementation("org.springframework.boot:spring-boot-starter-webflux")
-        implementation("org.springframework.boot:spring-boot-starter")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-        implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("org.springframework.boot:spring-boot-starter")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+        implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+        implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("org.springframework.boot:spring-boot-starter-validation")
+        implementation("org.apache.commons:commons-lang3:${property("commonsLang3Version")}")
+        implementation("io.github.microutils:kotlin-logging:${property("kotlinLoggingVersion")}")
 
-        // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-        implementation("org.apache.commons:commons-lang3:3.12.0")
 
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.projectreactor:reactor-test")
-        testImplementation("io.mockk:mockk:1.13.4")
-        testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation("io.mockk:mockk:${property("mockkVersion")}")
+        testImplementation("com.willowtreeapps.assertk:assertk-jvm:${property("assertkVersion")}")
 
         if (Os.isFamily(Os.FAMILY_MAC)) {
             // for-mac

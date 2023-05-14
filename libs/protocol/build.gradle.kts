@@ -2,13 +2,12 @@ import com.google.protobuf.gradle.id
 
 plugins {
     kotlin("jvm")
-    id("com.google.protobuf") version "0.9.2"
+    id("com.google.protobuf")
 }
-
 dependencies {
-    implementation("io.grpc:grpc-kotlin-stub:1.3.0")
-    implementation("io.grpc:grpc-protobuf:1.53.0")
-    implementation("com.google.protobuf:protobuf-kotlin:3.22.0")
+    implementation("io.grpc:grpc-protobuf:${property("gRpcProtoBufferVersion")}")
+    implementation("io.grpc:grpc-kotlin-stub:${property("gRpcKotlinStubVersion")}")
+    implementation("com.google.protobuf:protobuf-kotlin:${property("protoBufferKotlinVersion")}")
 }
 
 protobuf {
