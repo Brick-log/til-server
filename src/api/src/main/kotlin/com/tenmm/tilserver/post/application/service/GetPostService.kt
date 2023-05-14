@@ -71,6 +71,7 @@ class GetPostService(
         val userIdentifierPathMap = getUserUseCase.getByIdentifierList(result.data.map { it.userIdentifier })
             .associateBy { it.identifier }
         val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
+        val totalCount = getPostPort.totalPostCountByCategory(categoryIdentifier = categoryIdentifier)
         return GetPostListResult(
             posts = result.data.map {
                 PostDetail.generate(
@@ -79,7 +80,7 @@ class GetPostService(
                     category = categoryMap[it.categoryIdentifier]!!
                 )
             },
-            size = result.data.size,
+            size = totalCount,
             nextPageToken = result.pageToken
         )
     }
@@ -93,7 +94,7 @@ class GetPostService(
     ): GetPostListResult {
         val userInfo = getUserUseCase.getByPath(path)
         val category = getCategoryUseCase.getByIdentifier(userInfo.categoryIdentifier!!)
-        val totalCount = getPostPort.totalPostCount(userIdentifier = userInfo.identifier)
+        val totalCount = getPostPort.totalPostCountByUser(userIdentifier = userInfo.identifier)
         return if (pageToken == null) {
             getPostPort.getPostListByUserAndCreatedAt(
                 userInfo.identifier,
