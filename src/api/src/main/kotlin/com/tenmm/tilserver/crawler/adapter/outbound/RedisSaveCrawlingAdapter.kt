@@ -6,10 +6,9 @@ import com.tenmm.tilserver.crawler.domain.Post
 import com.tenmm.tilserver.outbound.redis.entity.ParsedPostEntity
 import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.setAndAwait
-import org.springframework.stereotype.Component
 
-@Component
-class SaveCrawlingAdapter(
+// @Component
+class RedisSaveCrawlingAdapter(
     parsedPostRedisTemplate: ReactiveRedisTemplate<String, ParsedPostEntity>,
 ) : SaveCrawlingPort {
     private val ops = parsedPostRedisTemplate.opsForValue()

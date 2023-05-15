@@ -33,5 +33,6 @@ interface GetPostPort {
     ): List<Post>
 
     fun countByUserIdentifierAndMonth(userIdentifier: Identifier, year: Int, month: Int): Int
-    fun totalPostCount(userIdentifier: Identifier): Int
+    fun totalPostCountByUser(userIdentifier: Identifier): Int
+    fun totalPostCountByCategory(categoryIdentifier: Identifier): Int
 }
