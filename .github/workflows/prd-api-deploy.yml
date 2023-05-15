@@ -32,7 +32,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build and Push Docker image to Amazon ECR
         run: |
-              ./gradlew jib -PbuildLevel=prd \
+              chmod +x ./gradlew
+              ./gradlew jib:api -PbuildLevel=prd \
               -Djib.from.image=openjdk:17-jdk-slim \ 
               -Djib.to.image=${{secrets.ECR_IMAGE}} \
               -Djib.to.auth.username=AWS \
