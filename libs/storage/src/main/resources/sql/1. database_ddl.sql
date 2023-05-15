@@ -46,6 +46,16 @@ create table `draft`
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
+CREATE TABLE `token`
+(
+    `id`                 int              not null primary key auto_increment,
+    `user_identifier`    char(36)         not null,
+    `access_token`       varchar(512)     not null,
+    `refresh_token`      varchar(512)     not null,
+    `refresh_token_expire` timestamp        not null,
+    index `idx_token_userIdentifier_accessToken` (`user_identifier`, `access_token`)
+);
+
 CREATE TABLE `recommended_post`
 (
     `id`                  int       not null primary key auto_increment,
@@ -66,6 +76,19 @@ CREATE TABLE `post`
     `url`                 varchar(255) not null,
     `hit_count`           int          not null,
     `created_at`          timestamp    not null default now(),
+    unique index UDX_IDENTIFIER (`identifier`),
+    index IDX_USER_IDENTIFIER (`user_identifier`)
+);
+
+CREATE TABLE `parsed_post`
+(
+    `id`              int          not null primary key auto_increment,
+    `identifier`      char(36)     not null,
+    `user_identifier` char(36)     not null,
+    `url`             varchar(255) not null,
+    `title`           varchar(30)  not null,
+    `description`     varchar(2500) null,
+    `created_at`      timestamp    null,
     unique index UDX_IDENTIFIER (`identifier`),
     index IDX_USER_IDENTIFIER (`user_identifier`)
 );

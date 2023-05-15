@@ -47,7 +47,7 @@ class SyncDraftController(
         userAuthInfo: UserAuthInfo,
         @RequestBody syncDraftRequest: SyncDraftRequest,
     ): SyncDraftResponse {
-        syncDraftUseCase.syncByUser(userAuthInfo.userIdentifier, syncDraftRequest.data)
-        return SyncDraftResponse(true)
+        val response = syncDraftUseCase.syncByUser(userAuthInfo.userIdentifier, syncDraftRequest.data)
+        return SyncDraftResponse(response)
     }
 }

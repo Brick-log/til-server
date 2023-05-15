@@ -2,8 +2,9 @@ package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
+import com.tenmm.tilserver.common.domain.toIdentifier
+import com.tenmm.tilserver.outbound.persistence.entity.ParsedPostEntity as PersistenceParsedPostEntity
 import com.tenmm.tilserver.outbound.persistence.entity.PostEntity
-import com.tenmm.tilserver.outbound.redis.entity.ParsedPostEntity
 import com.tenmm.tilserver.post.application.outbound.model.ParsedPostResult
 import com.tenmm.tilserver.post.domain.Post
 
@@ -32,14 +33,13 @@ fun PostEntity.toModel(): Post {
         createdAt = this.createdAt
     )
 }
-
-fun ParsedPostEntity.toResult(): ParsedPostResult {
+fun PersistenceParsedPostEntity.toResult(): ParsedPostResult {
     return ParsedPostResult(
-        identifier = Identifier(this.identifier),
-        userIdentifier = Identifier(this.userIdentifier),
+        identifier = this.identifier.toIdentifier(),
+        userIdentifier = this.userIdentifier.toIdentifier(),
         url = Url(this.url),
         title = this.title,
         description = this.description,
-        createdAt = this.createdAt
+        createdAt = this.createdAt,
     )
 }

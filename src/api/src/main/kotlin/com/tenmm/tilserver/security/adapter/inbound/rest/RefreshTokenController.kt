@@ -25,8 +25,8 @@ class RefreshTokenController(
         @RequestBody refreshTokenRequest: RefreshTokenRequest,
     ): RefreshTokenResponse {
         val result = refreshTokenUseCase.refresh(
-            userAuthInfo,
             SecurityToken(
+                userIdentifier = userAuthInfo.userIdentifier,
                 accessToken = refreshTokenRequest.accessToken,
                 refreshToken = refreshTokenRequest.refreshToken
             )
