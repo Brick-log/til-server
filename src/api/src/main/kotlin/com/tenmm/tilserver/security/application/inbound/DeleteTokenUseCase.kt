@@ -5,4 +5,6 @@ import com.tenmm.tilserver.common.domain.OperationResult
 
 interface DeleteTokenUseCase {
     suspend fun delete(userIdentifier: Identifier, accessToken: String): OperationResult
+
+    suspend fun deleteAllExpiredTokens()
 }

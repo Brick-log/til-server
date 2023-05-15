@@ -25,7 +25,11 @@ class GenerateTokenService(
         val accessToken = generateToken(userIdentifier, SecurityTokenType.ACCESS)
         val refreshToken = generateToken(userIdentifier, SecurityTokenType.REFRESH)
         saveRefreshTokenPort.save(userIdentifier, accessToken, refreshToken)
-        return SecurityToken(accessToken, refreshToken)
+        return SecurityToken(
+            userIdentifier = userIdentifier,
+            accessToken = accessToken,
+            refreshToken = refreshToken
+        )
     }
 
     private fun generateToken(userIdentifier: Identifier, securityTokenType: SecurityTokenType): String {

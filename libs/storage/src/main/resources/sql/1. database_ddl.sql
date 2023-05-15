@@ -46,6 +46,16 @@ create table `draft`
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
+CREATE TABLE `token`
+(
+    `id`                 int              not null primary key auto_increment,
+    `user_identifier`    char(36)         not null,
+    `access_token`       varchar(512)     not null,
+    `refresh_token`      varchar(512)     not null,
+    `refresh_token_expire` timestamp        not null,
+    index `idx_token_userIdentifier_accessToken` (`user_identifier`, `access_token`)
+);
+
 CREATE TABLE `recommended_post`
 (
     `id`                  int       not null primary key auto_increment,
