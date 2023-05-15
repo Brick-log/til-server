@@ -4,7 +4,6 @@ plugins {
     kotlin("jvm")
     id("com.google.cloud.tools.jib")
 }
-apply(from = "jib.gradle")
 
 dependencies {
     api(project(":protocol"))
@@ -16,7 +15,6 @@ dependencies {
 
     implementation(project(":storage"))
     implementation("io.grpc:grpc-protobuf:${property("gRpcProtoBufferVersion")}")
-
 
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.jsoup:jsoup:${property("jSoupVersion")}")
