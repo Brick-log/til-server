@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.sql.Timestamp
 
 @Entity
 @Table(name = "token")
@@ -21,5 +22,8 @@ data class TokenEntity(
     val accessToken: String,
 
     @Column
-    val refreshToken: String
+    val refreshToken: String,
+
+    @Column
+    val refreshTokenExpire: Timestamp
 )

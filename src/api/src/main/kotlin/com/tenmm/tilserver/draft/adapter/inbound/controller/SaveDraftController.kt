@@ -47,10 +47,10 @@ class SaveDraftController(
         userAuthInfo: UserAuthInfo,
         @RequestBody saveDraftRequest: SaveDraftRequest,
     ): SaveDraftResponse {
-        saveDraftUseCase.saveByUserIdentifier(
+        val response = saveDraftUseCase.saveByUserIdentifier(
             userAuthInfo.userIdentifier,
             saveDraftRequest.data
         )
-        return SaveDraftResponse(true)
+        return SaveDraftResponse(response)
     }
 }
