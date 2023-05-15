@@ -25,13 +25,6 @@ pluginManagement {
         }
     }
 }
-includeProject(":api", "src/boot-app/api")
-includeProject(":domain", "src/domain")
-includeProject(":storage", "src/infrastructure/storage")
-includeProject(":client","src/infrastructure/client")
-includeProject(":exception","src/core/exception")
-includeProject(":logger","src/core/logger")
-
 
 rootProject.name = "til-server"
 
