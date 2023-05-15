@@ -5,7 +5,6 @@ import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.outbound.persistence.entity.ParsedPostEntity as PersistenceParsedPostEntity
 import com.tenmm.tilserver.outbound.persistence.entity.PostEntity
-import com.tenmm.tilserver.outbound.redis.entity.ParsedPostEntity as RedisParsedPostEntity
 import com.tenmm.tilserver.post.application.outbound.model.ParsedPostResult
 import com.tenmm.tilserver.post.domain.Post
 
@@ -31,17 +30,6 @@ fun PostEntity.toModel(): Post {
         title = this.title,
         description = this.description,
         hitCount = this.hitCount.toBigInteger(),
-        createdAt = this.createdAt
-    )
-}
-
-fun RedisParsedPostEntity.toResult(): ParsedPostResult {
-    return ParsedPostResult(
-        identifier = Identifier(this.identifier),
-        userIdentifier = Identifier(this.userIdentifier),
-        url = Url(this.url),
-        title = this.title,
-        description = this.description,
         createdAt = this.createdAt
     )
 }

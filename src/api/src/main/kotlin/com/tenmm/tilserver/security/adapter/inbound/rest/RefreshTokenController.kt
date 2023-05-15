@@ -23,8 +23,8 @@ class RefreshTokenController(
     suspend fun refreshToken(
         userAuthInfo: UserAuthInfo,
         @RequestBody refreshTokenRequest: RefreshTokenRequest,
-    ): RefreshTokenResponse {
-        val result = refreshTokenUseCase.refresh(
+        ): RefreshTokenResponse {
+            val result = refreshTokenUseCase.refresh(
             userAuthInfo,
             SecurityToken(
                 accessToken = refreshTokenRequest.accessToken,

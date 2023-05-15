@@ -6,5 +6,4 @@ plugins {
 dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     api("org.springframework.boot:spring-boot-starter-data-jpa")
-    api("org.springframework.boot:spring-boot-starter-data-redis")
 }
