@@ -1,4 +1,4 @@
-name: deploy
+name: deploy-api-deploy
 on:
   push:
     branches: [ "main" ]
