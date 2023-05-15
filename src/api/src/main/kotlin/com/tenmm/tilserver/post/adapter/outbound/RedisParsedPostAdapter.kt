@@ -8,10 +8,8 @@ import com.tenmm.tilserver.post.application.outbound.model.ParsedPostResult
 import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.core.deleteAndAwait
 import org.springframework.data.redis.core.getAndAwait
-import org.springframework.stereotype.Component
 
-@Component
-class ParsedPostAdapter(
+class RedisParsedPostAdapter(
     parsedPostRedisTemplate: ReactiveRedisTemplate<String, ParsedPostEntity>,
 ) : GetParsedPostPort, DeleteParsedPostPort {
 

@@ -70,6 +70,19 @@ CREATE TABLE `post`
     index IDX_USER_IDENTIFIER (`user_identifier`)
 );
 
+CREATE TABLE `parsed_post`
+(
+    `id`              int          not null primary key auto_increment,
+    `identifier`      char(36)     not null,
+    `user_identifier` char(36)     not null,
+    `url`             varchar(255) not null,
+    `title`           varchar(30)  not null,
+    `description`     varchar(2500) null,
+    `created_at`      timestamp    null,
+    unique index UDX_IDENTIFIER (`identifier`),
+    index IDX_USER_IDENTIFIER (`user_identifier`)
+);
+
 CREATE TABLE `user`
 (
     `id`                  int          not null primary key auto_increment,
