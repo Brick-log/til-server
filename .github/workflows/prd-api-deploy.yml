@@ -26,18 +26,26 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
-
+      - name: Cache gradle modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build and Push Docker image to Amazon ECR
         run: |
               chmod +x gradlew
-              ./gradlew api:jib -PbuildLevel=prd \
+              ./gradlew :api:jib -PbuildLevel=prd \
               -Djib.from.image=openjdk:17-jdk-slim \ 
               -Djib.to.image=${{secrets.ECR_IMAGE}} \
               -Djib.to.auth.username=AWS \
-              -Djib.to.auth.password=${{ steps.ecr-login.outputs.ecr-password }} \
+               -Djib.to.auth.password=${{ steps.ecr-login.outputs.ecr-password }} \
               -Djib.to.tags=prd \
               -Djib.container.jvmFlags="-Dspring.profiles.active=prd,-Dfile.encoding=UTF-8" \
               -Djib.container.environment="DATASOURCE_URL=${{ secrets.DATASOURCE_URL}},DATASOURCE_USERNAME=${{ secrets.DATASOURCE_USERNAME }},DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }},GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }},GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }},GOOGLE_OAUTH_REDIRECT_URI=${{ secrets.GOOGLE_OAUTH_REDIRECT_URI}}"
