@@ -7,12 +7,11 @@ pluginManagement {
     val kotlinVersion: String by settings
     val protoBufferPluginVersion: String by settings
 
-
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
                 "org.springframework.boot" -> useVersion(springBootVersion)
-                "io.spring.dependency-management"-> useVersion(springDependencyManagementVersion)
+                "io.spring.dependency-management" -> useVersion(springDependencyManagementVersion)
                 "org.jlleitschuh.gradle.ktlint" -> useVersion(ktlintVersion)
                 "org.jetbrains.kotlin.plugin.jpa" -> useVersion(kotlinVersion)
                 "com.google.cloud.tools.jib" -> useVersion(jibVersion)
@@ -20,7 +19,6 @@ pluginManagement {
                 "org.jetbrains.kotlin.kapt" -> useVersion(kotlinVersion)
                 "org.jetbrains.kotlin.plugin.spring" -> useVersion(kotlinVersion)
                 "com.google.protobuf" -> useVersion(protoBufferPluginVersion)
-
             }
         }
     }

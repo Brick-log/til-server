@@ -43,7 +43,6 @@ allprojects {
         implementation("org.apache.commons:commons-lang3:${property("commonsLang3Version")}")
         implementation("io.github.microutils:kotlin-logging:${property("kotlinLoggingVersion")}")
 
-
         testImplementation("io.projectreactor:reactor-test")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.mockk:mockk:${property("mockkVersion")}")
