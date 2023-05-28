@@ -5,5 +5,5 @@ import com.tenmm.tilserver.account.domain.OAuthType
 data class LogInRequest(
     val token: String,
     val type: OAuthType,
-    val redirectUri: String
+    val redirectUrl: String
 )

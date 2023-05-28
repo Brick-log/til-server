@@ -58,7 +58,7 @@ class CertifyController(
             LogInCommand(
                 authorizeCode = req.token,
                 type = req.type,
-                redirectUri = Url(req.redirectUri)
+                redirectUrl = Url(req.redirectUrl)
             )
         )
         return LogInResponse.fromResult(result)

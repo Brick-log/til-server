@@ -16,7 +16,7 @@ class GetGoogleOAuthUserInfoService(
     override val oAuthType: OAuthType = OAuthType.GOOGLE
 
     override fun getByOAuthToken(oAuthToken: String, redirectUrl: Url): OAuthUserInfo {
-        val tokens = getOAuthTokenPort.getOAuthTokens(oAuthToken, oAuthType,redirectUrl)
+        val tokens = getOAuthTokenPort.getOAuthTokens(oAuthToken, oAuthType, redirectUrl)
         return getOAuthUserInfoPort.getUserInfo(
             accessToken = tokens.accessToken,
             refreshToken = tokens.refreshToken,

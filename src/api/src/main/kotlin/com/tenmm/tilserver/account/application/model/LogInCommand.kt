@@ -6,5 +6,5 @@ import com.tenmm.tilserver.common.domain.Url
 data class LogInCommand(
     val authorizeCode: String,
     val type: OAuthType,
-    val redirectUri: Url
+    val redirectUrl: Url
 )
