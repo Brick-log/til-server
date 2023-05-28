@@ -16,12 +16,18 @@ class DoCrawlingAdapter : DoCrawlingPort {
         val document = Jsoup.parse(URL(url.value), 1000 * 10)
 
         val dateFormat = SimpleDateFormat(cssSelectorInfo.dateFormat)
+        var createdAt: Timestamp
+        try {
+            createdAt = Timestamp(
+                dateFormat.parse(document.select(cssSelectorInfo.createdAtCssSelector).attr("content")).time
+            )
+        } catch (e: Exception) {
+            createdAt = Timestamp(System.currentTimeMillis())
+        }
         return Post(
             title = document.select(cssSelectorInfo.titleCssSelector).attr("content"),
             description = document.select(cssSelectorInfo.descriptionCssSelector).attr("content"),
-            createdAt = Timestamp(
-                dateFormat.parse(document.select(cssSelectorInfo.createdAtCssSelector).attr("content")).time
-            ),
+            createdAt = createdAt,
             url = url
         )
     }
