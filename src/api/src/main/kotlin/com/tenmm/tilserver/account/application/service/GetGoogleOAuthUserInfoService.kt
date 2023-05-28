@@ -5,6 +5,7 @@ import com.tenmm.tilserver.account.application.outbound.GetOAuthTokenPort
 import com.tenmm.tilserver.account.application.outbound.GetOAuthUserInfoPort
 import com.tenmm.tilserver.account.application.model.OAuthUserInfo
 import com.tenmm.tilserver.account.domain.OAuthType
+import com.tenmm.tilserver.common.domain.Url
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,8 +15,8 @@ class GetGoogleOAuthUserInfoService(
 ) : GetOAuthUserInfoUseCase {
     override val oAuthType: OAuthType = OAuthType.GOOGLE
 
-    override fun getByOAuthToken(oAuthToken: String): OAuthUserInfo {
-        val tokens = getOAuthTokenPort.getOAuthTokens(oAuthToken, oAuthType)
+    override fun getByOAuthToken(oAuthToken: String, redirectUrl: Url): OAuthUserInfo {
+        val tokens = getOAuthTokenPort.getOAuthTokens(oAuthToken, oAuthType,redirectUrl)
         return getOAuthUserInfoPort.getUserInfo(
             accessToken = tokens.accessToken,
             refreshToken = tokens.refreshToken,

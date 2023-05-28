@@ -8,7 +8,7 @@ interface TokenRepository : JpaRepository<TokenEntity, Long> {
     fun findByUserIdentifierAndAccessTokenAndRefreshTokenExpireIsAfter(
         userIdentifier: String,
         accessToken: String,
-        now:Timestamp
+        now: Timestamp
     ): TokenEntity?
 
     fun findByUserIdentifierAndAccessToken(
@@ -16,5 +16,5 @@ interface TokenRepository : JpaRepository<TokenEntity, Long> {
         accessToken: String
     ): TokenEntity?
 
-    fun deleteAllByRefreshTokenExpireBefore(now:Timestamp)
+    fun deleteAllByRefreshTokenExpireBefore(now: Timestamp)
 }

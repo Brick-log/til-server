@@ -30,7 +30,7 @@ class CertifyService(
 
     @Transactional
     override suspend fun logIn(command: LogInCommand): LogInResult {
-        val oAuthUserInfo = getGoogleOAuthUserInfoService.getByOAuthToken(command.authorizeCode)
+        val oAuthUserInfo = getGoogleOAuthUserInfoService.getByOAuthToken(command.authorizeCode, command.redirectUri)
 
         val account = getAccountPort.getByEmail(oAuthUserInfo.email) ?: register(oAuthUserInfo)
 
