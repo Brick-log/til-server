@@ -18,7 +18,9 @@ class DoCrawlingAdapter : DoCrawlingPort {
         val dateFormat = SimpleDateFormat(cssSelectorInfo.dateFormat)
         val createdAt = try {
             Timestamp(
-                dateFormat.parse(document.select(cssSelectorInfo.createdAtCssSelector).attr("content")).time
+                dateFormat.parse(
+                    document.select(cssSelectorInfo.createdAtCssSelector).attr("content")
+                ).time
             )
         } catch (e: Exception) {
             Timestamp(System.currentTimeMillis())
