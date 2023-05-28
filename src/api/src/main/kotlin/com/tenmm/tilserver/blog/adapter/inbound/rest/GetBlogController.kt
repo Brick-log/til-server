@@ -4,8 +4,6 @@ import com.tenmm.tilserver.blog.adapter.inbound.rest.model.BlogResult
 import com.tenmm.tilserver.blog.adapter.inbound.rest.model.GetBlogResponse
 import com.tenmm.tilserver.blog.application.inbound.GetUserBlogUseCase
 import com.tenmm.tilserver.common.exception.ErrorResponse
-import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
-import com.tenmm.tilserver.security.domain.UserAuthInfo
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -42,11 +40,7 @@ class GetBlogController(
             )
         ]
     )
-    @OptionalAuthentication
-    fun getBlogs(
-        userAuthInfo: UserAuthInfo,
-        @PathVariable path: String
-    ): GetBlogResponse {
+    fun getBlogs(@PathVariable path: String): GetBlogResponse {
         val blogList = getUserBlogUseCase.getAllByUserPath(path)
         val blogResults = blogList.map {
             BlogResult(
