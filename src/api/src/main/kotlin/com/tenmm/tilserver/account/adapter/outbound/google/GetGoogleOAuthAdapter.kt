@@ -38,13 +38,14 @@ class GetGoogleOAuthAdapter(
 
     override fun getOAuthTokens(
         authorizeCode: String,
-        type: OAuthType
+        type: OAuthType,
+        redirectUrl: Url
     ): OAuthTokenResult {
         val response = getTokenApi.getToken(
             authorizeCode = authorizeCode,
             clientId = registration.clientId,
             clientSecret = registration.clientSecret,
-            redirectUri = registration.redirectUri,
+            redirectUri = redirectUrl.value,
             grantType = registration.authorizationGrantType.value
         )
 

@@ -6,6 +6,7 @@ import com.tenmm.tilserver.account.adapter.inboud.rest.model.LogOutResponse
 import com.tenmm.tilserver.account.application.inbound.LogInUseCase
 import com.tenmm.tilserver.account.application.inbound.LogOutUseCase
 import com.tenmm.tilserver.account.application.model.LogInCommand
+import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.security.domain.UserAuthInfo
@@ -56,7 +57,8 @@ class CertifyController(
         val result = logInUseCase.logIn(
             LogInCommand(
                 authorizeCode = req.token,
-                type = req.type
+                type = req.type,
+                redirectUrl = Url(req.redirectUrl)
             )
         )
         return LogInResponse.fromResult(result)
