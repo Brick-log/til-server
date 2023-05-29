@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.crawler.util
 
-import com.tenmm.tilserver.crawler.domain.Url
+import com.tenmm.tilserver.common.domain.Url
 
 object UrlCheck {
     fun getType(url: Url): UrlType {

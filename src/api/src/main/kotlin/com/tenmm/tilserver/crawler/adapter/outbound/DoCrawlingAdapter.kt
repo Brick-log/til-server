@@ -1,13 +1,13 @@
 package com.tenmm.tilserver.crawler.adapter.outbound
 
+import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.crawler.application.outbound.DoCrawlingPort
 import com.tenmm.tilserver.crawler.domain.CssSelectorInfo
 import com.tenmm.tilserver.crawler.domain.Post
-import com.tenmm.tilserver.crawler.domain.Url
 import java.net.URL
 import java.sql.Timestamp
-import java.text.SimpleDateFormat
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.springframework.stereotype.Component
 
 @Component
@@ -15,22 +15,26 @@ class DoCrawlingAdapter : DoCrawlingPort {
     override fun crawling(url: Url, cssSelectorInfo: CssSelectorInfo): Post {
         val document = Jsoup.parse(URL(url.value), 1000 * 10)
 
-        val dateFormat = SimpleDateFormat(cssSelectorInfo.dateFormat)
+        val title = document.getAttribute(cssSelectorInfo.titleCssSelector)
+
+        val description = document.getAttribute(cssSelectorInfo.descriptionCssSelector)
+
         val createdAt = try {
-            Timestamp(
-                dateFormat.parse(
-                    document.select(cssSelectorInfo.createdAtCssSelector).attr("content")
-                ).time
-            )
+            val dateInfo = document.getAttribute(cssSelectorInfo.createdAtCssSelector)
+            Timestamp(cssSelectorInfo.dateFormat.parse(dateInfo).time)
         } catch (e: Exception) {
-            Timestamp(System.currentTimeMillis())
+            null
         }
 
         return Post(
-            title = document.select(cssSelectorInfo.titleCssSelector).attr("content"),
-            description = document.select(cssSelectorInfo.descriptionCssSelector).attr("content"),
+            title = title,
+            description = description,
             createdAt = createdAt,
             url = url
         )
+    }
+
+    private fun Document.getAttribute(cssSelector: String): String {
+        return this.select(cssSelector).attr("content")
     }
 }

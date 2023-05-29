@@ -8,6 +8,7 @@ plugins {
 dependencies {
     api(project(":protocol"))
     api("io.github.openfeign:feign-okhttp:${property("okHttpVersion")}")
+    implementation(project(":utils"))
 
     runtimeOnly("io.grpc:grpc-netty:${property("gRpcNettyVersion")}")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${property("jsonWebTokenVersion")}")
