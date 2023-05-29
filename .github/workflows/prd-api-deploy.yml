@@ -1,9 +1,7 @@
 name: prd-api-deploy
 on:
   push:
-    branches:
-      - main
-      - fix/cd
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
     # types: [ closed ] # when PR closed
@@ -14,7 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged
+    # if: github.event.pull_request.merged
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
