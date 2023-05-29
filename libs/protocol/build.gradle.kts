@@ -5,6 +5,7 @@ plugins {
     id("com.google.protobuf")
 }
 dependencies {
+    implementation(project(":utils"))
     implementation("io.grpc:grpc-protobuf:${property("gRpcProtoBufferVersion")}")
     implementation("io.grpc:grpc-kotlin-stub:${property("gRpcKotlinStubVersion")}")
     implementation("com.google.protobuf:protobuf-kotlin:${property("protoBufferKotlinVersion")}")

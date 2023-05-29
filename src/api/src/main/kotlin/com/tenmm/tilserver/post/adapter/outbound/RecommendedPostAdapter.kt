@@ -6,8 +6,6 @@ import com.tenmm.tilserver.outbound.persistence.entity.RecommendPostEntity
 import com.tenmm.tilserver.outbound.persistence.repository.RecommendPostRepository
 import com.tenmm.tilserver.post.application.outbound.AddRecommendedPostPort
 import com.tenmm.tilserver.post.application.outbound.GetRecommendedPostPort
-import java.sql.Timestamp
-import java.time.Instant
 import mu.KotlinLogging
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
@@ -28,8 +26,7 @@ class RecommendedPostAdapter(
     ): Boolean {
         val entity = RecommendPostEntity(
             categoryIdentifier = categoryIdentifier.value,
-            postIdentifier = postIdentifier.value,
-            createdAt = Timestamp.from(Instant.now())
+            postIdentifier = postIdentifier.value
         )
         return try {
             recommendPostRepository.save(entity)

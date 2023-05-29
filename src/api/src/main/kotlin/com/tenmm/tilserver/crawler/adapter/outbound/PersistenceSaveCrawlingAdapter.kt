@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.crawler.adapter.outbound
 
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.crawler.application.outbound.SaveCrawlingPort
-import com.tenmm.tilserver.crawler.domain.Identifier
 import com.tenmm.tilserver.crawler.domain.Post
 import com.tenmm.tilserver.outbound.persistence.entity.ParsedPostEntity
 import com.tenmm.tilserver.outbound.persistence.repository.ParsedPostRepository

@@ -1,6 +1,5 @@
 package com.tenmm.tilserver.draft.adapter.outbound
 
-import com.tenmm.tilserver.common.utils.getNowTimestamp
 import com.tenmm.tilserver.draft.application.outbound.SaveDraftPort
 import com.tenmm.tilserver.draft.domain.Draft
 import com.tenmm.tilserver.outbound.persistence.entity.DraftEntity
@@ -22,7 +21,6 @@ class SaveDraftAdapter(
                 id = savedDraft?.id ?: 0,
                 userIdentifier = userIdentifier.value,
                 data = draft.data,
-                updatedAt = getNowTimestamp()
             )
             draftRepository.save(newDraft).toDomain()
             return true

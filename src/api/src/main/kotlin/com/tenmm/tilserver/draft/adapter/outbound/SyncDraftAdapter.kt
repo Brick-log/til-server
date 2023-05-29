@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.draft.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.utils.getNowTimestamp
 import com.tenmm.tilserver.draft.application.outbound.SyncDraftPort
 import com.tenmm.tilserver.draft.domain.Draft
 import com.tenmm.tilserver.outbound.persistence.entity.DraftEntity
@@ -21,8 +20,7 @@ class SyncDraftAdapter(
                 DraftEntity(
                     id = entity?.id ?: 0,
                     userIdentifier = userIdentifier.value,
-                    data = data,
-                    updatedAt = getNowTimestamp()
+                    data = data
                 )
             )
             true

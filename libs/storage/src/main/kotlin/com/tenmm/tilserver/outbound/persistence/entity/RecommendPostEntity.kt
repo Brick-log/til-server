@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.outbound.persistence.entity
 
+import com.tenmm.tilserver.common.utils.getNowTimestamp
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -22,5 +23,5 @@ data class RecommendPostEntity(
     val postIdentifier: String,
 
     @Column
-    val createdAt: Timestamp,
+    val createdAt: Timestamp = getNowTimestamp(),
 )
