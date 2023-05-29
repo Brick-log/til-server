@@ -1,7 +1,9 @@
 name: prd-api-deploy
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - fix/cd
   pull_request:
     branches: [ "main" ]
     # types: [ closed ] # when PR closed
