@@ -2,6 +2,7 @@ package com.tenmm.tilserver.user.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.outbound.persistence.entity.UserEntity
+import com.tenmm.tilserver.outbound.persistence.entity.UserStatus
 import com.tenmm.tilserver.outbound.persistence.repository.UserRepository
 import com.tenmm.tilserver.user.application.inbound.model.ModifyUserCommand
 import com.tenmm.tilserver.user.application.inbound.model.OnBoardingUserCommand
@@ -55,7 +56,8 @@ class UserAdapter(
             ?: return false
 
         val modifiedUserEntity = userEntity.copy(
-            categoryIdentifier = command.categoryIdentifier.value
+            categoryIdentifier = command.categoryIdentifier.value,
+            status = UserStatus.COMPLETED
         )
 
         userRepository.save(modifiedUserEntity)
