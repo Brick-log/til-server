@@ -11,6 +11,7 @@ spring:
     import:
       - application-storage-${spring.profiles.active}.yml
       - application-oauth.yml
+      - application-actuator.yml
 security:
   aes128:
     key: 1q2w3e4r5t6y7u8i

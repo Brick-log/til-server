@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":storage"))
     implementation("io.grpc:grpc-protobuf:${property("gRpcProtoBufferVersion")}")
 
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.jsoup:jsoup:${property("jSoupVersion")}")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")

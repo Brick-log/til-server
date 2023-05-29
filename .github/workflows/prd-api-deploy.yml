@@ -1,12 +1,10 @@
 name: prd-api-deploy
 on:
   push:
-    branches:
-      - main
-      - fix/cd
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    # types: [ closed ] # when PR closed
+    types: [ closed ] # when PR closed
     paths:
       - 'libs/**'
       - 'src/api/**'
@@ -43,11 +41,4 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       - name: Build and Push Docker image to Amazon ECR
-        run: ./gradlew :api:jib \
-             -Djib.from.image=openjdk:17-jdk-slim \
-             -Djib.to.image=${{secrets.ECR_IMAGE}} \
-             -Djib.to.auth.username=AWS \
-             -Djib.to.auth.password=${{ steps.ecr-login.outputs.ecr-password }} \
-             -Djib.to.tags=prd \
-             -Djib.container.jvmFlags="-Dspring.profiles.active=prd,-Dfile.encoding=UTF-8" \
-             -Djib.container.environment="DATASOURCE_URL=${{ secrets.DATASOURCE_URL}},DATASOURCE_USERNAME=${{ secrets.DATASOURCE_USERNAME }},DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }},GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }},GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }},GOOGLE_OAUTH_REDIRECT_URI=${{ secrets.GOOGLE_OAUTH_REDIRECT_URI}}"
+        run: ./gradlew :api:jib -Djib.from.image=openjdk:17-jdk-slim -Djib.to.image=${{secrets.ECR_IMAGE}} -Djib.to.auth.username=AWS -Djib.to.auth.password=${{ steps.ecr-login.outputs.ecr-password }} -Djib.to.tags=prd -Djib.container.jvmFlags="-Dspring.profiles.active=prd,-Dfile.encoding=UTF-8" -Djib.container.environment="DATASOURCE_URL=${{ secrets.DATASOURCE_URL}},DATASOURCE_USERNAME=${{ secrets.DATASOURCE_USERNAME }},DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }},GOOGLE_OAUTH_CLIENT_ID=${{ secrets.GOOGLE_OAUTH_CLIENT_ID }},GOOGLE_OAUTH_CLIENT_SECRET=${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }},GOOGLE_OAUTH_REDIRECT_URI=${{ secrets.GOOGLE_OAUTH_REDIRECT_URI}}"

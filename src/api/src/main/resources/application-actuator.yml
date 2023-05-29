@@ -1,0 +1,10 @@
+management:
+  server:
+    port: 8000
+  endpoints:
+    web:
+      base-path: /monitoring
+      exposure:
+        include:
+          - health
+          - metrics
