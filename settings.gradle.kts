@@ -31,6 +31,7 @@ includeProject(":crawler", "src/crawler")
 
 includeProject(":protocol", "libs/protocol")
 includeProject(":storage", "libs/storage")
+includeProject(":utils", "libs/utils")
 
 fun includeProject(name: String, projectPath: String) {
     include(name)

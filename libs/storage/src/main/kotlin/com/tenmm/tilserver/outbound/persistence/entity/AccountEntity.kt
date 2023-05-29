@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.outbound.persistence.entity
 
+import com.tenmm.tilserver.common.utils.getNowTimestamp
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -9,7 +10,6 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.sql.Timestamp
-import java.time.Instant
 
 @Table(name = "account")
 @Entity
@@ -36,7 +36,7 @@ data class AccountEntity(
     val status: AccountStatus,
 
     @Column
-    val createdAt: Timestamp = Timestamp.from(Instant.now()),
+    val createdAt: Timestamp = getNowTimestamp(),
 )
 
 enum class OAuthType {

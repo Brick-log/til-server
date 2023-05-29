@@ -3,6 +3,7 @@ package com.tenmm.tilserver.post.application.service
 import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.NotFoundException
+import com.tenmm.tilserver.common.utils.getTimeZone
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
 import com.tenmm.tilserver.post.application.inbound.model.GetPostMetaResult
@@ -14,7 +15,6 @@ import com.tenmm.tilserver.post.domain.PostDetail
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import java.sql.Timestamp
 import java.time.LocalDate
-import java.time.ZoneId
 import org.apache.commons.lang3.StringUtils
 import org.springframework.stereotype.Service
 
@@ -132,7 +132,7 @@ class GetPostService(
         val result = getPostPort.getPostListByCreatedAt(userIdentifier, to, from)
         return GetPostMetaResult(
             dateList = result.map {
-                LocalDate.ofInstant(it.createdAt.toInstant(), ZoneId.systemDefault())
+                LocalDate.ofInstant(it.createdAt.toInstant(), getTimeZone())
             }
         )
     }

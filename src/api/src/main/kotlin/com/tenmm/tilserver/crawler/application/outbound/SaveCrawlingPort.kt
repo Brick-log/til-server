@@ -1,6 +1,6 @@
 package com.tenmm.tilserver.crawler.application.outbound
 
-import com.tenmm.tilserver.crawler.domain.Identifier
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.crawler.domain.Post
 
 interface SaveCrawlingPort {
