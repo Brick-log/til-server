@@ -7,4 +7,5 @@ data class CreateUserRequest(
     val name: String,
     val userIdentifier: Identifier,
     val profileImgSrc: Url,
+    val description: String,
 )
