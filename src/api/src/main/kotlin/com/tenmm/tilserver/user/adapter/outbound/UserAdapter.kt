@@ -71,7 +71,8 @@ class UserAdapter(
                     name = command.name,
                     userIdentifier = command.userIdentifier.value,
                     path = command.name,
-                    thumbnailUrl = command.profileImgSrc.value
+                    thumbnailUrl = command.profileImgSrc.value,
+                    introduction = command.description
                 )
             )
             user.toModel()

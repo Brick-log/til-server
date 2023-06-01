@@ -26,7 +26,7 @@ data class UserEntity(
     val categoryIdentifier: String? = null,
 
     @Column
-    val introduction: String? = null,
+    val introduction: String,
 
     @Column
     val thumbnailUrl: String,
