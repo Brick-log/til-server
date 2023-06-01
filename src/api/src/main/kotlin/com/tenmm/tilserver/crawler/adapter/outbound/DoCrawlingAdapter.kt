@@ -23,8 +23,15 @@ class DoCrawlingAdapter : DoCrawlingPort {
             val dateInfo = document.getAttribute(cssSelectorInfo.createdAtCssSelector)
             Timestamp(cssSelectorInfo.dateFormat.parse(dateInfo).time)
         } catch (e: Exception) {
-            null
+            try {
+                val dateInfo = document.select(cssSelectorInfo.createdAtCssSelector).text()
+                Timestamp(cssSelectorInfo.dateFormat.parse(dateInfo).time)
+            } catch (e: Exception) {
+                null
+            }
         }
+
+        println("createdAT : $createdAt")
 
         return Post(
             title = title,
