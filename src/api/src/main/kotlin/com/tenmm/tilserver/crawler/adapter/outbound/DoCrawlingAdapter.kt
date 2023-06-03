@@ -31,8 +31,6 @@ class DoCrawlingAdapter : DoCrawlingPort {
             }
         }
 
-        println("createdAT : $createdAt")
-
         return Post(
             title = title,
             description = description,

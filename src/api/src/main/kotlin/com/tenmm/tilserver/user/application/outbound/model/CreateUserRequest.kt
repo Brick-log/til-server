@@ -5,6 +5,7 @@ import com.tenmm.tilserver.common.domain.Url
 
 data class CreateUserRequest(
     val name: String,
+    val path: String,
     val userIdentifier: Identifier,
     val profileImgSrc: Url,
     val description: String,

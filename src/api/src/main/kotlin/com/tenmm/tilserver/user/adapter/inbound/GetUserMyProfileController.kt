@@ -54,6 +54,6 @@ class GetUserMyProfileController(
         val user = getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier)
         val category = user.categoryIdentifier?.let { getCategoryUseCase.getByIdentifier(it) }
         val account = getAccountUseCase.getByUserIdentifier(userAuthInfo.userIdentifier)
-        return GetMyProfileResponse.fromUser(user, category, account.isSpamNotificationAgreed)
+        return GetMyProfileResponse.fromUser(user, category, account)
     }
 }

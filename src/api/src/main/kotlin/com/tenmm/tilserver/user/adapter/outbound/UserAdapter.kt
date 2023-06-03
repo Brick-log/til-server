@@ -70,7 +70,7 @@ class UserAdapter(
                 UserEntity(
                     name = command.name,
                     userIdentifier = command.userIdentifier.value,
-                    path = command.name,
+                    path = command.path,
                     thumbnailUrl = command.profileImgSrc.value,
                     introduction = command.description
                 )

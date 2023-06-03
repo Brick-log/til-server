@@ -15,18 +15,19 @@ class CreateUserService(
     private val saveUserPort: SaveUserPort,
 ) : CreateUserUseCase {
     override fun create(command: CreateUserCommand): OperationResult {
-        val name = nameGenerator()
+        val path = pathGenerator()
         val request = CreateUserRequest(
+            name = command.name,
             userIdentifier = command.userIdentifier,
-            name = name,
+            path = path,
             profileImgSrc = profileImgProperties.default,
-            description = "${name}의 브릭로그입니다."
+            description = "${command.name}의 브릭로그입니다."
         )
         val user = saveUserPort.save(request)
         return if (user != null) OperationResult.success() else OperationResult.fail()
     }
 
-    private fun nameGenerator(): String {
+    private fun pathGenerator(): String {
         val now = LocalDateTime.now()
         val month = now.month.value.toString().padStart(2, '0')
         val day = now.dayOfMonth.toString().padStart(2, '0')
@@ -34,6 +35,6 @@ class CreateUserService(
         val minute = now.minute.toString().padStart(2, '0')
         val second = now.second.toString().padStart(2, '0')
 
-        return "$second$month$hour$minute$day"
+        return "user$second$month$hour$minute$day"
     }
 }
