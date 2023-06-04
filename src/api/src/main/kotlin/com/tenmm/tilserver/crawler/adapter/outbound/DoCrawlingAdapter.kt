@@ -15,9 +15,17 @@ class DoCrawlingAdapter : DoCrawlingPort {
     override fun crawling(url: Url, cssSelectorInfo: CssSelectorInfo): Post {
         val document = Jsoup.parse(URL(url.value), 1000 * 10)
 
-        val title = document.getAttribute(cssSelectorInfo.titleCssSelector)
+        val title = try {
+            document.getAttribute(cssSelectorInfo.titleCssSelector)
+        } catch (e: Exception) {
+            ""
+        }
 
-        val description = document.getAttribute(cssSelectorInfo.descriptionCssSelector)
+        val description = try {
+            document.getAttribute(cssSelectorInfo.descriptionCssSelector)
+        } catch (e: Exception) {
+            ""
+        }
 
         val createdAt = try {
             val dateInfo = document.getAttribute(cssSelectorInfo.createdAtCssSelector)
