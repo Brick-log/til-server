@@ -17,7 +17,11 @@ class DoCrawlingAdapter : DoCrawlingPort {
 
         val title = document.getAttribute(cssSelectorInfo.titleCssSelector)
 
-        val description = document.getAttribute(cssSelectorInfo.descriptionCssSelector)
+        val description = try {
+            document.getAttribute(cssSelectorInfo.descriptionCssSelector)
+        } catch (e: Exception) {
+            ""
+        }
 
         val createdAt = try {
             val dateInfo = document.getAttribute(cssSelectorInfo.createdAtCssSelector)
