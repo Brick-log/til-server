@@ -11,4 +11,5 @@ data class ModifyUserCommand(
     val categoryIdentifier: Identifier,
     val mailAgreement: Boolean,
     val profileImgSrc: Url,
+    val blogs: List<Url>,
 )

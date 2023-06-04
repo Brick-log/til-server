@@ -7,4 +7,9 @@ data class ModifyUserRequest(
     val path: String,
     val profileImgSrc: String,
     val isMailAgreement: Boolean,
+    val blogs: List<ModifyBlogInfoRequest>,
+)
+
+data class ModifyBlogInfoRequest(
+    val url: String,
 )

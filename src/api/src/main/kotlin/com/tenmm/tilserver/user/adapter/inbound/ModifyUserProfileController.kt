@@ -114,7 +114,8 @@ class ModifyUserProfileController(
             name = modifyUserRequest.name,
             path = modifyUserRequest.path,
             mailAgreement = modifyUserRequest.isMailAgreement,
-            profileImgSrc = Url(modifyUserRequest.profileImgSrc)
+            profileImgSrc = Url(modifyUserRequest.profileImgSrc),
+            blogs = modifyUserRequest.blogs.map { Url(it.url) }
         )
         return ModifyUserProfileResponse(modifyUserUseCase.modifyUserInfo(command).isSuccess)
     }
