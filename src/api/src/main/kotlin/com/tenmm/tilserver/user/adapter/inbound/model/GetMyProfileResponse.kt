@@ -15,7 +15,7 @@ data class GetMyProfileResponse(
     val introduction: String,
     val categoryIdentifier: String?,
     val categoryName: String?,
-    val isMailAgreement: Boolean,
+    val mailAgreement: Boolean,
 ) {
     companion object {
         fun fromUser(user: User, category: Category?, account: Account): GetMyProfileResponse {
@@ -28,7 +28,7 @@ data class GetMyProfileResponse(
                 categoryName = category?.name,
                 email = account.email.value,
                 oAuthType = account.oAuthType,
-                isMailAgreement = account.isSpamNotificationAgreed
+                mailAgreement = account.isSpamNotificationAgreed
             )
         }
     }
