@@ -6,7 +6,7 @@ data class ModifyUserRequest(
     val name: String,
     val path: String,
     val profileImgSrc: String,
-    val isMailAgreement: Boolean,
+    val mailAgreement: Boolean,
     val blogs: List<ModifyBlogInfoRequest>,
 )
 
