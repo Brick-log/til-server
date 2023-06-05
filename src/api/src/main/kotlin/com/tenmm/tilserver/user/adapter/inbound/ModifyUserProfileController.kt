@@ -67,7 +67,7 @@ class ModifyUserProfileController(
         val command = OnBoardingUserCommand(
             userIdentifier = userAuthInfo.userIdentifier,
             categoryIdentifier = onBoardingUserRequest.categoryIdentifier.toIdentifier(),
-            mailAgreement = onBoardingUserRequest.isMailAgreement
+            mailAgreement = onBoardingUserRequest.mailAgreement
         )
         return ModifyUserProfileResponse(modifyUserUseCase.onBoardingUserInfo(command).isSuccess)
     }
@@ -113,7 +113,7 @@ class ModifyUserProfileController(
             introduction = modifyUserRequest.introduction,
             name = modifyUserRequest.name,
             path = modifyUserRequest.path,
-            mailAgreement = modifyUserRequest.isMailAgreement,
+            mailAgreement = modifyUserRequest.mailAgreement,
             profileImgSrc = Url(modifyUserRequest.profileImgSrc),
             blogs = modifyUserRequest.blogs.map { Url(it.url) }
         )
