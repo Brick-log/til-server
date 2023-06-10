@@ -4,7 +4,7 @@ import com.tenmm.tilserver.account.domain.OAuthType
 import com.tenmm.tilserver.common.exception.ErrorCode
 import org.apache.logging.log4j.util.Strings
 
-open class ServerBaseException(val errorCode: ErrorCode,val  description: String = Strings.EMPTY) : RuntimeException()
+open class ServerBaseException(val errorCode: ErrorCode, val description: String = Strings.EMPTY) : RuntimeException()
 
 class InvalidIdentifierException(input: String) : ServerBaseException(ErrorCode.INVALID_ARGUMENT, input)
 class InvalidUrlException(input: String) : ServerBaseException(ErrorCode.INVALID_ARGUMENT, input)
@@ -31,4 +31,3 @@ class CategoryNotFoundException : ServerBaseException(ErrorCode.CATEGORY_NOT_FOU
 class SignUpFailException : ServerBaseException(ErrorCode.SIGN_UP_FAIL)
 class OAuthFailException(type: OAuthType, description: String) :
     ServerBaseException(ErrorCode.OAUTH_FAIL, "$type - $description")
-

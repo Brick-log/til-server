@@ -40,7 +40,6 @@ class ModifyPostAdapter(
 
             postRepository.save(modifiedEntity)
             return OperationResult.success()
-
         } catch (e: Exception) {
             logger.error(e) { "Post save Fail" }
             return OperationResult.fail()
@@ -58,7 +57,6 @@ class ModifyPostAdapter(
 
             postRepository.save(modifiedEntity)
             return OperationResult.success()
-
         } catch (e: Exception) {
             logger.error(e) { "Post save Fail" }
             return OperationResult.fail()
@@ -76,7 +74,6 @@ class ModifyPostAdapter(
 
             postRepository.save(modifiedEntity)
             return OperationResult.success()
-
         } catch (e: Exception) {
             logger.error(e) { "Post save Fail" }
             return OperationResult.fail()
