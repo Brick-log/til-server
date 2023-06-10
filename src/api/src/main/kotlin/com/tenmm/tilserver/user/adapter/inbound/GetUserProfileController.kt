@@ -32,17 +32,17 @@ class GetUserProfileController(
                 description = "사용자 프로필 조회 성공"
             ),
             ApiResponse(
-                responseCode = "400",
+                responseCode = "INVALID_ARGUMENT",
                 description = "잘못된 path 요청 (ex.잘못된 post id)",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
-                responseCode = "404",
+                responseCode = "USER_NOT_FOUND",
                 description = "path 조회 실패",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
-                responseCode = "500",
+                responseCode = "UNKNOWN_SERVER_ERROR",
                 description = "서버에러",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             )

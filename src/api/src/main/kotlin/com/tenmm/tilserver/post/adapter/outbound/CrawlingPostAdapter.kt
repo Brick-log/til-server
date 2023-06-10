@@ -2,20 +2,20 @@ package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
+import com.tenmm.tilserver.common.domain.toIdentifier
+import com.tenmm.tilserver.crawler.application.inbound.DoCrawlingUseCase
 import com.tenmm.tilserver.post.application.outbound.CrawlingPostPort
-import com.tenmm.tilserver.protocol.CrawlerServiceGrpcKt
-import com.tenmm.tilserver.protocol.CrawlingRequest
+import org.springframework.stereotype.Component
 
-// @Component
+@Component
 class CrawlingPostAdapter(
-    private val crawlerServiceCoroutineStub: CrawlerServiceGrpcKt.CrawlerServiceCoroutineStub,
+    private val doCrawlingUseCase: DoCrawlingUseCase,
 ) : CrawlingPostPort {
     override suspend fun requestParseFromUrl(url: Url, userIdentifier: Identifier): Identifier {
-        val request = CrawlingRequest.newBuilder()
-            .setUrl(url.value)
-            .setUserIdentifier(userIdentifier.value)
-            .build()
-        val response = crawlerServiceCoroutineStub.doCrawling(request)
-        return Identifier(response.identifier)
+        val response = doCrawlingUseCase.invoke(
+            Url(url.value),
+            userIdentifier.value.toIdentifier()
+        )
+        return response.value.toIdentifier()
     }
 }

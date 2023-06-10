@@ -6,8 +6,8 @@ import com.tenmm.tilserver.account.application.outbound.ModifyAccountPort
 import com.tenmm.tilserver.account.application.outbound.SaveAccountPort
 import com.tenmm.tilserver.account.domain.Account
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.OperationResult
+import com.tenmm.tilserver.common.domain.UserNotFoundException
 import com.tenmm.tilserver.outbound.persistence.entity.AccountEntity
 import com.tenmm.tilserver.outbound.persistence.entity.AccountStatus
 import com.tenmm.tilserver.outbound.persistence.entity.OAuthType
@@ -42,7 +42,7 @@ class SaveAccountAdapter(
 
     override fun modifyMailAgreement(userIdentifier: Identifier, isAgree: Boolean): OperationResult {
         val account = accountRepository.findByUserIdentifier(userIdentifier = userIdentifier.value)
-            ?: throw NotFoundException("ZZ")
+            ?: throw UserNotFoundException()
 
         val newAccount = account.copy(
             isSpamNotificationAgreed = isAgree

@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.post.application.service
 
+import com.tenmm.tilserver.common.domain.CrawlingResultNotFoundException
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.NotFoundException
 import com.tenmm.tilserver.common.domain.OperationResult
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.SavePostUseCase
@@ -31,7 +31,7 @@ class SavePostService(
     override suspend fun requestSave(command: PostSaveRequestCommand): PostSaveRequestResult {
         val parsedPostIdentifier = crawlingPostPort.requestParseFromUrl(command.url, command.userIdentifier)
         val result = getParsedPostPort.findByIdentifier(command.userIdentifier, parsedPostIdentifier)
-            ?: throw NotFoundException("Not found parsing info - $parsedPostIdentifier")
+            ?: throw CrawlingResultNotFoundException()
         return PostSaveRequestResult(
             saveIdentifier = parsedPostIdentifier,
             url = command.url,
@@ -45,7 +45,7 @@ class SavePostService(
         val parsedResult = getParsedPostPort.findByIdentifier(
             command.userIdentifier,
             command.saveIdentifier
-        ) ?: throw NotFoundException("Not found parsing info - ${command.saveIdentifier}")
+        ) ?: throw CrawlingResultNotFoundException()
         val userInfo = getUserUseCase.getByIdentifier(parsedResult.userIdentifier)
         val generatedPost = Post(
             identifier = Identifier.generate(),

@@ -6,8 +6,8 @@ import com.tenmm.tilserver.blog.application.outbound.DeleteBlogPort
 import com.tenmm.tilserver.blog.application.outbound.SaveBlogPort
 import com.tenmm.tilserver.blog.domain.Blog
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.ModifyFailException
-import com.tenmm.tilserver.common.domain.ModifyFailType
+import com.tenmm.tilserver.common.domain.ModifyUserFailType
+import com.tenmm.tilserver.common.domain.ModifyUserFailException
 import com.tenmm.tilserver.common.domain.OperationResult
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
@@ -34,7 +34,7 @@ class ModifyBlogService(
             return OperationResult(saveBlogPort.saveAll(blogs))
         } catch (e: Exception) {
             logger.error(e) { "Modify blog Fail : $command" }
-            throw ModifyFailException(ModifyFailType.BLOG)
+            throw ModifyUserFailException(ModifyUserFailType.BLOG)
         }
     }
 }

@@ -2,7 +2,7 @@ package com.tenmm.tilserver.post.application.service
 
 import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.NotFoundException
+import com.tenmm.tilserver.common.domain.PostNotFoundException
 import com.tenmm.tilserver.common.utils.getTimeZone
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
@@ -26,13 +26,13 @@ class GetPostService(
     private val getUserUseCase: GetUserUseCase,
 ) : GetPostUseCase {
     override fun showPostByIdentifier(postIdentifier: Identifier): GetPostResult {
-        val post = getPostPort.getPostByIdentifier(postIdentifier) ?: throw NotFoundException("Post not found")
+        val post = getPostPort.getPostByIdentifier(postIdentifier) ?: throw PostNotFoundException()
         modifyPostPort.increasePostHitCount(post.identifier)
         return GetPostResult(url = post.url)
     }
 
     override fun getPostByIdentifier(postIdentifier: Identifier): Post {
-        return getPostPort.getPostByIdentifier(postIdentifier) ?: throw NotFoundException("Post not found")
+        return getPostPort.getPostByIdentifier(postIdentifier) ?: throw PostNotFoundException()
     }
 
     override fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post> {

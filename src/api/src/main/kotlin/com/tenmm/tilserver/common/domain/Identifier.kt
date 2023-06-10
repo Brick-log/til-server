@@ -8,7 +8,7 @@ data class Identifier(
 ) {
     init {
         if (!UUID_REGEX.matches(value)) {
-            throw IllegalArgumentException("Invalid identifier: $value")
+            throw InvalidIdentifierException(value)
         }
     }
 

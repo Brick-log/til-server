@@ -1,11 +1,11 @@
 package com.tenmm.tilserver.user.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.OperationResult
+import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.outbound.persistence.entity.UserEntity
 import com.tenmm.tilserver.outbound.persistence.entity.UserStatus
 import com.tenmm.tilserver.outbound.persistence.repository.UserRepository
-import com.tenmm.tilserver.user.application.inbound.model.ModifyUserCommand
-import com.tenmm.tilserver.user.application.inbound.model.OnBoardingUserCommand
 import com.tenmm.tilserver.user.application.outbound.GetUserPort
 import com.tenmm.tilserver.user.application.outbound.ModifyUserPort
 import com.tenmm.tilserver.user.application.outbound.SaveUserPort
@@ -36,34 +36,6 @@ class UserAdapter(
         return userRepository.findByUserIdentifierIn(identifiers.map { it.value }).map { it.toModel() }
     }
 
-    override fun modifyUserInfo(command: ModifyUserCommand): Boolean {
-        val userEntity = userRepository.findByUserIdentifier(command.userIdentifier.value)
-            ?: return false
-
-        val modifiedUserEntity = userEntity.copy(
-            path = command.path,
-            name = command.name,
-            introduction = command.introduction,
-            categoryIdentifier = command.categoryIdentifier.value,
-            thumbnailUrl = command.profileImgSrc.value
-        )
-        userRepository.save(modifiedUserEntity)
-        return true
-    }
-
-    override fun modifyUserInfo(command: OnBoardingUserCommand): Boolean {
-        val userEntity = userRepository.findByUserIdentifier(command.userIdentifier.value)
-            ?: return false
-
-        val modifiedUserEntity = userEntity.copy(
-            categoryIdentifier = command.categoryIdentifier.value,
-            status = UserStatus.COMPLETED
-        )
-
-        userRepository.save(modifiedUserEntity)
-        return true
-    }
-
     override fun save(command: CreateUserRequest): User? {
         return try {
             val user = userRepository.save(
@@ -79,6 +51,108 @@ class UserAdapter(
         } catch (e: Exception) {
             logger.error(e) { "User save Fail - $command" }
             null
+        }
+    }
+
+    override fun updateUserName(userIdentifier: Identifier, name: String): OperationResult {
+        try {
+            val userEntity = userRepository.findByUserIdentifier(userIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedUserEntity = userEntity.copy(
+                name = name,
+            )
+
+            userRepository.save(modifiedUserEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Modify user fail" }
+            return OperationResult.fail()
+        }
+    }
+
+    override fun updateUserPath(userIdentifier: Identifier, path: String): OperationResult {
+        try {
+            val userEntity = userRepository.findByUserIdentifier(userIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedUserEntity = userEntity.copy(
+                path = path,
+            )
+
+            userRepository.save(modifiedUserEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Modify user fail" }
+            return OperationResult.fail()
+        }
+    }
+
+    override fun updateUserCategory(userIdentifier: Identifier, categoryIdentifier: Identifier): OperationResult {
+        try {
+            val userEntity = userRepository.findByUserIdentifier(userIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedUserEntity = userEntity.copy(
+                categoryIdentifier = categoryIdentifier.value,
+            )
+
+            userRepository.save(modifiedUserEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Modify user fail" }
+            return OperationResult.fail()
+        }
+    }
+
+    override fun updateUserIntroduction(userIdentifier: Identifier, introduction: String): OperationResult {
+        try {
+            val userEntity = userRepository.findByUserIdentifier(userIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedUserEntity = userEntity.copy(
+                introduction = introduction,
+            )
+
+            userRepository.save(modifiedUserEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Modify user fail" }
+            return OperationResult.fail()
+        }
+    }
+
+    override fun updateUserProfileImgSrc(userIdentifier: Identifier, profileImgSrc: Url): OperationResult {
+        try {
+            val userEntity = userRepository.findByUserIdentifier(userIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedUserEntity = userEntity.copy(
+                thumbnailUrl = profileImgSrc.value,
+            )
+
+            userRepository.save(modifiedUserEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Modify user fail" }
+            return OperationResult.fail()
+        }
+    }
+
+    override fun updateUserStatus(userIdentifier: Identifier): OperationResult {
+        try {
+            val userEntity = userRepository.findByUserIdentifier(userIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedUserEntity = userEntity.copy(
+                status = UserStatus.COMPLETED,
+            )
+
+            userRepository.save(modifiedUserEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Modify user fail" }
+            return OperationResult.fail()
         }
     }
 }

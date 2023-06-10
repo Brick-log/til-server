@@ -11,6 +11,7 @@ import com.tenmm.tilserver.account.application.outbound.GetAccountPort
 import com.tenmm.tilserver.account.application.outbound.SaveAccountPort
 import com.tenmm.tilserver.account.domain.Account
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.SignUpFailException
 import com.tenmm.tilserver.security.application.inbound.DeleteTokenUseCase
 import com.tenmm.tilserver.security.application.inbound.GenerateTokenUseCase
 import com.tenmm.tilserver.user.application.inbound.CreateUserUseCase
@@ -58,7 +59,7 @@ class CertifyService(
         val createUserResult = createUserUseCase.create(createUserCommand)
 
         if (account == null || !createUserResult.isSuccess) {
-            throw IllegalArgumentException("SignUp Fail")
+            throw SignUpFailException()
         }
         return account
     }
