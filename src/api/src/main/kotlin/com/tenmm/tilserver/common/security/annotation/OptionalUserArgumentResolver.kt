@@ -28,10 +28,14 @@ class OptionalUserArgumentResolver(
         return if (authFromHeader == null) {
             null.toMono()
         } else {
-            val tokenWithBearer = authFromHeader[0]
-            val token = tokenWithBearer.substringAfter("Bearer ")
-            val userIdentifier = resolveTokenUseCase.resolveToken(token, SecurityTokenType.ACCESS)
-            UserAuthInfo(userIdentifier).toMono()
+            try {
+                val tokenWithBearer = authFromHeader[0]
+                val token = tokenWithBearer.substringAfter("Bearer ")
+                val userIdentifier = resolveTokenUseCase.resolveToken(token, SecurityTokenType.ACCESS)
+                UserAuthInfo(userIdentifier).toMono()
+            } catch (e: Exception) {
+                null.toMono()
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.tenmm.tilserver.post.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.common.domain.OperationResult
 import com.tenmm.tilserver.outbound.persistence.repository.PostRepository
-import com.tenmm.tilserver.post.application.inbound.model.ModifyPostCommand
 import com.tenmm.tilserver.post.application.outbound.DeletePostPort
 import com.tenmm.tilserver.post.application.outbound.ModifyPostPort
 import com.tenmm.tilserver.post.application.outbound.SavePostPort
@@ -29,22 +29,54 @@ class ModifyPostAdapter(
         }
     }
 
-    override fun modifyByIdentifier(command: ModifyPostCommand): Boolean {
-        val postEntity = postRepository.findByIdentifier(command.identifier.value)
-            ?: return false
+    override fun updateTitle(postIdentifier: Identifier, title: String): OperationResult {
+        try {
+            val postEntity = postRepository.findByIdentifier(postIdentifier.value)
+                ?: return OperationResult.fail()
 
-        val modifiedEntity = postEntity.copy(
-            title = command.title,
-            description = command.summary,
-            createdAt = Timestamp.from(Instant.ofEpochSecond(command.createdAt))
-        )
+            val modifiedEntity = postEntity.copy(
+                title = title
+            )
 
-        return try {
             postRepository.save(modifiedEntity)
-            true
+            return OperationResult.success()
         } catch (e: Exception) {
-            logger.error(e) { "Post save Fail - $command" }
-            false
+            logger.error(e) { "Post save Fail" }
+            return OperationResult.fail()
+        }
+    }
+
+    override fun updateSummary(postIdentifier: Identifier, summary: String): OperationResult {
+        try {
+            val postEntity = postRepository.findByIdentifier(postIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedEntity = postEntity.copy(
+                description = summary
+            )
+
+            postRepository.save(modifiedEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Post save Fail" }
+            return OperationResult.fail()
+        }
+    }
+
+    override fun updateCreatedAt(postIdentifier: Identifier, createdAt: Long): OperationResult {
+        try {
+            val postEntity = postRepository.findByIdentifier(postIdentifier.value)
+                ?: return OperationResult.fail()
+
+            val modifiedEntity = postEntity.copy(
+                createdAt = Timestamp.from(Instant.ofEpochSecond(createdAt))
+            )
+
+            postRepository.save(modifiedEntity)
+            return OperationResult.success()
+        } catch (e: Exception) {
+            logger.error(e) { "Post save Fail" }
+            return OperationResult.fail()
         }
     }
 

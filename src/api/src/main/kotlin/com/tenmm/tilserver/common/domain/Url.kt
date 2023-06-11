@@ -7,7 +7,7 @@ data class Url(
 ) {
     init {
         if (value != "" && !URL_REGEX.matches(value)) {
-            throw IllegalArgumentException("Invalid URL : $value")
+            throw InvalidUrlException("Invalid URL : $value")
         }
     }
 }

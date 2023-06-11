@@ -33,17 +33,17 @@ class GetUserMyProfileController(
                 description = "내 프로필 조회 성공"
             ),
             ApiResponse(
-                responseCode = "401",
+                responseCode = "UNAUTHORIZED_USER",
                 description = "로그인 하지 않은 사용자",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
-                responseCode = "404",
+                responseCode = "USER_NOT_FOUND",
                 description = "프로필 조회 실패",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
-                responseCode = "500",
+                responseCode = "UNKNOWN_SERVER_ERROR",
                 description = "서버에러",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             )

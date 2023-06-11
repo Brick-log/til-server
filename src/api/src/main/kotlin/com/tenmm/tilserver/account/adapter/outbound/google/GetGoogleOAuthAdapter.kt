@@ -2,25 +2,30 @@ package com.tenmm.tilserver.account.adapter.outbound.google
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.tenmm.tilserver.account.adapter.outbound.google.model.GoogleOAuthUserInfoResponse
-import com.tenmm.tilserver.account.application.outbound.GetOAuthTokenPort
-import com.tenmm.tilserver.account.application.outbound.GetOAuthUserInfoPort
 import com.tenmm.tilserver.account.application.model.OAuthTokenResult
 import com.tenmm.tilserver.account.application.model.OAuthUserInfo
+import com.tenmm.tilserver.account.application.outbound.GetOAuthTokenPort
+import com.tenmm.tilserver.account.application.outbound.GetOAuthUserInfoPort
 import com.tenmm.tilserver.account.domain.OAuthType
 import com.tenmm.tilserver.common.domain.Email
+import com.tenmm.tilserver.common.domain.OAuthFailException
 import com.tenmm.tilserver.common.domain.Url
 import java.util.Base64
 import javax.annotation.PostConstruct
+import mu.KotlinLogging
+import org.apache.logging.log4j.util.Strings
 import org.springframework.security.oauth2.client.registration.ClientRegistration
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 
+private val logger = KotlinLogging.logger {}
+
 @Component
 class GetGoogleOAuthAdapter(
     private val getTokenApi: GoogleGetOAuthTokenApi,
     private val getUserInfoApi: GoogleGetOAuthUserInfoApi,
-    private val clientRegistrationRepository: ReactiveClientRegistrationRepository
+    private val clientRegistrationRepository: ReactiveClientRegistrationRepository,
 ) : GetOAuthTokenPort, GetOAuthUserInfoPort {
 
     private val objectMapper = ObjectMapper()
@@ -41,13 +46,18 @@ class GetGoogleOAuthAdapter(
         type: OAuthType,
         redirectUrl: Url
     ): OAuthTokenResult {
-        val response = getTokenApi.getToken(
-            authorizeCode = authorizeCode,
-            clientId = registration.clientId,
-            clientSecret = registration.clientSecret,
-            redirectUri = redirectUrl.value,
-            grantType = registration.authorizationGrantType.value
-        )
+        val response = try {
+            getTokenApi.getToken(
+                authorizeCode = authorizeCode,
+                clientId = registration.clientId,
+                clientSecret = registration.clientSecret,
+                redirectUri = redirectUrl.value,
+                grantType = registration.authorizationGrantType.value
+            )
+        } catch (e: Exception) {
+            logger.error(e) { "OAuth to google fail" }
+            throw OAuthFailException(OAuthType.GOOGLE, e.message ?: Strings.EMPTY)
+        }
 
         return OAuthTokenResult(
             accessToken = response.accessToken,
@@ -75,8 +85,7 @@ class GetGoogleOAuthAdapter(
                 type = type
             )
         } else {
-            val response =
-                getUserInfoApi.getUserInfo(accessToken)
+            val response = getUserInfoApi.getUserInfo(accessToken)
             return OAuthUserInfo(
                 name = response.name,
                 email = Email(response.email),

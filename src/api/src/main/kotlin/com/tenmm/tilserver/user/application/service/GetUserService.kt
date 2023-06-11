@@ -1,7 +1,7 @@
 package com.tenmm.tilserver.user.application.service
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.NotFoundException
+import com.tenmm.tilserver.common.domain.UserNotFoundException
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import com.tenmm.tilserver.user.application.outbound.GetUserPort
 import com.tenmm.tilserver.user.domain.User
@@ -12,15 +12,15 @@ class GetUserService(
     private val getUserPort: GetUserPort,
 ) : GetUserUseCase {
     override fun getByName(name: String): User {
-        return getUserPort.getByName(name) ?: throw NotFoundException("User not found")
+        return getUserPort.getByName(name) ?: throw UserNotFoundException()
     }
 
     override fun getByPath(path: String): User {
-        return getUserPort.getByPath(path) ?: throw NotFoundException("User not found")
+        return getUserPort.getByPath(path) ?: throw UserNotFoundException()
     }
 
     override fun getByIdentifier(userIdentifier: Identifier): User {
-        return getUserPort.getByUserIdentifier(userIdentifier) ?: throw NotFoundException("User not found")
+        return getUserPort.getByUserIdentifier(userIdentifier) ?: throw UserNotFoundException()
     }
 
     override fun getByIdentifierList(userIdentifiers: List<Identifier>): List<User> {

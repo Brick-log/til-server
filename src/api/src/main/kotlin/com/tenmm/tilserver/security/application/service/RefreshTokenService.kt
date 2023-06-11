@@ -19,7 +19,7 @@ class RefreshTokenService(
     override suspend fun refresh(securityToken: SecurityToken): SecurityToken {
         val (userIdentifier, accessToken, refreshToken) = securityToken
         getRefreshTokenPort.getAccessToken(userIdentifier, accessToken, refreshToken)
-            ?: throw UnAuthorizedException("Can't find Tokens")
+            ?: throw UnAuthorizedException()
 
         deleteRefreshTokenPort.delete(userIdentifier, accessToken)
         return generateTokenUseCase.generate(userIdentifier)
