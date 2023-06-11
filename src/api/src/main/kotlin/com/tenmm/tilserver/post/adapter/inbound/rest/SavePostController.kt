@@ -1,6 +1,5 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
-import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
@@ -67,45 +66,11 @@ class SavePostController(
             userAuthInfo.userIdentifier,
             Url(requestUploadPostRequest.url)
         )
-        val result = savePostUseCase.requestSave(requestCommand)
+        val result = savePostUseCase.requestParse(requestCommand)
         return RequestUploadPostResponse.fromResult(result)
     }
 
     @PostMapping("/confirm")
-    @Operation(
-        summary = "포스트 업로드 확인",
-        responses = [
-            ApiResponse(
-                responseCode = "200",
-                description = "포스트 업로드 확인 성공"
-            ),
-            ApiResponse(
-                responseCode = "400",
-                description = "잘못된 포스트 업로드 확인 요청 (ex.잘못된 url)",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            ),
-            ApiResponse(
-                responseCode = "401",
-                description = "로그인 하지 않은 사용자",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            ),
-            ApiResponse(
-                responseCode = "403",
-                description = "접근 권한이 없는 사용자",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            ),
-            ApiResponse(
-                responseCode = "404",
-                description = "포스트 업로드 요청 기록 조회 실패",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            ),
-            ApiResponse(
-                responseCode = "500",
-                description = "서버에러",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            )
-        ]
-    )
     @RequiredAuthentication
     suspend fun uploadConfirm(
         userAuthInfo: UserAuthInfo,
@@ -113,12 +78,12 @@ class SavePostController(
     ): ConfirmUploadPostResponse {
         val confirmCommand = PostSaveConfirmCommand(
             userIdentifier = userAuthInfo.userIdentifier,
-            saveIdentifier = Identifier(confirmUploadPostRequest.identifier),
+            url = Url(confirmUploadPostRequest.url),
             title = confirmUploadPostRequest.title,
             description = confirmUploadPostRequest.summary,
             createdAt = confirmUploadPostRequest.createdAt,
         )
-        val result = savePostUseCase.confirmSave(confirmCommand)
+        val result = savePostUseCase.savePost(confirmCommand)
         return ConfirmUploadPostResponse.fromResult(result)
     }
 }

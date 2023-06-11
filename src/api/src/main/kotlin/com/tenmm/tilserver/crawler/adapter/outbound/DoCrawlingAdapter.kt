@@ -3,7 +3,7 @@ package com.tenmm.tilserver.crawler.adapter.outbound
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.crawler.application.outbound.DoCrawlingPort
 import com.tenmm.tilserver.crawler.domain.CssSelectorInfo
-import com.tenmm.tilserver.crawler.domain.Post
+import com.tenmm.tilserver.crawler.domain.ParsedPost
 import java.net.URL
 import java.sql.Timestamp
 import org.jsoup.Jsoup
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class DoCrawlingAdapter : DoCrawlingPort {
-    override fun crawling(url: Url, cssSelectorInfo: CssSelectorInfo): Post {
+    override fun crawling(url: Url, cssSelectorInfo: CssSelectorInfo): ParsedPost {
         val document = Jsoup.parse(URL(url.value), 1000 * 10)
 
         val title = document.getAttribute(cssSelectorInfo.titleCssSelector)
@@ -35,7 +35,7 @@ class DoCrawlingAdapter : DoCrawlingPort {
             }
         }
 
-        return Post(
+        return ParsedPost(
             title = title,
             description = description,
             createdAt = createdAt,

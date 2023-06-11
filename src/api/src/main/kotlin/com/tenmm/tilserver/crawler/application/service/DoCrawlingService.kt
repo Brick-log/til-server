@@ -4,8 +4,8 @@ import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.crawler.application.inbound.DoCrawlingUseCase
 import com.tenmm.tilserver.crawler.application.outbound.DoCrawlingPort
-import com.tenmm.tilserver.crawler.application.outbound.SaveCrawlingPort
 import com.tenmm.tilserver.crawler.application.service.crawler.CrawlerMap
+import com.tenmm.tilserver.crawler.domain.ParsedPost
 import com.tenmm.tilserver.crawler.util.UrlCheck
 import org.springframework.stereotype.Service
 
@@ -13,9 +13,8 @@ import org.springframework.stereotype.Service
 class DoCrawlingService(
     private val crawlerMap: CrawlerMap,
     private val doCrawlingPort: DoCrawlingPort,
-    private val saveCrawlingPort: SaveCrawlingPort,
 ) : DoCrawlingUseCase {
-    override suspend fun invoke(url: Url, userIdentifier: Identifier): Identifier {
+    override suspend fun invoke(url: Url, userIdentifier: Identifier): ParsedPost {
         val type = UrlCheck.getType(url)
         val cssSelectorInfo = crawlerMap[type]!!.getMeta()
 
@@ -24,6 +23,11 @@ class DoCrawlingService(
             cssSelectorInfo = cssSelectorInfo
         )
 
-        return saveCrawlingPort.saveCrawling(userIdentifier, crawlingResult)
+        return ParsedPost(
+            url = url,
+            title = crawlingResult.title,
+            description = crawlingResult.description,
+            createdAt = crawlingResult.createdAt
+        )
     }
 }

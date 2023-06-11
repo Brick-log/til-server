@@ -6,6 +6,6 @@ import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestCommand
 import com.tenmm.tilserver.post.application.inbound.model.PostSaveRequestResult
 
 interface SavePostUseCase {
-    suspend fun requestSave(command: PostSaveRequestCommand): PostSaveRequestResult
-    suspend fun confirmSave(command: PostSaveConfirmCommand): PostSaveConfirmResult
+    suspend fun requestParse(command: PostSaveRequestCommand): PostSaveRequestResult
+    suspend fun savePost(command: PostSaveConfirmCommand): PostSaveConfirmResult
 }

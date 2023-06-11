@@ -25,9 +25,10 @@ enum class ModifyPostFailType {
     POST_TITLE, POST_SUMMARY, POST_CREATED_AT
 }
 
-class CrawlingResultNotFoundException : ServerBaseException(ErrorCode.CRAWLING_RESULT_NOT_FOUND)
 class CategoryNotFoundException : ServerBaseException(ErrorCode.CATEGORY_NOT_FOUND)
 
 class SignUpFailException : ServerBaseException(ErrorCode.SIGN_UP_FAIL)
 class OAuthFailException(type: OAuthType, description: String) :
     ServerBaseException(ErrorCode.OAUTH_FAIL, "$type - $description")
+
+class PostSaveFailException : ServerBaseException(ErrorCode.POST_SAVE_FAIL)
