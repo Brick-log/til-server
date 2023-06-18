@@ -4,8 +4,8 @@ import com.tenmm.tilserver.account.application.inbound.ModifyAccountUseCase
 import com.tenmm.tilserver.blog.application.inbound.ModifyBlogUseCase
 import com.tenmm.tilserver.blog.application.inbound.model.ModifyBlogCommand
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.ModifyUserFailType
 import com.tenmm.tilserver.common.domain.ModifyUserFailException
+import com.tenmm.tilserver.common.domain.ModifyUserFailType
 import com.tenmm.tilserver.common.domain.OperationResult
 import com.tenmm.tilserver.common.domain.Url
 import com.tenmm.tilserver.common.domain.UserNotFoundException
@@ -31,6 +31,7 @@ class ModifyUserService(
     @Transactional
     override fun modifyUserInfo(command: ModifyUserCommand): OperationResult {
         getUserPort.getByUserIdentifier(command.userIdentifier) ?: throw UserNotFoundException()
+        if (getUserPort.getByPath(command.path) != null) throw ModifyUserFailException(ModifyUserFailType.USER_PATH)
         modifyUserPort.updateUserName(command.userIdentifier, command.name).check(UpdateUserType.NAME)
         modifyUserPort.updateUserCategory(command.userIdentifier, command.categoryIdentifier)
             .check(UpdateUserType.CATEGORY)
