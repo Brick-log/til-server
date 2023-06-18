@@ -31,7 +31,10 @@ class ModifyUserService(
     @Transactional
     override fun modifyUserInfo(command: ModifyUserCommand): OperationResult {
         getUserPort.getByUserIdentifier(command.userIdentifier) ?: throw UserNotFoundException()
-        if (getUserPort.getByPath(command.path) != null) throw ModifyUserFailException(ModifyUserFailType.USER_PATH)
+        getUserPort.getByPath(command.path)?.let {
+            if (it.identifier != command.userIdentifier)
+                throw ModifyUserFailException(ModifyUserFailType.USER_PATH)
+        }
         modifyUserPort.updateUserName(command.userIdentifier, command.name).check(UpdateUserType.NAME)
         modifyUserPort.updateUserCategory(command.userIdentifier, command.categoryIdentifier)
             .check(UpdateUserType.CATEGORY)
