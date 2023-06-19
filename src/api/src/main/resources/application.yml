@@ -33,4 +33,4 @@ feign:
     enabled: true
 
 profile-img:
-  default: "https://raw.githubusercontent.com/Brick-log/til-server/main/default.png"
+  default: "https://dev.bricklog.io/images/profile/default.png"

@@ -21,6 +21,7 @@ data class Post(
 data class PostDetail(
     val identifier: Identifier,
     val userPath: String,
+    val userName: String,
     val userProfileSrc: Url,
     val categoryIdentifier: Identifier,
     val categoryName: String,
@@ -35,6 +36,7 @@ data class PostDetail(
             return PostDetail(
                 identifier = post.identifier,
                 userPath = user.path,
+                userName = user.name,
                 userProfileSrc = user.thumbnailUrl,
                 categoryIdentifier = category.identifier,
                 categoryName = category.name,
