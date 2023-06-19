@@ -25,6 +25,7 @@ data class GetPostListResponse(
 data class PostResponse(
     val identifier: String,
     val userPath: String,
+    val userName: String,
     val profileImgSrc: String,
     val categoryIdentifier: String,
     val categoryName: String,
@@ -39,6 +40,7 @@ data class PostResponse(
             return PostResponse(
                 identifier = post.identifier.value,
                 userPath = post.userPath,
+                userName = post.userName,
                 profileImgSrc = post.userProfileSrc.value,
                 categoryIdentifier = post.categoryIdentifier.value,
                 categoryName = post.categoryName,
