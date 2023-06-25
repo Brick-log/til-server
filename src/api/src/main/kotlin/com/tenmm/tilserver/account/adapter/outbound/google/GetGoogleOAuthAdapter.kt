@@ -78,8 +78,10 @@ class GetGoogleOAuthAdapter(
             val payload = String(base64DecodedPayload, Charsets.UTF_8)
             val response = objectMapper.readValue(payload, GoogleOAuthUserInfoResponse::class.java)
 
+            val name = response.givenName.substring(0, minOf(response.givenName.length, 10))
+
             return OAuthUserInfo(
-                name = response.givenName.substring(0, 10),
+                name = name,
                 email = Email(response.email),
                 profileImgUrl = Url(response.picture),
                 type = type

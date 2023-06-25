@@ -6,16 +6,7 @@ CREATE TABLE `account`
     `is_spam_notification_agreed` boolean      not null,
     `status`                      varchar(20)  not null,
     `email`                       varchar(100) not null,
-    `created_at`                  timestamp    not null,
-    unique index UDX_USER_IDENTIFIER (`user_identifier`)
-);
-
-CREATE TABLE `alarm`
-(
-    `id`              int      not null primary key auto_increment,
-    `user_identifier` char(36) not null,
-    `enable`          boolean  not null default false,
-    `iteration`       varchar(128)      default null,
+    `created_at`                  timestamp    not null default now(),
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
@@ -46,14 +37,19 @@ create table `draft`
     unique index UDX_USER_IDENTIFIER (`user_identifier`)
 );
 
-CREATE TABLE `token`
+CREATE TABLE `post`
 (
-    `id`                 int              not null primary key auto_increment,
-    `user_identifier`    char(36)         not null,
-    `access_token`       varchar(512)     not null,
-    `refresh_token`      varchar(512)     not null,
-    `refresh_token_expire` timestamp        not null,
-    index `idx_token_userIdentifier_accessToken` (`user_identifier`, `access_token`)
+    `id`                  int           not null primary key auto_increment,
+    `identifier`          char(36)      not null,
+    `category_identifier` char(36)      not null,
+    `user_identifier`     char(36)      not null,
+    `title`               varchar(200)  not null,
+    `description`         varchar(1000) not null,
+    `url`                 varchar(255)  not null,
+    `hit_count`           int           not null,
+    `created_at`          timestamp     not null default now(),
+    unique index UDX_IDENTIFIER (`identifier`),
+    index IDX_USER_IDENTIFIER (`user_identifier`)
 );
 
 CREATE TABLE `recommended_post`
@@ -65,32 +61,27 @@ CREATE TABLE `recommended_post`
     index IDX_CATEGORY_IDENTIFIER (`category_identifier`)
 );
 
-CREATE TABLE `post`
+CREATE TABLE `token`
 (
-    `id`                  int          not null primary key auto_increment,
-    `identifier`          char(36)     not null,
-    `category_identifier` char(36)     not null,
-    `user_identifier`     char(36)     not null,
-    `title`               varchar(200)  not null,
-    `description`         varchar(2500) not null,
-    `url`                 varchar(255) not null,
-    `hit_count`           int          not null,
-    `created_at`          timestamp    not null default now(),
-    unique index UDX_IDENTIFIER (`identifier`),
-    index IDX_USER_IDENTIFIER (`user_identifier`)
+    `id`                   int          not null primary key auto_increment,
+    `user_identifier`      char(36)     not null,
+    `access_token`         varchar(512) not null,
+    `refresh_token`        varchar(512) not null,
+    `refresh_token_expire` timestamp    not null default now(),
+    index `idx_token_userIdentifier_accessToken` (`user_identifier`, `access_token`)
 );
 
 CREATE TABLE `user`
 (
     `id`                  int          not null primary key auto_increment,
-    `name`                varchar(255) not null,
+    `name`                varchar(10)  not null,
     `user_identifier`     char(36)     not null,
     `category_identifier` char(36)     null,
-    `introduction`        TEXT         null,
+    `introduction`        varchar(200) null,
     `thumbnail_url`       varchar(255) not null,
     `path`                varchar(255) not null,
     `status`              varchar(20)  not null,
     unique index UDX_USER_IDENTIFIER (`user_identifier`),
-    unique index UDX_NAME (`name`),
+
     unique index UDX_PATH (`path`)
 );
