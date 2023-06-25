@@ -93,6 +93,13 @@ class GetPostService(
         pageToken: String?,
     ): GetPostListResult {
         val userInfo = getUserUseCase.getByPath(path)
+        if (userInfo.categoryIdentifier == null) {
+            return GetPostListResult(
+                posts = emptyList(),
+                size = 0,
+                nextPageToken = null
+            )
+        }
         val category = getCategoryUseCase.getByIdentifier(userInfo.categoryIdentifier!!)
         val totalCount = getPostPort.totalPostCountByUser(userIdentifier = userInfo.identifier)
         return if (pageToken == null) {
