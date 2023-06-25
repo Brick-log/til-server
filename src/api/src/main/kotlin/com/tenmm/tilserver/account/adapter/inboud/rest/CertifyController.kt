@@ -67,7 +67,7 @@ class CertifyController(
     @RequiredAuthentication
     @PostMapping("/logout")
     @Operation(
-        summary = "로그인",
+        summary = "로그아웃",
         responses = [
             ApiResponse(
                 responseCode = "200",

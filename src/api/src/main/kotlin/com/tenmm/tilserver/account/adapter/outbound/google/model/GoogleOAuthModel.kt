@@ -23,8 +23,8 @@ data class GoogleOAuthLoginResponse(
 data class GoogleOAuthUserInfoResponse(
     @JsonProperty("email")
     val email: String,
-    @JsonProperty("name")
-    val name: String,
+    @JsonProperty("given_name")
+    val givenName: String,
     @JsonProperty("picture")
     val picture: String,
 )
