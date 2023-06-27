@@ -12,7 +12,6 @@ import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.utils.SpringDocUtils
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 
 @Configuration
 @SecurityScheme(
@@ -23,7 +22,6 @@ import org.springframework.context.annotation.Profile
     `in` = SecuritySchemeIn.HEADER,
     paramName = "Authorization"
 )
-@Profile("!prd")
 class SwaggerConfig {
 
     init {
