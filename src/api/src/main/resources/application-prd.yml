@@ -1,0 +1,39 @@
+springdoc:
+  swagger-ui:
+    enabled: false
+    disable-swagger-default-url: true
+  api-docs:
+    enabled: false
+
+spring:
+  main:
+    web-application-type: reactive
+  config:
+    import:
+      - application-storage-prd.yml
+      - application-oauth.yml
+      - application-actuator.yml
+security:
+  aes128:
+    key: ${AES_128_KEY}
+
+grpc:
+  crawling-server:
+    address: "localhost"
+    port: "9090"
+
+jwt:
+  access:
+    expire: ${ACCESS_TOKEN_EXPIRE}
+    secret: ${ACCESS_TOKEN_SECRET}
+  refresh:
+    expire: ${REFRESH_TOKEN_EXPIRE}
+    secret: ${REFRESH_TOKEN_SECRET}
+feign:
+  okhttp:
+    enabled: true
+
+
+
+profile-img:
+  default: "https://dev.bricklog.io/images/profile/default.png"
