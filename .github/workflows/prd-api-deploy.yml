@@ -1,9 +1,9 @@
 name: prd-api-deploy
 on:
   push:
-    branches: [ "release" ]
+    branches: [ "prd" ]
   pull_request:
-    branches: [ "release" ]
+    branches: [ "prd" ]
     types: [ closed ] # when PR closed
     paths:
       - 'libs/**'
