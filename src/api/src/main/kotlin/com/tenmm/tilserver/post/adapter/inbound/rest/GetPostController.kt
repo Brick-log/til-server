@@ -3,11 +3,14 @@ package com.tenmm.tilserver.post.adapter.inbound.rest
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.exception.ErrorResponse
+import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostMetaResponse
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostResponse
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.GetRecommendedPostUseCase
+import com.tenmm.tilserver.security.domain.UserAuthInfo
+import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/v1/post")
 @Tag(name = "Post")
 class GetPostController(
+    private val getUserUseCase: GetUserUseCase,
     private val getPostUseCase: GetPostUseCase,
     private val getRecommendedPostUseCase: GetRecommendedPostUseCase,
 ) {
@@ -170,13 +174,21 @@ class GetPostController(
             )
         ]
     )
+    @OptionalAuthentication
     fun getByCategory(
+        userAuthInfo: UserAuthInfo?,
         @RequestParam size: Int,
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
-        val postListResult = if (categoryIdentifier != null) {
-            getPostUseCase.getPostListByCategory(categoryIdentifier.toIdentifier(), size, pageToken)
+        val searchCategoryIdentifier = if (userAuthInfo != null) {
+            getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
+        } else {
+            categoryIdentifier?.toIdentifier()
+        }
+
+        val postListResult = if (searchCategoryIdentifier != null) {
+            getPostUseCase.getPostListByCategory(searchCategoryIdentifier, size, pageToken)
         } else {
             getPostUseCase.getPostListRandom(size)
         }
@@ -208,11 +220,19 @@ class GetPostController(
             )
         ]
     )
+    @OptionalAuthentication
     fun getRecommendationList(
+        userAuthInfo: UserAuthInfo?,
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
     ): GetPostListResponse {
-        val postListResult = if (categoryIdentifier != null) {
-            getRecommendedPostUseCase.getRecommendedPostListByCategory(categoryIdentifier.toIdentifier())
+        val searchCategoryIdentifier = if (userAuthInfo != null) {
+            getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
+        } else {
+            categoryIdentifier?.toIdentifier()
+        }
+
+        val postListResult = if (searchCategoryIdentifier != null) {
+            getRecommendedPostUseCase.getRecommendedPostListByCategory(searchCategoryIdentifier)
         } else {
             getRecommendedPostUseCase.getRecommendedPostListRandom()
         }
