@@ -181,10 +181,12 @@ class GetPostController(
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
-        val searchCategoryIdentifier = if (userAuthInfo != null) {
+        val searchCategoryIdentifier = if (categoryIdentifier != null) {
+            categoryIdentifier.toIdentifier()
+        } else if (userAuthInfo != null) {
             getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
         } else {
-            categoryIdentifier?.toIdentifier()
+            null
         }
 
         val postListResult = if (searchCategoryIdentifier != null) {
@@ -225,10 +227,12 @@ class GetPostController(
         userAuthInfo: UserAuthInfo?,
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
     ): GetPostListResponse {
-        val searchCategoryIdentifier = if (userAuthInfo != null) {
+        val searchCategoryIdentifier = if (categoryIdentifier != null) {
+            categoryIdentifier.toIdentifier()
+        } else if (userAuthInfo != null) {
             getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
         } else {
-            categoryIdentifier?.toIdentifier()
+            null
         }
 
         val postListResult = if (searchCategoryIdentifier != null) {
