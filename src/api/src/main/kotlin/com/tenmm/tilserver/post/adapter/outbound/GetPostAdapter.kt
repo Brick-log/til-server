@@ -106,8 +106,8 @@ class GetPostAdapter(
         val pageToken = generatePageToken(
             result.size == size + 1,
             userIdentifier,
-            from.time,
-            to.time,
+            from.time / 1000,
+            to.time / 1000,
             resultList.lastOrNull()
         ).toString()
         return ResultWithToken(
