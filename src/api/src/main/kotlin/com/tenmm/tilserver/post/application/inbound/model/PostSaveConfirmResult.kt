@@ -5,4 +5,6 @@ import com.tenmm.tilserver.common.domain.OperationResult
 data class PostSaveConfirmResult(
     val operationResult: OperationResult,
     val monthlyPublishCount: Int,
+    val month: Int,
+    val year: Int,
 )

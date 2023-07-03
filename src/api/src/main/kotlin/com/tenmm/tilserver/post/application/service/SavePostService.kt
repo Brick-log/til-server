@@ -14,7 +14,6 @@ import com.tenmm.tilserver.post.application.outbound.SavePostPort
 import com.tenmm.tilserver.post.domain.Post
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import java.math.BigInteger
-import java.time.LocalDate
 import org.springframework.stereotype.Service
 
 @Service
@@ -47,14 +46,19 @@ class SavePostService(
             hitCount = BigInteger.ZERO
         )
 
+        val postYear = command.createdAt.toLocalDateTime().year
+        val monthYear = command.createdAt.toLocalDateTime().monthValue
+
         return if (savePostPort.save(generatedPost)) {
             PostSaveConfirmResult(
                 operationResult = OperationResult.success(),
                 monthlyPublishCount = getPostUseCase.getPostCountByMonth(
                     userIdentifier = userInfo.identifier,
-                    year = LocalDate.now().year,
-                    month = LocalDate.now().monthValue
-                )
+                    year = postYear,
+                    month = monthYear
+                ),
+                month = monthYear,
+                year = postYear,
             )
         } else {
             throw PostSaveFailException()
