@@ -10,7 +10,7 @@ data class ConfirmUploadPostResponse(
         fun fromResult(result: PostSaveConfirmResult): ConfirmUploadPostResponse {
             return ConfirmUploadPostResponse(
                 isSuccess = result.operationResult.isSuccess,
-                monthlyPublishCount = result.monthlyPublishCount
+                monthlyPublishCount = result.monthlyPublishCount,
             )
         }
     }
