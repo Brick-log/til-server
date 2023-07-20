@@ -1,9 +1,9 @@
 name: prd-api-deploy
 on:
   push:
-    branches: [ "prd" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "prd" ]
+    branches: [ "master" ]
     types: [ closed ] # when PR closed
 jobs:
   build:
