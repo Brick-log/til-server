@@ -9,9 +9,9 @@ name: build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master","develop", "release/v*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master","develop", "release/v*" ]
 
 permissions:
   contents: read
