@@ -27,7 +27,6 @@ pluginManagement {
 rootProject.name = "til-server"
 
 includeProject(":api", "src/api")
-includeProject(":crawler", "src/crawler")
 
 includeProject(":protocol", "libs/protocol")
 includeProject(":storage", "libs/storage")
