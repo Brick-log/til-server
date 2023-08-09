@@ -10,8 +10,8 @@ import com.tenmm.tilserver.account.domain.OAuthType
 import com.tenmm.tilserver.common.domain.Email
 import com.tenmm.tilserver.common.domain.OAuthFailException
 import com.tenmm.tilserver.common.domain.Url
+import jakarta.annotation.PostConstruct
 import java.util.Base64
-import javax.annotation.PostConstruct
 import mu.KotlinLogging
 import org.apache.logging.log4j.util.Strings
 import org.springframework.security.oauth2.client.registration.ClientRegistration
@@ -44,7 +44,7 @@ class GetGoogleOAuthAdapter(
     override fun getOAuthTokens(
         authorizeCode: String,
         type: OAuthType,
-        redirectUrl: Url
+        redirectUrl: Url,
     ): OAuthTokenResult {
         val response = try {
             getTokenApi.getToken(

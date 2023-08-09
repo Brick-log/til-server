@@ -283,6 +283,7 @@ allprojects {
             "com.tenmm.tilserver.user.application.service.ModifyUserServiceKt",
             "com.tenmm.tilserver.crawler.domain.CssSelectorInfo",
             "com.tenmm.tilserver.crawler.domain.ParsedPost",
+            "com.tenmm.tilserver.crawler.adapter.outbound.DoURLConnectionCrawlingAdapter",
             "com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse.Companion",
             "com.tenmm.tilserver.user.adapter.inbound.model.GetUserProfileResponse",
             "com.tenmm.tilserver.user.adapter.inbound.model.ModifyUserProfileResponse.Companion",
