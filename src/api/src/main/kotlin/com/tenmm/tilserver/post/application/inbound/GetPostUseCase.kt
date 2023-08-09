@@ -12,8 +12,8 @@ interface GetPostUseCase {
     fun getPostByIdentifier(postIdentifier: Identifier): Post
     fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post>
 
-    fun getPostListRandom(size: Int): GetPostListResult
-    fun getPostListByCategory(categoryIdentifier: String, size: Int, pageToken: String?): GetPostListResult
+    suspend fun getPostListByCategory(categoryIdentifier: String, size: Int): GetPostListResult
+    suspend fun getPostListWithPageToken(pageToken: String, size: Int): GetPostListResult
 
     fun getPostListByNameAndDateWithPageToken(
         path: String,

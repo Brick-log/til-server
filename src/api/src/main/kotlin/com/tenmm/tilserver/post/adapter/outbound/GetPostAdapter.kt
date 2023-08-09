@@ -17,19 +17,9 @@ class GetPostAdapter(
     private val postRepository: PostRepository,
     private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
-    override fun getPostRandom(size: Int): List<Post> {
-        return postRepository.findByRandom(size).map { it.toModel() }
-    }
-
     override fun totalPostCountByUser(userIdentifier: Identifier): Int {
         return postRepository.countAllByUserIdentifier(
             userIdentifier = userIdentifier.value
-        )
-    }
-
-    override fun totalPostCountByCategory(categoryIdentifier: String): Int {
-        return postRepository.countAllByCategoryIdentifier(
-            categoryIdentifier = categoryIdentifier
         )
     }
 
@@ -49,23 +39,25 @@ class GetPostAdapter(
             categoryIdentifier,
             size + 1
         )
-        val minOfSize = minOf(size, result.size)
-        val resultList = result.subList(0, minOfSize)
+        val resultList = result.subList(0, minOf(size, result.size))
 
-        val pageToken = generatePageToken(
-            result.size == size + 1,
-            categoryIdentifier,
-            resultList.lastOrNull()
-        ).toString()
+        val pageToken = resultList.lastOrNull()?.let { lastEntity ->
+            generatePageToken(
+                condition = result.size == size + 1,
+                categoryIdentifier = categoryIdentifier,
+                lastEntity = lastEntity
+            )
+        }
+
         return ResultWithToken(
             data = resultList.map { it.toModel() },
             pageToken = pageToken
         )
     }
 
-    override fun getPostListByCategoryIdentifierWithPageToken(
-        size: Int,
+    override fun getPostListWithPageToken(
         pageToken: String,
+        size: Int,
     ): ResultWithToken<List<Post>> {
         val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchPostWithCategoryIdentifier::class)
         val result = postRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
@@ -74,15 +66,16 @@ class GetPostAdapter(
             categoryIdentifier = parsedPageToken.categoryIdentifier,
             size = size + 1
         )
-        val minOfSize = minOf(size, result.size)
-        val resultList = result.subList(0, minOfSize)
 
-        val nextPageToken = generatePageToken(
-            result.size == size + 1,
-            parsedPageToken.categoryIdentifier,
-            resultList.lastOrNull()
-        ).toString()
+        val resultList = result.subList(0, minOf(size, result.size))
 
+        val nextPageToken = resultList.lastOrNull()?.let { lastEntity ->
+            generatePageToken(
+                condition = result.size == size + 1,
+                categoryIdentifier = parsedPageToken.categoryIdentifier,
+                lastEntity = lastEntity
+            )
+        }
         return ResultWithToken(
             data = resultList.map { it.toModel() },
             pageToken = nextPageToken
@@ -109,7 +102,7 @@ class GetPostAdapter(
             from.time / 1000,
             to.time / 1000,
             resultList.lastOrNull()
-        ).toString()
+        )
         return ResultWithToken(
             data = resultList.map { it.toModel() },
             pageToken = pageToken
@@ -141,7 +134,7 @@ class GetPostAdapter(
             parsedPageToken.from,
             parsedPageToken.to,
             resultList.lastOrNull()
-        ).toString()
+        )
 
         return ResultWithToken(
             data = resultList.map { it.toModel() },

@@ -171,26 +171,26 @@ class GetPostController(
             )
         ]
     )
-    @OptionalAuthentication
-    fun getByCategory(
-        userAuthInfo: UserAuthInfo?,
+    suspend fun getByCategory(
         @RequestParam size: Int,
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
-        val searchCategoryIdentifier = if (categoryIdentifier != null) {
-            categoryIdentifier
-        } else if (userAuthInfo != null) {
-            getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
+
+        val postListResult = if (categoryIdentifier == null && pageToken != null) {
+            getPostUseCase.getPostListWithPageToken(
+                pageToken = pageToken,
+                size = size
+            )
+        } else if (categoryIdentifier != null && pageToken == null) {
+            getPostUseCase.getPostListByCategory(
+                categoryIdentifier = categoryIdentifier,
+                size = size
+            )
         } else {
-            null
+            throw IllegalArgumentException()
         }
 
-        val postListResult = if (searchCategoryIdentifier != null) {
-            getPostUseCase.getPostListByCategory(searchCategoryIdentifier, size, pageToken)
-        } else {
-            getPostUseCase.getPostListRandom(size)
-        }
         return GetPostListResponse.fromResult(postListResult)
     }
 
