@@ -35,10 +35,15 @@ class GetPostAdapter(
         categoryIdentifier: String,
         size: Int,
     ): ResultWithToken<List<Post>> {
-        val result = postRepository.findAllByCategoryIdentifier(
-            categoryIdentifier,
-            size + 1
-        )
+        val result = if (categoryIdentifier == "all") {
+            postRepository.findAll(size + 1)
+        } else {
+            postRepository.findAllByCategoryIdentifier(
+                categoryIdentifier,
+                size + 1
+            )
+        }
+
         val resultList = result.subList(0, minOf(size, result.size))
 
         val pageToken = resultList.lastOrNull()?.let { lastEntity ->
@@ -60,12 +65,20 @@ class GetPostAdapter(
         size: Int,
     ): ResultWithToken<List<Post>> {
         val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchPostWithCategoryIdentifier::class)
-        val result = postRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
-            lastEntityId = parsedPageToken.lastEntityId,
-            lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
-            categoryIdentifier = parsedPageToken.categoryIdentifier,
-            size = size + 1
-        )
+        val result = if (parsedPageToken.categoryIdentifier == "all") {
+            postRepository.findAllByCreatedAtBefore(
+                lastEntityId = parsedPageToken.lastEntityId,
+                lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
+                size = size + 1
+            )
+        } else {
+            postRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
+                lastEntityId = parsedPageToken.lastEntityId,
+                lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
+                categoryIdentifier = parsedPageToken.categoryIdentifier,
+                size = size + 1
+            )
+        }
 
         val resultList = result.subList(0, minOf(size, result.size))
 
