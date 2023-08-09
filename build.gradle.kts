@@ -343,8 +343,4 @@ allprojects {
             }
         }
     }
-
-    springBoot {
-        mainClass.set("com.tenmm.tilserver.TilServerApplication")
-    }
 }
