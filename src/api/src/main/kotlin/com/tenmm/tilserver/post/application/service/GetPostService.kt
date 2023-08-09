@@ -59,7 +59,7 @@ class GetPostService(
     }
 
     override fun getPostListByCategory(
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         size: Int,
         pageToken: String?,
     ): GetPostListResult {

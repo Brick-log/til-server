@@ -42,7 +42,7 @@ data class PostResponse(
                 userPath = post.userPath,
                 userName = post.userName,
                 profileImgSrc = post.userProfileSrc.value,
-                categoryIdentifier = post.categoryIdentifier.value,
+                categoryIdentifier = post.categoryIdentifier,
                 categoryName = post.categoryName,
                 title = post.title,
                 summary = post.description,

@@ -27,9 +27,9 @@ class GetPostAdapter(
         )
     }
 
-    override fun totalPostCountByCategory(categoryIdentifier: Identifier): Int {
+    override fun totalPostCountByCategory(categoryIdentifier: String): Int {
         return postRepository.countAllByCategoryIdentifier(
-            categoryIdentifier = categoryIdentifier.value
+            categoryIdentifier = categoryIdentifier
         )
     }
 
@@ -42,11 +42,11 @@ class GetPostAdapter(
     }
 
     override fun getPostListByCategoryIdentifier(
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         size: Int,
     ): ResultWithToken<List<Post>> {
         val result = postRepository.findAllByCategoryIdentifier(
-            categoryIdentifier.value,
+            categoryIdentifier,
             size + 1
         )
         val minOfSize = minOf(size, result.size)
@@ -71,7 +71,7 @@ class GetPostAdapter(
         val result = postRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
             lastEntityId = parsedPageToken.lastEntityId,
             lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
-            categoryIdentifier = parsedPageToken.categoryIdentifier.value,
+            categoryIdentifier = parsedPageToken.categoryIdentifier,
             size = size + 1
         )
         val minOfSize = minOf(size, result.size)
@@ -105,7 +105,7 @@ class GetPostAdapter(
         val resultList = result.subList(0, minOfSize)
         val pageToken = generatePageToken(
             result.size == size + 1,
-            userIdentifier,
+            userIdentifier.value,
             from.time / 1000,
             to.time / 1000,
             resultList.lastOrNull()
@@ -169,7 +169,7 @@ class GetPostAdapter(
 
     private fun generatePageToken(
         condition: Boolean,
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         lastEntity: PostEntity?,
     ): String? {
         return if (condition) {
@@ -187,14 +187,14 @@ class GetPostAdapter(
     }
 
     private data class PageTokenSearchPostWithCategoryIdentifier(
-        val categoryIdentifier: Identifier,
+        val categoryIdentifier: String,
         val lastEntityId: Int,
         val lastEntityCreatedAt: Timestamp,
     )
 
     private fun generatePageToken(
         condition: Boolean,
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         from: Long,
         to: Long,
         lastEntity: PostEntity?,
@@ -216,7 +216,7 @@ class GetPostAdapter(
     }
 
     private data class PageTokenSearchPostWithCategoryIdentifierTimePeriod(
-        val categoryIdentifier: Identifier,
+        val categoryIdentifier: String,
         val from: Long,
         val to: Long,
         val lastEntityId: Int,

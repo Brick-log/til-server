@@ -10,7 +10,7 @@ interface GetPostPort {
     fun getPostByIdentifier(postIdentifier: Identifier): Post?
     fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post>
 
-    fun getPostListByCategoryIdentifier(categoryIdentifier: Identifier, size: Int): ResultWithToken<List<Post>>
+    fun getPostListByCategoryIdentifier(categoryIdentifier: String, size: Int): ResultWithToken<List<Post>>
     fun getPostListByCategoryIdentifierWithPageToken(size: Int, pageToken: String): ResultWithToken<List<Post>>
 
     fun getPostListByUserAndCreatedAt(
@@ -34,5 +34,5 @@ interface GetPostPort {
 
     fun countByUserIdentifierAndMonth(userIdentifier: Identifier, year: Int, month: Int): Int
     fun totalPostCountByUser(userIdentifier: Identifier): Int
-    fun totalPostCountByCategory(categoryIdentifier: Identifier): Int
+    fun totalPostCountByCategory(categoryIdentifier: String): Int
 }

@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
@@ -180,7 +179,7 @@ class GetPostController(
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
         val searchCategoryIdentifier = if (categoryIdentifier != null) {
-            categoryIdentifier.toIdentifier()
+            categoryIdentifier
         } else if (userAuthInfo != null) {
             getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
         } else {
@@ -226,7 +225,7 @@ class GetPostController(
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
     ): GetPostListResponse {
         val searchCategoryIdentifier = if (categoryIdentifier != null) {
-            categoryIdentifier.toIdentifier()
+            categoryIdentifier
         } else if (userAuthInfo != null) {
             getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
         } else {

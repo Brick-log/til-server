@@ -8,7 +8,7 @@ data class ModifyUserCommand(
     val path: String,
     val name: String,
     val introduction: String,
-    val categoryIdentifier: Identifier,
+    val categoryIdentifier: String,
     val mailAgreement: Boolean,
     val profileImgSrc: Url,
     val blogs: List<Url>,

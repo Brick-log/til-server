@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.user.adapter.outbound
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.domain.toUrl
 import com.tenmm.tilserver.outbound.persistence.entity.UserEntity
 import com.tenmm.tilserver.outbound.persistence.entity.UserStatus
@@ -16,7 +15,7 @@ fun UserEntity.toModel(): User {
         path = this.path,
         introduction = this.introduction,
         thumbnailUrl = this.thumbnailUrl.toUrl(),
-        categoryIdentifier = this.categoryIdentifier?.toIdentifier(),
+        categoryIdentifier = this.categoryIdentifier,
     )
 }
 
