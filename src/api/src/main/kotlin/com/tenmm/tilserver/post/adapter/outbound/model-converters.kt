@@ -8,7 +8,7 @@ import com.tenmm.tilserver.post.domain.Post
 fun Post.toEntity(): PostEntity {
     return PostEntity(
         identifier = this.identifier.value,
-        categoryIdentifier = this.categoryIdentifier.value,
+        categoryIdentifier = this.categoryIdentifier,
         userIdentifier = this.userIdentifier.value,
         url = this.url.value,
         title = this.title,
@@ -21,7 +21,7 @@ fun Post.toEntity(): PostEntity {
 fun PostEntity.toModel(): Post {
     return Post(
         identifier = Identifier(this.identifier),
-        categoryIdentifier = Identifier(this.categoryIdentifier),
+        categoryIdentifier = this.categoryIdentifier,
         userIdentifier = Identifier(this.userIdentifier),
         url = Url(this.url),
         title = this.title,

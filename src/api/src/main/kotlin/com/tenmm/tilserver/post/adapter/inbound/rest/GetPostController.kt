@@ -1,7 +1,6 @@
 package com.tenmm.tilserver.post.adapter.inbound.rest
 
 import com.tenmm.tilserver.common.domain.Identifier
-import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
 import com.tenmm.tilserver.post.adapter.inbound.rest.model.GetPostListResponse
@@ -172,26 +171,26 @@ class GetPostController(
             )
         ]
     )
-    @OptionalAuthentication
-    fun getByCategory(
-        userAuthInfo: UserAuthInfo?,
+    suspend fun getByCategory(
         @RequestParam size: Int,
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
-        val searchCategoryIdentifier = if (categoryIdentifier != null) {
-            categoryIdentifier.toIdentifier()
-        } else if (userAuthInfo != null) {
-            getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
+
+        val postListResult = if (categoryIdentifier == null && pageToken != null) {
+            getPostUseCase.getPostListWithPageToken(
+                pageToken = pageToken,
+                size = size
+            )
+        } else if (categoryIdentifier != null && pageToken == null) {
+            getPostUseCase.getPostListByCategory(
+                categoryIdentifier = categoryIdentifier,
+                size = size
+            )
         } else {
-            null
+            throw IllegalArgumentException()
         }
 
-        val postListResult = if (searchCategoryIdentifier != null) {
-            getPostUseCase.getPostListByCategory(searchCategoryIdentifier, size, pageToken)
-        } else {
-            getPostUseCase.getPostListRandom(size)
-        }
         return GetPostListResponse.fromResult(postListResult)
     }
 
@@ -226,7 +225,7 @@ class GetPostController(
         @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
     ): GetPostListResponse {
         val searchCategoryIdentifier = if (categoryIdentifier != null) {
-            categoryIdentifier.toIdentifier()
+            categoryIdentifier
         } else if (userAuthInfo != null) {
             getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
         } else {

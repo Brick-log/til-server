@@ -17,19 +17,9 @@ class GetPostAdapter(
     private val postRepository: PostRepository,
     private val cryptoHandler: CryptoHandler,
 ) : GetPostPort {
-    override fun getPostRandom(size: Int): List<Post> {
-        return postRepository.findByRandom(size).map { it.toModel() }
-    }
-
     override fun totalPostCountByUser(userIdentifier: Identifier): Int {
         return postRepository.countAllByUserIdentifier(
             userIdentifier = userIdentifier.value
-        )
-    }
-
-    override fun totalPostCountByCategory(categoryIdentifier: Identifier): Int {
-        return postRepository.countAllByCategoryIdentifier(
-            categoryIdentifier = categoryIdentifier.value
         )
     }
 
@@ -42,47 +32,63 @@ class GetPostAdapter(
     }
 
     override fun getPostListByCategoryIdentifier(
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         size: Int,
     ): ResultWithToken<List<Post>> {
-        val result = postRepository.findAllByCategoryIdentifier(
-            categoryIdentifier.value,
-            size + 1
-        )
-        val minOfSize = minOf(size, result.size)
-        val resultList = result.subList(0, minOfSize)
+        val result = if (categoryIdentifier == "all") {
+            postRepository.findAll(size + 1)
+        } else {
+            postRepository.findAllByCategoryIdentifier(
+                categoryIdentifier,
+                size + 1
+            )
+        }
 
-        val pageToken = generatePageToken(
-            result.size == size + 1,
-            categoryIdentifier,
-            resultList.lastOrNull()
-        ).toString()
+        val resultList = result.subList(0, minOf(size, result.size))
+
+        val pageToken = resultList.lastOrNull()?.let { lastEntity ->
+            generatePageToken(
+                condition = result.size == size + 1,
+                categoryIdentifier = categoryIdentifier,
+                lastEntity = lastEntity
+            )
+        }
+
         return ResultWithToken(
             data = resultList.map { it.toModel() },
             pageToken = pageToken
         )
     }
 
-    override fun getPostListByCategoryIdentifierWithPageToken(
-        size: Int,
+    override fun getPostListWithPageToken(
         pageToken: String,
+        size: Int,
     ): ResultWithToken<List<Post>> {
         val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchPostWithCategoryIdentifier::class)
-        val result = postRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
-            lastEntityId = parsedPageToken.lastEntityId,
-            lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
-            categoryIdentifier = parsedPageToken.categoryIdentifier.value,
-            size = size + 1
-        )
-        val minOfSize = minOf(size, result.size)
-        val resultList = result.subList(0, minOfSize)
+        val result = if (parsedPageToken.categoryIdentifier == "all") {
+            postRepository.findAllByCreatedAtBefore(
+                lastEntityId = parsedPageToken.lastEntityId,
+                lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
+                size = size + 1
+            )
+        } else {
+            postRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
+                lastEntityId = parsedPageToken.lastEntityId,
+                lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
+                categoryIdentifier = parsedPageToken.categoryIdentifier,
+                size = size + 1
+            )
+        }
 
-        val nextPageToken = generatePageToken(
-            result.size == size + 1,
-            parsedPageToken.categoryIdentifier,
-            resultList.lastOrNull()
-        ).toString()
+        val resultList = result.subList(0, minOf(size, result.size))
 
+        val nextPageToken = resultList.lastOrNull()?.let { lastEntity ->
+            generatePageToken(
+                condition = result.size == size + 1,
+                categoryIdentifier = parsedPageToken.categoryIdentifier,
+                lastEntity = lastEntity
+            )
+        }
         return ResultWithToken(
             data = resultList.map { it.toModel() },
             pageToken = nextPageToken
@@ -105,11 +111,11 @@ class GetPostAdapter(
         val resultList = result.subList(0, minOfSize)
         val pageToken = generatePageToken(
             result.size == size + 1,
-            userIdentifier,
+            userIdentifier.value,
             from.time / 1000,
             to.time / 1000,
             resultList.lastOrNull()
-        ).toString()
+        )
         return ResultWithToken(
             data = resultList.map { it.toModel() },
             pageToken = pageToken
@@ -141,7 +147,7 @@ class GetPostAdapter(
             parsedPageToken.from,
             parsedPageToken.to,
             resultList.lastOrNull()
-        ).toString()
+        )
 
         return ResultWithToken(
             data = resultList.map { it.toModel() },
@@ -169,7 +175,7 @@ class GetPostAdapter(
 
     private fun generatePageToken(
         condition: Boolean,
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         lastEntity: PostEntity?,
     ): String? {
         return if (condition) {
@@ -187,14 +193,14 @@ class GetPostAdapter(
     }
 
     private data class PageTokenSearchPostWithCategoryIdentifier(
-        val categoryIdentifier: Identifier,
+        val categoryIdentifier: String,
         val lastEntityId: Int,
         val lastEntityCreatedAt: Timestamp,
     )
 
     private fun generatePageToken(
         condition: Boolean,
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         from: Long,
         to: Long,
         lastEntity: PostEntity?,
@@ -216,7 +222,7 @@ class GetPostAdapter(
     }
 
     private data class PageTokenSearchPostWithCategoryIdentifierTimePeriod(
-        val categoryIdentifier: Identifier,
+        val categoryIdentifier: String,
         val from: Long,
         val to: Long,
         val lastEntityId: Int,

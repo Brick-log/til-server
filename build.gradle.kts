@@ -109,7 +109,7 @@ allprojects {
             "com.tenmm.tilserver.post.application.service.RecommendedPostService",
             "com.tenmm.tilserver.post.application.service.ModifyPostService.UpdatePostType",
             "com.tenmm.tilserver.post.application.service.ModifyPostService",
-            "com.tenmm.tilserver.post.application.service.GetPostService",
+            "com.tenmm.tilserver.post.application.service.GetPostService*",
             "com.tenmm.tilserver.post.application.service.SavePostService",
             "com.tenmm.tilserver.security.adapter.outbound.RefreshTokenAdapterKt",
             "com.tenmm.tilserver.security.adapter.outbound.RefreshTokenAdapter",

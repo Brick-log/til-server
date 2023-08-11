@@ -1,8 +1,6 @@
 package com.tenmm.tilserver.user.adapter.inbound
 
-import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.Url
-import com.tenmm.tilserver.common.domain.toIdentifier
 import com.tenmm.tilserver.common.exception.ErrorResponse
 import com.tenmm.tilserver.common.security.annotation.RequiredAuthentication
 import com.tenmm.tilserver.security.domain.UserAuthInfo
@@ -66,7 +64,7 @@ class ModifyUserProfileController(
     ): ModifyUserProfileResponse {
         val command = OnBoardingUserCommand(
             userIdentifier = userAuthInfo.userIdentifier,
-            categoryIdentifier = onBoardingUserRequest.categoryIdentifier.toIdentifier(),
+            categoryIdentifier = onBoardingUserRequest.categoryIdentifier,
             mailAgreement = onBoardingUserRequest.mailAgreement
         )
         return ModifyUserProfileResponse(modifyUserUseCase.onBoardingUserInfo(command).isSuccess)
@@ -109,7 +107,7 @@ class ModifyUserProfileController(
     ): ModifyUserProfileResponse {
         val command = ModifyUserCommand(
             userIdentifier = userAuthInfo.userIdentifier,
-            categoryIdentifier = Identifier(modifyUserRequest.categoryIdentifier),
+            categoryIdentifier = modifyUserRequest.categoryIdentifier,
             introduction = modifyUserRequest.introduction,
             name = modifyUserRequest.name,
             path = modifyUserRequest.path,
