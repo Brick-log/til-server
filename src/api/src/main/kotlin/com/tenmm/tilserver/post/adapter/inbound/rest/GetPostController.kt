@@ -222,17 +222,15 @@ class GetPostController(
     @OptionalAuthentication
     fun getRecommendationList(
         userAuthInfo: UserAuthInfo?,
-        @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
+        @RequestParam(name = "identifier") categoryIdentifier: String
     ): GetPostListResponse {
-        val searchCategoryIdentifier = if (categoryIdentifier != null) {
-            categoryIdentifier
-        } else if (userAuthInfo != null) {
+        val searchCategoryIdentifier = if (userAuthInfo != null) {
             getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
         } else {
-            null
+            categoryIdentifier
         }
 
-        val postListResult = if (searchCategoryIdentifier != null) {
+        val postListResult = if (searchCategoryIdentifier != null && searchCategoryIdentifier != "all") {
             getRecommendedPostUseCase.getRecommendedPostListByCategory(searchCategoryIdentifier)
         } else {
             getRecommendedPostUseCase.getRecommendedPostListRandom()
