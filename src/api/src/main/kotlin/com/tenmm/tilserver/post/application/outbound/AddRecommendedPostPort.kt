@@ -4,7 +4,7 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 interface AddRecommendedPostPort {
     fun addByPostIdentifier(
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         postIdentifier: Identifier,
     ): Boolean
 }

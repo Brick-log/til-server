@@ -21,11 +21,11 @@ class RecommendedPostAdapter(
     }
 
     override fun addByPostIdentifier(
-        categoryIdentifier: Identifier,
+        categoryIdentifier: String,
         postIdentifier: Identifier,
     ): Boolean {
         val entity = RecommendPostEntity(
-            categoryIdentifier = categoryIdentifier.value,
+            categoryIdentifier = categoryIdentifier,
             postIdentifier = postIdentifier.value
         )
         return try {
@@ -37,9 +37,9 @@ class RecommendedPostAdapter(
         }
     }
 
-    override fun getByCategoryIdentifier(categoryIdentifier: Identifier): List<Identifier> {
+    override fun getByCategoryIdentifier(categoryIdentifier: String): List<Identifier> {
         return recommendPostRepository.findByCategoryIdentifierOrderByCreatedAtDesc(
-            categoryIdentifier.value, PageRequest.ofSize(3)
+            categoryIdentifier, PageRequest.ofSize(3)
         ).map { Identifier(it.postIdentifier) }
     }
 }

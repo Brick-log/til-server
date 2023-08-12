@@ -88,13 +88,13 @@ class UserAdapter(
         }
     }
 
-    override fun updateUserCategory(userIdentifier: Identifier, categoryIdentifier: Identifier): OperationResult {
+    override fun updateUserCategory(userIdentifier: Identifier, categoryIdentifier: String): OperationResult {
         try {
             val userEntity = userRepository.findByUserIdentifier(userIdentifier.value)
                 ?: return OperationResult.fail()
 
             val modifiedUserEntity = userEntity.copy(
-                categoryIdentifier = categoryIdentifier.value,
+                categoryIdentifier = categoryIdentifier,
             )
 
             userRepository.save(modifiedUserEntity)

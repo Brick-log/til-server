@@ -40,7 +40,7 @@ class RecommendedPostService(
         return generatePostWithPath(postList)
     }
 
-    override fun getRecommendedPostListByCategory(categoryIdentifier: Identifier): GetPostListResult {
+    override fun getRecommendedPostListByCategory(categoryIdentifier: String): GetPostListResult {
         val postIdentifiers = getRecommendedPostPort.getByCategoryIdentifier(categoryIdentifier)
         val postList = getPostUseCase.getPostListByIdentifiers(postIdentifiers)
 
