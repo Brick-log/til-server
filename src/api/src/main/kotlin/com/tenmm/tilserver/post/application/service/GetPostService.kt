@@ -109,15 +109,14 @@ class GetPostService(
             categoryIdentifier = categoryIdentifier,
             size = size
         )
-
-        val (category, userMap) = getCategoryToUserMap(categoryIdentifier, posts.data)
+        val (categories, users) = getCategoryToUserMap(categoryIdentifier, posts.data)
 
         return GetPostListResult(
             posts = posts.data.map { post ->
                 PostDetail.generate(
                     post = post,
-                    user = userMap[post.userIdentifier]!!,
-                    category = category
+                    user = users[post.userIdentifier]!!,
+                    category = categories[post.categoryIdentifier]!!
                 )
             },
             size = posts.data.size,
@@ -131,14 +130,14 @@ class GetPostService(
             size = size
         )
 
-        val (category, userMap) = getCategoryToUserMap(posts.data.first().categoryIdentifier, posts.data)
+        val (categories, users) = getCategoryToUserMap(posts.data.first().categoryIdentifier, posts.data)
 
         return GetPostListResult(
             posts = posts.data.map { post ->
                 PostDetail.generate(
                     post = post,
-                    user = userMap[post.userIdentifier]!!,
-                    category = category
+                    user = users[post.userIdentifier]!!,
+                    category = categories[post.categoryIdentifier]!!
                 )
             },
             size = posts.data.size,
@@ -148,7 +147,10 @@ class GetPostService(
 
     private suspend fun getCategoryToUserMap(categoryIdentifier: String, posts: List<Post>) = supervisorScope {
         val categoryDeferred = async {
-            getCategoryUseCase.getByIdentifier(categoryIdentifier)
+            if (categoryIdentifier == "all")
+                getCategoryUseCase.getAll()
+            else
+                listOf(getCategoryUseCase.getByIdentifier(categoryIdentifier))
         }
         val userDeferred = posts.map { post ->
             async {
@@ -156,6 +158,6 @@ class GetPostService(
             }
         }
 
-        categoryDeferred.await() to userDeferred.awaitAll().associateBy { it.identifier }
+        categoryDeferred.await().associateBy { it.identifier } to userDeferred.awaitAll().associateBy { it.identifier }
     }
 }
