@@ -32,3 +32,5 @@ feign:
 
 profile-img:
   default: "https://bricklog.io/images/profile/default.png"
+  base-url: "https://bricklog.io/images/profile/"
+  max-size: 8
