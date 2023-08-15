@@ -13,7 +13,7 @@ interface GetPostUseCase {
     fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post>
 
     suspend fun getPostListByCategory(categoryIdentifier: String, size: Int): GetPostListResult
-    suspend fun getPostListWithPageToken(pageToken: String, size: Int): GetPostListResult
+    suspend fun getPostListByCategoryWithPageToken(pageToken: String, categoryIdentifier: String, size: Int): GetPostListResult
 
     fun getPostListByNameAndDateWithPageToken(
         path: String,

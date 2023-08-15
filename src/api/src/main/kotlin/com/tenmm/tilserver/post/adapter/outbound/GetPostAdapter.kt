@@ -60,12 +60,13 @@ class GetPostAdapter(
         )
     }
 
-    override fun getPostListWithPageToken(
+    override fun getPostListByCategoryIdentifierWithPageToken(
         pageToken: String,
+        categoryIdentifier: String,
         size: Int,
     ): ResultWithToken<List<Post>> {
         val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchPostWithCategoryIdentifier::class)
-        val result = if (parsedPageToken.categoryIdentifier == "all") {
+        val result = if (categoryIdentifier == "all") {
             postRepository.findAllByCreatedAtBefore(
                 lastEntityId = parsedPageToken.lastEntityId,
                 lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
@@ -75,7 +76,7 @@ class GetPostAdapter(
             postRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
                 lastEntityId = parsedPageToken.lastEntityId,
                 lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
-                categoryIdentifier = parsedPageToken.categoryIdentifier,
+                categoryIdentifier = categoryIdentifier,
                 size = size + 1
             )
         }
