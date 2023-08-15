@@ -3,7 +3,6 @@ package com.tenmm.tilserver.post.application.service
 import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.domain.PostNotFoundException
-import com.tenmm.tilserver.common.utils.CryptoHandler
 import com.tenmm.tilserver.common.utils.getTimeZone
 import com.tenmm.tilserver.post.application.inbound.GetPostUseCase
 import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class GetPostService(
-    private val cryptoHandler: CryptoHandler,
     private val getPostPort: GetPostPort,
     private val modifyPostPort: ModifyPostPort,
     private val getCategoryUseCase: GetCategoryUseCase,
@@ -58,7 +56,7 @@ class GetPostService(
                 nextPageToken = null
             )
         }
-        val category = getCategoryUseCase.getByIdentifier(userInfo.categoryIdentifier!!)
+        val category = getCategoryUseCase.getByIdentifier(userInfo.categoryIdentifier)
         val totalCount = getPostPort.totalPostCountByUser(userIdentifier = userInfo.identifier)
         return if (pageToken == null) {
             getPostPort.getPostListByUserAndCreatedAt(
