@@ -101,7 +101,8 @@ class GetPostController(
             to = to?.let { Timestamp.from(Instant.ofEpochSecond(it)) } ?: Timestamp.from(
                 Instant.ofEpochSecond(1909230603)
             ),
-            from = from?.let { Timestamp.from(Instant.ofEpochSecond(it)) } ?: Timestamp.from(Instant.ofEpochSecond(0)),
+            from = from?.let { Timestamp.from(Instant.ofEpochSecond(it)) }
+                ?: Timestamp.from(Instant.ofEpochSecond(0)),
             size = size,
             pageToken = pageToken
         )
@@ -173,22 +174,21 @@ class GetPostController(
     )
     suspend fun getByCategory(
         @RequestParam size: Int,
-        @RequestParam(name = "identifier", required = false) categoryIdentifier: String? = null,
+        @RequestParam(name = "identifier") categoryIdentifier: String,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetPostListResponse {
 
-        val postListResult = if (categoryIdentifier == null && pageToken != null) {
-            getPostUseCase.getPostListWithPageToken(
+        val postListResult = if (pageToken != null) {
+            getPostUseCase.getPostListByCategoryWithPageToken(
                 pageToken = pageToken,
-                size = size
-            )
-        } else if (categoryIdentifier != null && pageToken == null) {
-            getPostUseCase.getPostListByCategory(
                 categoryIdentifier = categoryIdentifier,
                 size = size
             )
         } else {
-            throw IllegalArgumentException()
+            getPostUseCase.getPostListByCategory(
+                categoryIdentifier = categoryIdentifier,
+                size = size
+            )
         }
 
         return GetPostListResponse.fromResult(postListResult)

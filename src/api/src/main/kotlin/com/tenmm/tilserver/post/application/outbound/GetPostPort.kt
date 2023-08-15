@@ -10,7 +10,7 @@ interface GetPostPort {
     fun getPostListByIdentifiers(postIdentifiers: List<Identifier>): List<Post>
 
     fun getPostListByCategoryIdentifier(categoryIdentifier: String, size: Int): ResultWithToken<List<Post>>
-    fun getPostListWithPageToken(pageToken: String, size: Int): ResultWithToken<List<Post>>
+    fun getPostListByCategoryIdentifierWithPageToken(pageToken: String, categoryIdentifier: String, size: Int): ResultWithToken<List<Post>>
 
     fun getPostListByUserAndCreatedAt(
         userIdentifier: Identifier,
