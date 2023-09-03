@@ -6,6 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 @ConfigurationProperties("profile-img")
 data class ProfileImgProperties(
     val default: Url,
+    val baseUrl: Url,
+    val maxSize: Int,
 ) {
-    constructor(value: String) : this(Url(value))
+    constructor(value: String) : this(Url(value), Url(value), 0)
 }

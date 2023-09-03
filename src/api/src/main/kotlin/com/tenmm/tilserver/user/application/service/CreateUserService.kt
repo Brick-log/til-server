@@ -6,6 +6,7 @@ import com.tenmm.tilserver.user.application.inbound.CreateUserUseCase
 import com.tenmm.tilserver.user.application.inbound.model.CreateUserCommand
 import com.tenmm.tilserver.user.application.outbound.SaveUserPort
 import com.tenmm.tilserver.user.application.outbound.model.CreateUserRequest
+import com.tenmm.tilserver.common.domain.Url
 import java.time.LocalDateTime
 import org.springframework.stereotype.Service
 
@@ -16,12 +17,13 @@ class CreateUserService(
 ) : CreateUserUseCase {
     override fun create(command: CreateUserCommand): OperationResult {
         val path = pathGenerator()
+        val imageRange = (1..profileImgProperties.maxSize)
         val request = CreateUserRequest(
             name = command.name,
             userIdentifier = command.userIdentifier,
             path = path,
-            profileImgSrc = profileImgProperties.default,
-            description = "${command.name}의 브릭로그입니다."
+            profileImgSrc = Url(profileImgProperties.baseUrl.value + imageRange.random() + ".png"),
+            description = "${command.name}s bricklog"
         )
         val user = saveUserPort.save(request)
         return if (user != null) OperationResult.success() else OperationResult.fail()
