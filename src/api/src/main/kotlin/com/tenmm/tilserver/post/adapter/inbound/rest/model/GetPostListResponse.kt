@@ -4,19 +4,18 @@ import com.tenmm.tilserver.post.application.inbound.model.GetPostListResult
 import com.tenmm.tilserver.post.domain.PostDetail
 import java.math.BigInteger
 import java.sql.Timestamp
-import org.apache.logging.log4j.util.Strings
 
 data class GetPostListResponse(
     val posts: List<PostResponse>,
     val size: Int,
-    val nextPageToken: String,
+    val nextPageToken: String?,
 ) {
     companion object {
         fun fromResult(result: GetPostListResult): GetPostListResponse {
             return GetPostListResponse(
                 posts = result.posts.map { PostResponse.fromDomain(it) },
                 size = result.size,
-                nextPageToken = result.nextPageToken ?: Strings.EMPTY,
+                nextPageToken = result.nextPageToken
             )
         }
     }
@@ -42,7 +41,7 @@ data class PostResponse(
                 userPath = post.userPath,
                 userName = post.userName,
                 profileImgSrc = post.userProfileSrc.value,
-                categoryIdentifier = post.categoryIdentifier.value,
+                categoryIdentifier = post.categoryIdentifier,
                 categoryName = post.categoryName,
                 title = post.title,
                 summary = post.description,

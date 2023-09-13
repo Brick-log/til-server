@@ -16,11 +16,6 @@ security:
   aes128:
     key: 1q2w3e4r5t6y7u8i
 
-grpc:
-  crawling-server:
-    address: "localhost"
-    port: "9090"
-
 jwt:
   access:
     expire: ${ACCESS_TOKEN_EXPIRE:86400000} # 1 day
@@ -34,3 +29,5 @@ feign:
 
 profile-img:
   default: "https://dev.bricklog.io/images/profile/default.png"
+  base-url: "https://dev.bricklog.io/images/profile/"
+  max-size: 8

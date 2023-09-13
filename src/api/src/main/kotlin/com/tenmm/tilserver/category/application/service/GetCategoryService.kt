@@ -4,7 +4,6 @@ import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.category.application.outbound.GetCategoryPort
 import com.tenmm.tilserver.category.domain.Category
 import com.tenmm.tilserver.common.domain.CategoryNotFoundException
-import com.tenmm.tilserver.common.domain.Identifier
 import org.springframework.stereotype.Service
 
 @Service
@@ -15,7 +14,7 @@ class GetCategoryService(
         return getCategoryPort.getAll()
     }
 
-    override fun getByIdentifier(identifier: Identifier): Category {
+    override fun getByIdentifier(identifier: String): Category {
         return getCategoryPort.getByIdentifier(identifier) ?: throw CategoryNotFoundException()
     }
 }

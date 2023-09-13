@@ -30,6 +30,17 @@ interface PostRepository : JpaRepository<PostEntity, Long> {
         value =
         """
         SELECT * FROM post 
+        ORDER BY created_at DESC, id DESC
+        LIMIT :size
+        """,
+        nativeQuery = true
+    )
+    fun findAll(size: Int): List<PostEntity>
+
+    @Query(
+        value =
+        """
+        SELECT * FROM post 
         where category_identifier = :categoryIdentifier 
         AND ((created_at = :lastEntityCreatedAt AND id < :lastEntityId) OR created_at < :lastEntityCreatedAt)
         ORDER BY created_at DESC, id DESC
@@ -39,6 +50,22 @@ interface PostRepository : JpaRepository<PostEntity, Long> {
     )
     fun findAllByCreatedAtBeforeAndCategoryIdentifier(
         categoryIdentifier: String,
+        lastEntityId: Int,
+        lastEntityCreatedAt: Timestamp,
+        size: Int,
+    ): List<PostEntity>
+
+    @Query(
+        value =
+        """
+        SELECT * FROM post 
+        where ((created_at = :lastEntityCreatedAt AND id < :lastEntityId) OR created_at < :lastEntityCreatedAt)
+        ORDER BY created_at DESC, id DESC
+        LIMIT :size
+        """,
+        nativeQuery = true
+    )
+    fun findAllByCreatedAtBefore(
         lastEntityId: Int,
         lastEntityCreatedAt: Timestamp,
         size: Int,

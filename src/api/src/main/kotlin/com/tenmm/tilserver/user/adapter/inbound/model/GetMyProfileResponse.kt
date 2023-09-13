@@ -24,7 +24,7 @@ data class GetMyProfileResponse(
                 path = user.path,
                 profileImgSrc = user.thumbnailUrl.value,
                 introduction = user.introduction ?: StringUtils.EMPTY,
-                categoryIdentifier = user.categoryIdentifier?.value,
+                categoryIdentifier = user.categoryIdentifier,
                 categoryName = category?.name,
                 email = account.email.value,
                 oAuthType = account.oAuthType,

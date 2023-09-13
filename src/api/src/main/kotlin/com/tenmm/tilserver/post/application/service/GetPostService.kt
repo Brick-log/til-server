@@ -15,7 +15,9 @@ import com.tenmm.tilserver.post.domain.PostDetail
 import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
 import java.sql.Timestamp
 import java.time.LocalDate
-import org.apache.commons.lang3.StringUtils
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.supervisorScope
 import org.springframework.stereotype.Service
 
 @Service
@@ -39,52 +41,6 @@ class GetPostService(
         return getPostPort.getPostListByIdentifiers(postIdentifiers)
     }
 
-    override fun getPostListRandom(size: Int): GetPostListResult {
-        val result = getPostPort.getPostRandom(size)
-
-        val userIdentifierPathMap = getUserUseCase.getByIdentifierList(result.map { it.userIdentifier })
-            .associateBy { it.identifier }
-        val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
-        return GetPostListResult(
-            posts = result.map {
-                PostDetail.generate(
-                    post = it,
-                    user = userIdentifierPathMap[it.userIdentifier]!!,
-                    category = categoryMap[it.categoryIdentifier]!!
-                )
-            },
-            size = result.size,
-            nextPageToken = StringUtils.EMPTY
-        )
-    }
-
-    override fun getPostListByCategory(
-        categoryIdentifier: Identifier,
-        size: Int,
-        pageToken: String?,
-    ): GetPostListResult {
-        val result = if (pageToken == null) {
-            getPostPort.getPostListByCategoryIdentifier(categoryIdentifier, size)
-        } else {
-            getPostPort.getPostListByCategoryIdentifierWithPageToken(size, pageToken)
-        }
-        val userIdentifierPathMap = getUserUseCase.getByIdentifierList(result.data.map { it.userIdentifier })
-            .associateBy { it.identifier }
-        val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
-        val totalCount = getPostPort.totalPostCountByCategory(categoryIdentifier = categoryIdentifier)
-        return GetPostListResult(
-            posts = result.data.map {
-                PostDetail.generate(
-                    post = it,
-                    user = userIdentifierPathMap[it.userIdentifier]!!,
-                    category = categoryMap[it.categoryIdentifier]!!
-                )
-            },
-            size = totalCount,
-            nextPageToken = result.pageToken
-        )
-    }
-
     override fun getPostListByNameAndDateWithPageToken(
         path: String,
         to: Timestamp,
@@ -100,7 +56,7 @@ class GetPostService(
                 nextPageToken = null
             )
         }
-        val category = getCategoryUseCase.getByIdentifier(userInfo.categoryIdentifier!!)
+        val category = getCategoryUseCase.getByIdentifier(userInfo.categoryIdentifier)
         val totalCount = getPostPort.totalPostCountByUser(userIdentifier = userInfo.identifier)
         return if (pageToken == null) {
             getPostPort.getPostListByUserAndCreatedAt(
@@ -146,5 +102,63 @@ class GetPostService(
 
     override fun getPostCountByMonth(userIdentifier: Identifier, year: Int, month: Int): Int {
         return getPostPort.countByUserIdentifierAndMonth(userIdentifier, year, month)
+    }
+
+    override suspend fun getPostListByCategory(categoryIdentifier: String, size: Int): GetPostListResult {
+        val posts = getPostPort.getPostListByCategoryIdentifier(
+            categoryIdentifier = categoryIdentifier,
+            size = size
+        )
+        val (categories, users) = getCategoryToUserMap(categoryIdentifier, posts.data)
+
+        return GetPostListResult(
+            posts = posts.data.map { post ->
+                PostDetail.generate(
+                    post = post,
+                    user = users[post.userIdentifier]!!,
+                    category = categories[post.categoryIdentifier]!!
+                )
+            },
+            size = posts.data.size,
+            nextPageToken = posts.pageToken
+        )
+    }
+
+    override suspend fun getPostListByCategoryWithPageToken(pageToken: String, categoryIdentifier: String, size: Int): GetPostListResult {
+        val posts = getPostPort.getPostListByCategoryIdentifierWithPageToken(
+            pageToken = pageToken,
+            categoryIdentifier = categoryIdentifier,
+            size = size
+        )
+
+        val (categories, users) = getCategoryToUserMap(categoryIdentifier, posts.data)
+
+        return GetPostListResult(
+            posts = posts.data.map { post ->
+                PostDetail.generate(
+                    post = post,
+                    user = users[post.userIdentifier]!!,
+                    category = categories[post.categoryIdentifier]!!
+                )
+            },
+            size = posts.data.size,
+            nextPageToken = posts.pageToken
+        )
+    }
+
+    private suspend fun getCategoryToUserMap(categoryIdentifier: String, posts: List<Post>) = supervisorScope {
+        val categoryDeferred = async {
+            if (categoryIdentifier == "all")
+                getCategoryUseCase.getAll()
+            else
+                listOf(getCategoryUseCase.getByIdentifier(categoryIdentifier))
+        }
+        val userDeferred = posts.map { post ->
+            async {
+                getUserUseCase.getByIdentifier(post.userIdentifier)
+            }
+        }
+
+        categoryDeferred.await().associateBy { it.identifier } to userDeferred.awaitAll().associateBy { it.identifier }
     }
 }

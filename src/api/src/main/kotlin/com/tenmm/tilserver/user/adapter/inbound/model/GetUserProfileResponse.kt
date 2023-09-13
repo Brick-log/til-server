@@ -20,7 +20,7 @@ data class GetUserProfileResponse(
                 path = user.path,
                 profileImgSrc = user.thumbnailUrl.value,
                 introduction = user.introduction ?: StringUtils.EMPTY,
-                categoryIdentifier = user.categoryIdentifier?.value,
+                categoryIdentifier = user.categoryIdentifier,
                 categoryName = category?.name,
                 isAuthorized = isAuthorized
             )

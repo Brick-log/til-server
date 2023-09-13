@@ -10,7 +10,7 @@ import java.sql.Timestamp
 data class Post(
     val identifier: Identifier,
     val userIdentifier: Identifier,
-    val categoryIdentifier: Identifier,
+    val categoryIdentifier: String,
     val title: String,
     val description: String,
     val url: Url,
@@ -23,7 +23,7 @@ data class PostDetail(
     val userPath: String,
     val userName: String,
     val userProfileSrc: Url,
-    val categoryIdentifier: Identifier,
+    val categoryIdentifier: String,
     val categoryName: String,
     val title: String,
     val description: String,
