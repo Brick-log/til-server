@@ -6,7 +6,7 @@ import com.tenmm.tilserver.outbound.persistence.entity.RetrospectEntity
 import com.tenmm.tilserver.outbound.persistence.entity.RetrospectQnaEntity
 
 interface GetUserRetrospectPort {
-    fun getRetrospectListByCreatedAt(userIdentifier: Identifier, to: Timestamp, from: Timestamp): List<RetrospectEntity>
+    fun getRetrospectListByCreatedAt(userIdentifier: Identifier, to: Timestamp, from: Timestamp, isSecret: Boolean): List<RetrospectEntity>
     fun getRetrospectListByRetrospectIdentifier(retrospectIdentifier: Identifier): List<RetrospectQnaEntity>
     fun totalRetrospectCountByUser(userIdentifier: Identifier): Int
 }

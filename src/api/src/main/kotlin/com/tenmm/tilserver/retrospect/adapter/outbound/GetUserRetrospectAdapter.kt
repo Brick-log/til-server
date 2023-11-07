@@ -15,12 +15,20 @@ class GetUserRetrospectAdapter(
     private val retrospectRepository: RetrospectRepository,
     private val retrospectQnaRepository: RetrospectQnaRepository
 ) : GetUserRetrospectPort {
-    override fun getRetrospectListByCreatedAt(userIdentifier: Identifier, to: Timestamp, from: Timestamp): List<RetrospectEntity> {
-        return retrospectRepository.findByRetrospectListByUserIdentifierAndTimePeriod(
-            userIdentifier = userIdentifier.value,
-            to = to,
-            from = from
-        )
+    override fun getRetrospectListByCreatedAt(userIdentifier: Identifier, to: Timestamp, from: Timestamp, isSecret: Boolean): List<RetrospectEntity> {
+        return if (isSecret == false) {
+            retrospectRepository.findByRetrospectListByUserIdentifierAndTimePeriodAndSecretIsFalse(
+                userIdentifier = userIdentifier.value,
+                to = to,
+                from = from,
+            )
+        } else { 
+            retrospectRepository.findByRetrospectListByUserIdentifierAndTimePeriod(
+                userIdentifier = userIdentifier.value,
+                to = to,
+                from = from,
+            )
+        }
     }
 
     override fun totalRetrospectCountByUser(userIdentifier: Identifier): Int {

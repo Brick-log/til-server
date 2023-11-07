@@ -10,6 +10,7 @@ interface GetUserRetrospectUseCase {
         from: Timestamp,
         size: Int,
         pageToken: String?,
+        isSecret: Boolean,
     ): GetUserRetrospectResponseModel
 
     fun getRetrospectMetaListByNameAndDate(

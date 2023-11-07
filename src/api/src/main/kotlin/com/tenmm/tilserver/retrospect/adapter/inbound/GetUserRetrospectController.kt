@@ -18,12 +18,17 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestMapping
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetUserRetrospectResponseModel
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetRetrospectMetaResponseModel
+import com.tenmm.tilserver.user.application.inbound.GetUserUseCase
+
+import com.tenmm.tilserver.security.domain.UserAuthInfo
+import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
 
 @RestController
 @RequestMapping("/v1/retrospect")
 @Tag(name = "Retrospect")
 class GetUserRetrospectController(
     private val getUserRetrospectUseCase: GetUserRetrospectUseCase,
+    private val getUserUseCase: GetUserUseCase,
 ) {
     @GetMapping("{path}")
     @Operation(
@@ -45,13 +50,24 @@ class GetUserRetrospectController(
             )
         ]
     )
+    @OptionalAuthentication
     suspend fun getRetrospect(
+        userAuthInfo: UserAuthInfo?,
         @PathVariable path: String,
         @RequestParam size: Int,
         @RequestParam(required = false) to: Long? = null,
         @RequestParam(required = false) from: Long? = null,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetUserRetrospectResponseModel {
+        val authPath = if (userAuthInfo != null) {
+            try {
+                getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).path
+            } catch (e: Exception) {
+                ""
+            }
+        } else {
+            ""
+        }
         val retrospectListResult = getUserRetrospectUseCase.getRetrospectListByNameAndDateWithPageToken(
             path = path,
             to = to?.let { Timestamp.from(Instant.ofEpochSecond(it)) } ?: Timestamp.from(
@@ -60,7 +76,8 @@ class GetUserRetrospectController(
             from = from?.let { Timestamp.from(Instant.ofEpochSecond(it)) }
                 ?: Timestamp.from(Instant.ofEpochSecond(0)),
             size = size,
-            pageToken = pageToken
+            pageToken = pageToken,
+            isSecret = if (authPath == path) true else false
         )
         return retrospectListResult
     }

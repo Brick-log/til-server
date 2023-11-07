@@ -27,6 +27,7 @@ class GetUserRetrospectService(
         from: Timestamp,
         size: Int,
         pageToken: String?,
+        isSecret: Boolean,
     ): GetUserRetrospectResponseModel {
         val userInfo = getUserUseCase.getByPath(path)
         if (userInfo.categoryIdentifier == null) {
@@ -40,6 +41,7 @@ class GetUserRetrospectService(
             userIdentifier = userInfo.identifier,
             to = to,
             from = from,
+            isSecret = isSecret
         )
         val detailRetrospect = retrospects.map {
             DetailRetrospect(
@@ -68,7 +70,7 @@ class GetUserRetrospectService(
         from: Timestamp,
     ): GetRetrospectMetaResponseModel {
         val userIdentifier = getUserUseCase.getByPath(path).identifier
-        val result = getUserRetrospectPort.getRetrospectListByCreatedAt(userIdentifier, to, from)
+        val result = getUserRetrospectPort.getRetrospectListByCreatedAt(userIdentifier, to, from, true)
         val postMetaTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return GetRetrospectMetaResponseModel(
             metas = result.map {
