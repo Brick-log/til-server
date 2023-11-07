@@ -19,6 +19,25 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         where user_identifier = :userIdentifier 
         AND created_at >= :from
         AND created_at < :to
+        AND is_secret = FALSE
+        ORDER BY created_at DESC, id DESC
+        """,
+        nativeQuery = true
+    )
+    fun findByRetrospectListByUserIdentifierAndTimePeriodAndSecretIsFalse(
+        userIdentifier: String,
+        to: Timestamp,
+        from: Timestamp,
+    ): List<RetrospectEntity>
+
+
+    @Query(
+        value =
+        """
+        SELECT * FROM retrospect 
+        where user_identifier = :userIdentifier 
+        AND created_at >= :from
+        AND created_at < :to
         ORDER BY created_at DESC, id DESC
         """,
         nativeQuery = true
