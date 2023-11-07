@@ -22,7 +22,7 @@ class GetUserRetrospectAdapter(
                 to = to,
                 from = from,
             )
-        } else { 
+        } else {
             retrospectRepository.findByRetrospectListByUserIdentifierAndTimePeriod(
                 userIdentifier = userIdentifier.value,
                 to = to,

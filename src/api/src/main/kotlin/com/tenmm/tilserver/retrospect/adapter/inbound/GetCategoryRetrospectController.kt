@@ -54,20 +54,20 @@ class GetCategoryRetrospectController(
         @RequestParam(required = false) pageToken: String? = null,
     ): String {
 
-        // val postListResult = if (pageToken != null) {
-        //     getPostUseCase.getPostListByCategoryWithPageToken(
+        // val retrospectListResult = if (pageToken != null) {
+        //     getCategoryRetrospectUseCase.getRetrospectListByCategoryWithPageToken(
         //         pageToken = pageToken,
         //         categoryIdentifier = categoryIdentifier,
         //         size = size
         //     )
         // } else {
-        //     getPostUseCase.getPostListByCategory(
+        //     getCategoryRetrospectUseCase.getRetrospectListByCategory(
         //         categoryIdentifier = categoryIdentifier,
         //         size = size
         //     )
         // }
 
-        // return GetPostListResponse.fromResult(postListResult)
+        // return GetRetrospectListResponse.fromResult(retrospectListResult)
         return ""
     }
 
@@ -107,12 +107,12 @@ class GetCategoryRetrospectController(
         //     categoryIdentifier
         // }
 
-        // val postListResult = if (searchCategoryIdentifier != null && searchCategoryIdentifier != "all") {
-        //     getRecommendedPostUseCase.getRecommendedPostListByCategory(searchCategoryIdentifier)
+        // val retrospectListResult = if (searchCategoryIdentifier != null && searchCategoryIdentifier != "all") {
+        //     getRecommendedRetrospectUseCase.getRecommendedRetrospectListByCategory(searchCategoryIdentifier)
         // } else {
-        //     getRecommendedPostUseCase.getRecommendedPostListRandom()
+        //     getRecommendedRetrospectUseCase.getRecommendedRetrospectListRandom()
         // }
-        //return GetPostListResponse.fromResult(postListResult)
+        // return GetRetrospectListResponse.fromResult(retrospectListResult)
         return ""
     }
 }
