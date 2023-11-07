@@ -80,3 +80,11 @@ insert into post(identifier, category_identifier, user_identifier, title, descri
                                     '0',
                                     now()
     );
+
+
+/* spen 1.5 */
+insert into question_type(type, name) VALUE ('Random', '랜덤질문');
+insert into question_type(type, name) VALUE ('Static', '고정질문');
+
+insert into question(type, name) VALUE ('Random', '아쉬웠던 점');
+insert into question(type, name) VALUE ('Random', '어떤 하루를 보냈나요?');
