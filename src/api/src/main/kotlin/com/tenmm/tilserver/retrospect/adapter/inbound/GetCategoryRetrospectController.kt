@@ -12,5 +12,4 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Tag(name = "Retrospect")
 class GetCategoryRetrospectController(
     private val getCategoryRetrospectUseCase: GetCategoryRetrospectUseCase,
-) {
-}
+)

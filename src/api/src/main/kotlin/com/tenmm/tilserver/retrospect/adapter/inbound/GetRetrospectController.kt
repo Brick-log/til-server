@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RestController
 @RequestMapping("/v1/my/retrospect")
 @Tag(name = "Retrospect")
-class GetRetrospectController (
+class GetRetrospectController(
     private val getRetrospectUseCase: GetRetrospectUseCase,
 ) {
     @GetMapping
