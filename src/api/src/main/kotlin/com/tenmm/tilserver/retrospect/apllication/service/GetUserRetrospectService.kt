@@ -28,6 +28,7 @@ class GetUserRetrospectService(
         size: Int,
         pageToken: String?,
     ): GetUserRetrospectResponseModel {
+        println("path: $path, to: $to, from: $from, size: $size, pageToken: $pageToken")
         val userInfo = getUserUseCase.getByPath(path)
         if (userInfo.categoryIdentifier == null) {
             return GetUserRetrospectResponseModel(
