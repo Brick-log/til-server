@@ -14,7 +14,6 @@ class GetQuestionService(
     override fun getQuestionByType(type: String): GetQuestionResponse {
         val question = getQuestionPort.findByType(type)
         val questions = question.map {
-            println(it.name)
             Question(
                 name = it.name
             )
