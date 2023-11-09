@@ -16,7 +16,7 @@ class GetRetrospectAdapter(
     private val retrospectQnaRepository: RetrospectQnaRepository,
     private val retrospectRepository: RetrospectRepository
 ) : GetRetrospectPort {
-    override fun findOneRetrospectByUserIdentifierToday(userIdentifier: Identifier): RetrospectEntity? {
+    override fun findOneRetrospectByUserIdentifierToday(userIdentifier: Identifier): List<RetrospectEntity> {
         val currentDateTime = LocalDateTime.now()
         val todayStartDateTime = currentDateTime.toLocalDate().atStartOfDay()
         val todayTimestamp = Timestamp.valueOf(todayStartDateTime)

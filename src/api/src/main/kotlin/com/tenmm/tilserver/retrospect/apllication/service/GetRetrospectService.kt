@@ -12,24 +12,18 @@ import org.springframework.stereotype.Service
 class GetRetrospectService(
     private val getRetrospectPort: GetRetrospectPort
 ) : GetRetrospectUseCase {
-    override fun getRetrospect(userIdentifier: Identifier): GetRetrospectResponseModel {
-        val retrospect = getRetrospectPort.findOneRetrospectByUserIdentifierToday(userIdentifier)
-        if (retrospect == null) return GetRetrospectResponseModel(
-            type = "NONE",
-            retrospectIdentifier = "",
-            retrospect = listOf()
-        )
-        val retrospectQnaList = getRetrospectPort.findRetrospectQnaListByRetrospectIdentifier(Identifier(retrospect.retrospectIdentifier))
-        val simpleRetrospect = retrospectQnaList.map {
-            SimpleRetrospect(
-                question = it.question,
-                answer = it.answer,
+    override fun getRetrospect(userIdentifier: Identifier): List<GetRetrospectResponseModel> {
+        return getRetrospectPort.findOneRetrospectByUserIdentifierToday(userIdentifier).map {
+            GetRetrospectResponseModel(
+                type = it.type,
+                retrospectIdentifier = it.retrospectIdentifier,
+                retrospect = getRetrospectPort.findRetrospectQnaListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
+                    SimpleRetrospect(
+                        question = it.question,
+                        answer = it.answer,
+                    )
+                }
             )
         }
-        return GetRetrospectResponseModel(
-            type = retrospect.type,
-            retrospectIdentifier = retrospect.retrospectIdentifier,
-            retrospect = simpleRetrospect
-        )
     }
 }

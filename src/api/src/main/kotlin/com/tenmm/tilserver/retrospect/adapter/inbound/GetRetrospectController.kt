@@ -44,7 +44,7 @@ class GetRetrospectController(
         ]
     )
     @RequiredAuthentication
-    suspend fun getRetrospect(userAuthInfo: UserAuthInfo): GetRetrospectResponseModel {
+    suspend fun getRetrospect(userAuthInfo: UserAuthInfo): List<GetRetrospectResponseModel> {
         return getRetrospectUseCase.getRetrospect(userAuthInfo.userIdentifier)
     }
 }

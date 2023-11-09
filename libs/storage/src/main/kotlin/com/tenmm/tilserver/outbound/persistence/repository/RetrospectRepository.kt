@@ -11,25 +11,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
     fun findByUserIdentifier(userIdentifier: String): List<RetrospectEntity>
     fun findByUserIdentifierAndRetrospectIdentifier(userIdentifier: String, retrospectIdentifier: String): RetrospectEntity?
     fun deleteByUserIdentifierAndRetrospectIdentifier(userIdentifier: String, retrospectIdentifier: String)
-    
-    @Query(
-        value =
-        """
-        SELECT * FROM retrospect 
-        where user_identifier = :userIdentifier 
-        AND created_at >= :from
-        AND created_at < :to
-        AND is_secret = FALSE
-        ORDER BY created_at DESC, id DESC
-        """,
-        nativeQuery = true
-    )
-    fun findByRetrospectListByUserIdentifierAndTimePeriodAndSecretIsFalse(
-        userIdentifier: String,
-        to: Timestamp,
-        from: Timestamp,
-    ): List<RetrospectEntity>
-
+    fun countAllByUserIdentifier(userIdentifier: String): Int
 
     @Query(
         value =
@@ -81,7 +63,65 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         userIdentifier: String,
         from: Timestamp,
         to: Timestamp,
-    ): RetrospectEntity?
+    ):  List<RetrospectEntity>
 
-    fun countAllByUserIdentifier(userIdentifier: String): Int
+    @Query(
+        value =
+        """
+        SELECT * FROM retrospect 
+        where type = :type 
+        AND ((created_at = :lastEntityCreatedAt AND id < :lastEntityId) OR created_at < :lastEntityCreatedAt)
+        ORDER BY created_at DESC, id DESC
+        LIMIT :size
+        """,
+        nativeQuery = true
+    )
+    fun findAllByCreatedAtBeforeAndType(
+        type: String,
+        lastEntityId: Int,
+        lastEntityCreatedAt: Timestamp,
+        size: Int,
+    ): List<RetrospectEntity>
+
+    @Query(
+        value =
+        """
+        SELECT * FROM retrospect 
+        where ((created_at = :lastEntityCreatedAt AND id < :lastEntityId) OR created_at < :lastEntityCreatedAt)
+        ORDER BY created_at DESC, id DESC
+        LIMIT :size
+        """,
+        nativeQuery = true
+    )
+    fun findAllByCreatedAtBefore(
+        lastEntityId: Int,
+        lastEntityCreatedAt: Timestamp,
+        size: Int,
+    ): List<RetrospectEntity>
+
+    @Query(
+        value =
+        """
+        SELECT * FROM retrospect 
+        LIMIT :size
+        """,
+        nativeQuery = true
+    )
+    fun findAllWithSize (
+        size: Int,
+    ): List<RetrospectEntity>
+
+    @Query(
+        value =
+        """
+        SELECT * FROM retrospect 
+        where type = :type
+        LIMIT :size
+        """,
+        nativeQuery = true
+    )
+    fun findByTypeWithSize (
+        size: Int,
+        type: String,
+    ): List<RetrospectEntity>
 }

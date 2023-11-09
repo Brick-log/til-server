@@ -4,5 +4,5 @@ import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetRetrospectRespons
 import com.tenmm.tilserver.common.domain.Identifier
 
 interface GetRetrospectUseCase {
-    fun getRetrospect(userIdentifier: Identifier): GetRetrospectResponseModel
+    fun getRetrospect(userIdentifier: Identifier): List<GetRetrospectResponseModel>
 }

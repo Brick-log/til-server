@@ -41,19 +41,19 @@ class GetUserRetrospectService(
             userIdentifier = userInfo.identifier,
             to = to,
             from = from,
-            isSecret = isSecret
+            pageToken = pageToken ?: "",
         )
         val detailRetrospect = retrospects.map {
             DetailRetrospect(
                 isSecret = it.isSecret,
                 createdAt = it.createdAt,
-                id = it.retrospectIdentifier,
-                qna = getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
+                id = if (!it.isSecret || isSecret) it.retrospectIdentifier else "",
+                qna = if (!it.isSecret || isSecret) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                     RetrospectQna(
                         question = it.question,
                         answer = it.answer,
                     )
-                }
+                } else listOf<RetrospectQna>()
             )
         }
 
@@ -70,7 +70,7 @@ class GetUserRetrospectService(
         from: Timestamp,
     ): GetRetrospectMetaResponseModel {
         val userIdentifier = getUserUseCase.getByPath(path).identifier
-        val result = getUserRetrospectPort.getRetrospectListByCreatedAt(userIdentifier, to, from, true)
+        val result = getUserRetrospectPort.getRetrospectListByCreatedAt(userIdentifier, to, from, pageToken = "")
         val postMetaTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         return GetRetrospectMetaResponseModel(
             metas = result.map {
