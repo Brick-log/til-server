@@ -7,3 +7,7 @@ spring:
   jpa:
     show-sql: true
     database: mysql
+  sql:
+    init:
+      data-locations: classpath:sql/3. question_dml.sql
+      mode: always
