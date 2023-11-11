@@ -91,16 +91,16 @@ CREATE TABLE `user`
 CREATE TABLE `question_type`
 (
     `id`                  int          not null primary key auto_increment,
-    `name`                varchar(36)  not null,
-    `type`     char(36)     not null
-);
+    `name`                varchar(255)  not null,
+    `type`     char(255)     not null
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `question`
 (
     `id`                  int          not null primary key auto_increment,
-    `name`                varchar(36)  not null,
-    `type`     char(36)     not null
-);
+    `name`                varchar(255)  not null,
+    `type`     char(255)     not null
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE `retrospect`
@@ -108,15 +108,15 @@ CREATE TABLE `retrospect`
     `id`                        int          not null primary key auto_increment,
     `retrospect_identifier`     char(36)     not null,
     `user_identifier`           char(36)      not null,
-    `type`           char(36)      not null,
+    `type`           char(255)      not null,
     `is_secret` boolean      not null,
     `created_at`                  timestamp    not null default now()
-);
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `retrospect_qna`
 (
     `id`                        int          not null primary key auto_increment,
     `retrospect_identifier`     char(36)     not null,
-    `question`     char(36)     not null,
+    `question`     char(255)     not null,
     `answer`                varchar(255) not null
-);
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
