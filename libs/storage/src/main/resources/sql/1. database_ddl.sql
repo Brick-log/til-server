@@ -85,3 +85,38 @@ CREATE TABLE `user`
 
     unique index UDX_PATH (`path`)
 );
+
+
+/*Spec 1.5*/
+CREATE TABLE `question_type`
+(
+    `id`                  int          not null primary key auto_increment,
+    `name`                varchar(36)  not null,
+    `type`     char(36)     not null
+);
+
+CREATE TABLE `question`
+(
+    `id`                  int          not null primary key auto_increment,
+    `name`                varchar(36)  not null,
+    `type`     char(36)     not null
+);
+
+
+CREATE TABLE `retrospect`
+(
+    `id`                        int          not null primary key auto_increment,
+    `retrospect_identifier`     char(36)     not null,
+    `user_identifier`           char(36)      not null,
+    `type`           char(36)      not null,
+    `is_secret` boolean      not null,
+    `created_at`                  timestamp    not null default now()
+);
+
+CREATE TABLE `retrospect_qna`
+(
+    `id`                        int          not null primary key auto_increment,
+    `retrospect_identifier`     char(36)     not null,
+    `question`     char(36)     not null,
+    `answer`                varchar(255) not null
+);
