@@ -29,7 +29,7 @@ class DeleteRetrospectController(
 ) {
     @DeleteMapping("{retrospectIdentifier}")
     @Operation(
-        summary = "Retrospect 삭제",
+        summary = "회고 삭제",
         responses = [
             ApiResponse(
                 responseCode = "200",
