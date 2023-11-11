@@ -25,7 +25,7 @@ class GetRetrospectController(
 ) {
     @GetMapping
     @Operation(
-        summary = "Retrospect 조회",
+        summary = "회고 조회",
         responses = [
             ApiResponse(
                 responseCode = "200",

@@ -32,7 +32,7 @@ class GetUserRetrospectController(
 ) {
     @GetMapping("{path}")
     @Operation(
-        summary = "사용자별 조회",
+        summary = "사용자별 회고 조회",
         responses = [
             ApiResponse(
                 responseCode = "200",
