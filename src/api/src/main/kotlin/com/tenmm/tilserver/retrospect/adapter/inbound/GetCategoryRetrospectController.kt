@@ -28,15 +28,15 @@ class GetCategoryRetrospectController(
 
     @GetMapping("/category")
     @Operation(
-        summary = "카테고리별 포스트 리스트 요청",
+        summary = "카테고리별 회고 리스트 요청",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "포스트 리스트 요청 성공"
+                description = "회고 리스트 요청 성공"
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "잘못된 포스트 리스트 요청 (ex.잘못된 카테고리 identifier)",
+                description = "잘못된 회고 리스트 요청 (ex.잘못된 카테고리 identifier)",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
@@ -58,20 +58,6 @@ class GetCategoryRetrospectController(
         @RequestParam(name = "retrospectType") retrospectType: String,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetUserRetrospectResponseModel {
-        // val retrospectListResult = if (pageToken != null) {
-        //     getCategoryRetrospectUseCase.getRetrospectListByTypeWithPageToken(
-        //         pageToken = pageToken,
-        //         categoryIdentifier = categoryIdentifier,
-        //         size = size
-        //     )
-        // } else {
-        //     getCategoryRetrospectUseCase.getRetrospectListByType(
-        //         categoryIdentifier = categoryIdentifier,
-        //         size = size
-        //     )
-        // }
-
-        // return GetRetrospectListResponse.fromResult(retrospectListResult)
         return if (pageToken != null) {
             getCategoryRetrospectUseCase.getRetrospectListByTypeWithPageToken(
                 pageToken = pageToken,
@@ -90,15 +76,15 @@ class GetCategoryRetrospectController(
 
     @GetMapping("/category/recommend")
     @Operation(
-        summary = "카테고리별 추천 포스트 리스트 요청",
+        summary = "카테고리별 추천 회고 리스트 요청",
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "포스트 리스트 요청 성공"
+                description = "회고 리스트 요청 성공"
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "잘못된 포스트 리스트 요청 (ex.잘못된 카테고리 identifier)",
+                description = "잘못된 회고 리스트 요청 (ex.잘못된 카테고리 identifier)",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
@@ -118,18 +104,6 @@ class GetCategoryRetrospectController(
         userAuthInfo: UserAuthInfo?,
         @RequestParam(name = "identifier") categoryIdentifier: String
     ): String {
-        // val searchCategoryIdentifier = if (userAuthInfo != null) {
-        //     getUserUseCase.getByIdentifier(userAuthInfo.userIdentifier).categoryIdentifier
-        // } else {
-        //     categoryIdentifier
-        // }
-
-        // val retrospectListResult = if (searchCategoryIdentifier != null && searchCategoryIdentifier != "all") {
-        //     getRecommendedRetrospectUseCase.getRecommendedRetrospectListByCategory(searchCategoryIdentifier)
-        // } else {
-        //     getRecommendedRetrospectUseCase.getRecommendedRetrospectListRandom()
-        // }
-        // return GetRetrospectListResponse.fromResult(retrospectListResult)
         return ""
     }
 }

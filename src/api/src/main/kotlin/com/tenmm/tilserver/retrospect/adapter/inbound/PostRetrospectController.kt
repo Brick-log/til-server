@@ -25,7 +25,7 @@ class PostRetrospectController(
 ) {
     @PostMapping
     @Operation(
-        summary = "Retrospect 등록",
+        summary = "회고 등록",
         responses = [
             ApiResponse(
                 responseCode = "200",
@@ -45,8 +45,6 @@ class PostRetrospectController(
     )
     @RequiredAuthentication
     suspend fun postRetrospect(userAuthInfo: UserAuthInfo, @RequestBody postRetrospectRequestModel: PostRetrospectRequestModel) {
-        print("postRetrospectRequestModel: $postRetrospectRequestModel")
-        print("userAuthInfo: $userAuthInfo")
         return postRetrospectUseCase.postRetrospect(userAuthInfo.userIdentifier, postRetrospectRequestModel)
     }
 }
