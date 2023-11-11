@@ -9,7 +9,3 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: none
-  sql:
-    init:
-      data-locations: classpath:sql/3. question_dml.sql
-      mode: always
