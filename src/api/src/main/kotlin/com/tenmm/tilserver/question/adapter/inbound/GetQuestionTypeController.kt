@@ -19,7 +19,7 @@ class GetQuestionTypeController(
     private val getQuestionTypeUseCase: GetQuestionTypeUseCase,
 ) {
 
-    @GetMapping("/")
+    @GetMapping("")
     @Operation(
         summary = "질문 타입 요청",
         responses = [
