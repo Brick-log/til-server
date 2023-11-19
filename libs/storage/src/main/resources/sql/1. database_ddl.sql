@@ -120,3 +120,11 @@ CREATE TABLE `retrospect_qna`
     `question`     char(255)     not null,
     `answer`                varchar(255) not null
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `recommended_retrospect`
+(
+    `id`                        int          not null primary key auto_increment,
+    `retrospect_identifier`     char(36)     not null,
+    `retrospect_type`     char(255)     not null,
+    `created_at`                  timestamp    not null default now()
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

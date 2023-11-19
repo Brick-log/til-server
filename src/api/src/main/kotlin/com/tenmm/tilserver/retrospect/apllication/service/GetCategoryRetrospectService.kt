@@ -7,7 +7,6 @@ import com.tenmm.tilserver.retrospect.application.outbound.GetUserRetrospectPort
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.DetailRetrospect
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.RetrospectQna
 
-import com.tenmm.tilserver.retrospect.adapter.outbound.model.RetrospectListWithPageToken
 import com.tenmm.tilserver.retrospect.adapter.outbound.model.RetrospectList
 
 import org.springframework.stereotype.Service
@@ -19,33 +18,37 @@ class GetCategoryRetrospectService(
     private val getUserRetrospectPort: GetUserRetrospectPort
 ) : GetCategoryRetrospectUseCase {
     override fun getRetrospectListByTypeWithPageToken(pageToken: String, retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
-        val retrospectListWithPageToken: RetrospectListWithPageToken = getCategoryRetrospectPort.getRetrospectListByTypeWithPageToken(pageToken, retrospectType, size)
-        val getUserRetrospectResponseModel: GetUserRetrospectResponseModel = GetUserRetrospectResponseModel(
-            size = retrospectListWithPageToken.retrospectList.size,
-            nextPageToken = retrospectListWithPageToken.nextPageToken ?: "",
-            retrospects = retrospectListWithPageToken.retrospectList.map {
-                DetailRetrospect(
-                    isSecret = it.isSecret,
-                    createdAt = it.createdAt,
-                    id = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) it.retrospectIdentifier else "",
-                    qna = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
-                        RetrospectQna(
-                            question = it.question,
-                            answer = it.answer,
-                        )
-                    } else listOf<RetrospectQna>()
-                )
-            }
-        )
-        return getUserRetrospectResponseModel
+        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByTypeWithPageToken(pageToken, retrospectType, size)
+        return generateRetrospectWithPath(retrospectList, userIdentifier)
     }
 
     override fun getRetrospectListByType(retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
-        val retrospectListWithPageToken: RetrospectList = getCategoryRetrospectPort.getRetrospectListByType(retrospectType, size)
-        val getUserRetrospectResponseModel: GetUserRetrospectResponseModel = GetUserRetrospectResponseModel(
-            size = retrospectListWithPageToken.retrospectList.size,
-            nextPageToken = "",
-            retrospects = retrospectListWithPageToken.retrospectList.map {
+        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByType(retrospectType, size)
+        return generateRetrospectWithPath(retrospectList, userIdentifier)
+    }
+
+    override fun getRecommendedRetrospectListRandom(): GetUserRetrospectResponseModel {
+        val retrospectIdentifiers = getCategoryRetrospectPort.getRandom(3)
+        val retrospectList = getCategoryRetrospectPort.getRetrospectListByIdentifiers(retrospectIdentifiers)
+
+        return generateRetrospectWithPath(retrospectList, null)
+    }
+
+    override fun getRecommendedRetrospectListByCategory(retrospectType: String): GetUserRetrospectResponseModel {
+        val retrospectIdentifiers = getCategoryRetrospectPort.getByRetrospectType(retrospectType)
+        val retrospectList = getCategoryRetrospectPort.getRetrospectListByIdentifiers(retrospectIdentifiers)
+
+        return generateRetrospectWithPath(retrospectList, null)
+    }
+
+    private fun generateRetrospectWithPath(
+        retrospectList: RetrospectList,
+        userIdentifier: Identifier?
+    ): GetUserRetrospectResponseModel {
+        return GetUserRetrospectResponseModel(
+            size = retrospectList.retrospectList.size,
+            nextPageToken = retrospectList.nextPageToken ?: "",
+            retrospects = retrospectList.retrospectList.map {
                 DetailRetrospect(
                     isSecret = it.isSecret,
                     createdAt = it.createdAt,
@@ -59,6 +62,5 @@ class GetCategoryRetrospectService(
                 )
             }
         )
-        return getUserRetrospectResponseModel
     }
 }

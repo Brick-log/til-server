@@ -26,7 +26,7 @@ class GetCategoryRetrospectController(
     private val getCategoryRetrospectUseCase: GetCategoryRetrospectUseCase,
 ) {
 
-    @GetMapping("/category")
+    @GetMapping
     @Operation(
         summary = "카테고리별 회고 리스트 요청",
         responses = [
@@ -74,7 +74,7 @@ class GetCategoryRetrospectController(
         }
     }
 
-    @GetMapping("/category/recommend")
+    @GetMapping("/recommend")
     @Operation(
         summary = "카테고리별 추천 회고 리스트 요청",
         responses = [
@@ -99,11 +99,17 @@ class GetCategoryRetrospectController(
             )
         ]
     )
-    @OptionalAuthentication
+
     fun getRecommendationList(
-        userAuthInfo: UserAuthInfo?,
-        @RequestParam(name = "identifier") categoryIdentifier: String
-    ): String {
-        return ""
+        @RequestParam(name = "retrospectType") retrospectType: String
+    ): GetUserRetrospectResponseModel {
+
+        val postListResult = if (retrospectType != null && retrospectType != "all") {
+            getCategoryRetrospectUseCase.getRecommendedRetrospectListByCategory(retrospectType)
+        } else {
+            getCategoryRetrospectUseCase.getRecommendedRetrospectListRandom()
+        }
+
+        return postListResult
     }
 }

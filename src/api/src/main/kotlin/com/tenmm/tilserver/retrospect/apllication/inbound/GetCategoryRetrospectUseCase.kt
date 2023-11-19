@@ -6,4 +6,7 @@ import com.tenmm.tilserver.common.domain.Identifier
 interface GetCategoryRetrospectUseCase {
     fun getRetrospectListByTypeWithPageToken(pageToken: String, retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel
     fun getRetrospectListByType(retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel
+
+    fun getRecommendedRetrospectListRandom(): GetUserRetrospectResponseModel
+    fun getRecommendedRetrospectListByCategory(retrospectType: String): GetUserRetrospectResponseModel
 }
