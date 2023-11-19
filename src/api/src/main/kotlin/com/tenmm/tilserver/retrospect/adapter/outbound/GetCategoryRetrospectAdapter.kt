@@ -1,15 +1,16 @@
 package com.tenmm.tilserver.retrospect.adapter.outbound
 
 import com.tenmm.tilserver.retrospect.application.outbound.GetCategoryRetrospectPort
-import com.tenmm.tilserver.retrospect.adapter.outbound.model.RetrospectListWithPageToken
 import com.tenmm.tilserver.retrospect.adapter.outbound.model.RetrospectList
 import com.tenmm.tilserver.outbound.persistence.repository.RetrospectQnaRepository
+import com.tenmm.tilserver.outbound.persistence.repository.RecommendRetrospectRepository
 import com.tenmm.tilserver.outbound.persistence.repository.RetrospectRepository
 import org.springframework.stereotype.Component
 import java.sql.Timestamp
+import org.springframework.data.domain.PageRequest
 
 import com.tenmm.tilserver.outbound.persistence.entity.RetrospectEntity
-
+import com.tenmm.tilserver.common.domain.Identifier
 import com.tenmm.tilserver.common.utils.CryptoHandler
 
 @Component
@@ -17,8 +18,9 @@ class GetCategoryRetrospectAdapter(
     private val cryptoHandler: CryptoHandler,
     private val retrospectQnaRepository: RetrospectQnaRepository,
     private val retrospectRepository: RetrospectRepository,
+    private val recommendRetrospectRepository: RecommendRetrospectRepository
 ) : GetCategoryRetrospectPort {
-    override fun getRetrospectListByTypeWithPageToken(pageToken: String, retrospectType: String, size: Int): RetrospectListWithPageToken {
+    override fun getRetrospectListByTypeWithPageToken(pageToken: String, retrospectType: String, size: Int): RetrospectList {
 
         val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchRetrospect::class)
 
@@ -45,7 +47,7 @@ class GetCategoryRetrospectAdapter(
                 lastEntity = lastEntity
             )
         }
-        return RetrospectListWithPageToken(
+        return RetrospectList(
             retrospectList = result,
             nextPageToken = nextPageToken
         )
@@ -64,6 +66,25 @@ class GetCategoryRetrospectAdapter(
 
         return RetrospectList(
             retrospectList = result,
+            nextPageToken = ""
+        )
+    }
+
+    override fun getRandom(size: Int): List<Identifier> {
+        return recommendRetrospectRepository.findByRandom(size).map { Identifier(it.retrospectIdentifier) }
+    }
+
+    override fun getByRetrospectType(retrospectType: String): List<Identifier> {
+        return recommendRetrospectRepository.findByRetrospectTypeOrderByCreatedAtDesc(
+            retrospectType, PageRequest.ofSize(3)
+        ).map { Identifier(it.retrospectIdentifier) }
+    }
+
+    override fun getRetrospectListByIdentifiers(retrospectIdentifiers: List<Identifier>): RetrospectList {
+        val result = retrospectIdentifiers.map { retrospectRepository.findOneByRetrospectIdentifier(it.value) }
+        return RetrospectList(
+            retrospectList = result,
+            nextPageToken = ""
         )
     }
 
