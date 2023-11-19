@@ -28,11 +28,11 @@ class PostCategoryRetrospectController(
         responses = [
             ApiResponse(
                 responseCode = "200",
-                description = "회고 리스트 요청 성공"
+                description = "추천 회고 업도르 요청 성공"
             ),
             ApiResponse(
                 responseCode = "400",
-                description = "잘못된 회고 리스트 요청 (ex.잘못된 카테고리 identifier)",
+                description = "잘못된 추천 회고 업로드 요청 (ex.잘못된 카테고리 identifier)",
                 content = [Content(schema = Schema(implementation = ErrorResponse::class))]
             ),
             ApiResponse(
