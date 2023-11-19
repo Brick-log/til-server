@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
     fun findByUserIdentifier(userIdentifier: String): List<RetrospectEntity>
+    fun findOneByRetrospectIdentifier(retrospectIdentifier: String): RetrospectEntity
     fun findByUserIdentifierAndRetrospectIdentifier(userIdentifier: String, retrospectIdentifier: String): RetrospectEntity?
     fun deleteByUserIdentifierAndRetrospectIdentifier(userIdentifier: String, retrospectIdentifier: String)
     fun countAllByUserIdentifier(userIdentifier: String): Int
