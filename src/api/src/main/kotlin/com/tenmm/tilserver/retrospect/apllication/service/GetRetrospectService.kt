@@ -15,11 +15,11 @@ class GetRetrospectService(
     override fun getRetrospect(userIdentifier: Identifier): List<GetRetrospectResponseModel> {
         return getRetrospectPort.findOneRetrospectByUserIdentifierToday(userIdentifier).map {
             GetRetrospectResponseModel(
-                type = it.type,
+                questionType = it.questionType,
                 retrospectIdentifier = it.retrospectIdentifier,
                 retrospect = getRetrospectPort.findRetrospectQnaListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                     SimpleRetrospect(
-                        question = it.question,
+                        questionName = it.questionName,
                         answer = it.answer,
                     )
                 }

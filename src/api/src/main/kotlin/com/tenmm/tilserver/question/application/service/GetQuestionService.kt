@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service
 class GetQuestionService(
     private val getQuestionPort: GetQuestionPort,
 ) : GetQuestionUseCase {
-    override fun getQuestionByType(type: String): GetQuestionResponse {
-        val question = getQuestionPort.findByType(type)
+    override fun getQuestionByType(questionType: String): GetQuestionResponse {
+        val question = getQuestionPort.findByQuestionType(questionType)
         val questions = question.map {
             Question(
-                name = it.name
+                questionName = it.questionName
             )
         }
         return GetQuestionResponse(
-            type = type,
+            questionType = questionType,
             question = questions
         )
     }

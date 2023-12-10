@@ -5,6 +5,6 @@ data class GetQuestionTypeResponse(
 )
 
 data class QuestionType(
-    val type: String,
-    val name: String,
+    val questionType: String,
+    val questionTypeName: String,
 )

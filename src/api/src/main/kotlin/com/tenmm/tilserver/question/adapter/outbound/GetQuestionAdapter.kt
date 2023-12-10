@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class GetQuestionAdapter(
     private val questionRepository: QuestionRepository,
 ) : GetQuestionPort {
-    override fun findByType(type: String): List<QuestionEntity> {
-        return questionRepository.findByType(type)
+    override fun findByQuestionType(questionType: String): List<QuestionEntity> {
+        return questionRepository.findByQuestionType(questionType)
     }
 }

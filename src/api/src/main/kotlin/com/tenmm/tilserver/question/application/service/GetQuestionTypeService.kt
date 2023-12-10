@@ -15,8 +15,8 @@ class GetQuestionTypeService(
         val questionType = getQuestionTypePort.findAll()
         val questionTypes = questionType.map {
             QuestionType(
-                type = it.type,
-                name = it.name
+                questionType = it.questionType,
+                questionTypeName = it.questionTypeName
             )
         }
         return GetQuestionTypeResponse(

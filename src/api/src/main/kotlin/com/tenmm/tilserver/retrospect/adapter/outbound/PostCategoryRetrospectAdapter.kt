@@ -12,11 +12,11 @@ class PostCategoryRetrospectAdapter(
     private val recommendRetrospectRepository: RecommendRetrospectRepository,
 ) : PostCategoryRetrospectPort {
     override fun addByRetrospectIdentifier(
-        retrospectType: String,
+        catecoryIdentifier: String,
         retrospectIdentifier: Identifier,
     ): Boolean {
         val entity = RecommendRetrospectEntity(
-            retrospectType = retrospectType,
+            catecoryIdentifier = catecoryIdentifier,
             retrospectIdentifier = retrospectIdentifier.value
         )
         return try {

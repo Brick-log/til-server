@@ -24,7 +24,7 @@ class PostRetrospectAdapter(
         val retrospectEntity: RetrospectEntity = RetrospectEntity(
             retrospectIdentifier = retrospectIdentifier,
             userIdentifier = userIdentifier.value,
-            type = postRetrospectRequestModel.type,
+            questionType = postRetrospectRequestModel.questionType,
             isSecret = postRetrospectRequestModel.isSecret,
             createdAt = Timestamp.valueOf(LocalDateTime.now())
         )
@@ -32,7 +32,7 @@ class PostRetrospectAdapter(
         postRetrospectRequestModel.retrospect.forEach {
             val retrospectQnaEntity: RetrospectQnaEntity = RetrospectQnaEntity(
                 retrospectIdentifier = retrospectIdentifier,
-                question = it.question,
+                questionName = it.questionName,
                 answer = it.answer,
             )
             retrospectQnaRepository.save(retrospectQnaEntity)
