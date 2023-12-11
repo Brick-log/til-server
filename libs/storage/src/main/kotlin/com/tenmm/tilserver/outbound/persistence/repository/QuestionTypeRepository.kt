@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface QuestionTypeRepository : JpaRepository<QuestionTypeEntity, Long> {
     
+    @Query(value = "SELECT * FROM question_type where question_type = :questionType", nativeQuery = true)
+    fun findByType(questionType: String): QuestionTypeEntity?
 }

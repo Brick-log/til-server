@@ -6,5 +6,7 @@ data class DetailRetrospect(
     val isSecret: Boolean,
     val id: String,
     val createdAt: Timestamp,
+    val questionType: String,
+    val questionTypeName: String,
     val qna: List<RetrospectQna>
 )

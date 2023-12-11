@@ -6,6 +6,7 @@ import com.tenmm.tilserver.retrospect.application.outbound.GetCategoryRetrospect
 import com.tenmm.tilserver.retrospect.application.outbound.GetUserRetrospectPort
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.DetailRetrospect
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.RetrospectQna
+import com.tenmm.tilserver.post.application.service.GetQuestionTypeService
 
 import com.tenmm.tilserver.retrospect.adapter.outbound.model.RetrospectList
 
@@ -14,6 +15,7 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 @Service
 class GetCategoryRetrospectService(
+    private val getQuestionTypeService: GetQuestionTypeService,
     private val getCategoryRetrospectPort: GetCategoryRetrospectPort,
     private val getUserRetrospectPort: GetUserRetrospectPort
 ) : GetCategoryRetrospectUseCase {
@@ -52,6 +54,8 @@ class GetCategoryRetrospectService(
                 DetailRetrospect(
                     isSecret = it.isSecret,
                     createdAt = it.createdAt,
+                    questionType = it.questionType,
+                    questionTypeName =  getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
                     id = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) it.retrospectIdentifier else "",
                     qna = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                         RetrospectQna(

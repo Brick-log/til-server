@@ -33,3 +33,5 @@ class OAuthFailException(type: OAuthType, description: String) :
     ServerBaseException(ErrorCode.OAUTH_FAIL, "$type - $description")
 
 class PostSaveFailException : ServerBaseException(ErrorCode.POST_SAVE_FAIL)
+
+class QuestionTypeNotFoundException : ServerBaseException(ErrorCode.QUESTION_TYPE_NOT_FOUND)
