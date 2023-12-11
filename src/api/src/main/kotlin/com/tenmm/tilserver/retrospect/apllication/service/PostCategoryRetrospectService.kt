@@ -10,9 +10,9 @@ import com.tenmm.tilserver.common.domain.Identifier
 class PostCategoryRetrospectService(
     private val postCategoryRetrospectPort: PostCategoryRetrospectPort,
 ) : PostCategoryRetrospectUseCase {
-    override fun addByRetrospectId(retrospectIdentifier: Identifier, retrospectType: String): Boolean {
+    override fun addByRetrospectId(retrospectIdentifier: Identifier, categoryIdentifier: Identifier): Boolean {
         return postCategoryRetrospectPort.addByRetrospectIdentifier(
-            retrospectType = retrospectType,
+            categoryIdentifier = categoryIdentifier,
             retrospectIdentifier = retrospectIdentifier
         )
     }

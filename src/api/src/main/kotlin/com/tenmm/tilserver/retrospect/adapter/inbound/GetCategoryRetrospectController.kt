@@ -19,6 +19,8 @@ import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetUserRetrospectRes
 import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
 
+import com.tenmm.tilserver.common.domain.Identifier
+
 @RestController
 @RequestMapping("/v1/retrospect/category")
 @Tag(name = "Retrospect")
@@ -55,19 +57,19 @@ class GetCategoryRetrospectController(
     suspend fun getByCategory(
         userAuthInfo: UserAuthInfo?,
         @RequestParam size: Int,
-        @RequestParam(name = "retrospectType") retrospectType: String,
+        @RequestParam(name = "categoryIdentifier") categoryIdentifier: String,
         @RequestParam(required = false) pageToken: String? = null,
     ): GetUserRetrospectResponseModel {
         return if (pageToken != null) {
-            getCategoryRetrospectUseCase.getRetrospectListByTypeWithPageToken(
+            getCategoryRetrospectUseCase.getRetrospectListByCategoryIdentifierWithPageToken(
                 pageToken = pageToken,
-                retrospectType = retrospectType,
+                categoryIdentifier = Identifier(categoryIdentifier),
                 size = size,
                 userIdentifier = userAuthInfo?.userIdentifier
             )
         } else {
-            getCategoryRetrospectUseCase.getRetrospectListByType(
-                retrospectType = retrospectType,
+            getCategoryRetrospectUseCase.getRetrospectListByCategoryIdentifier(
+                categoryIdentifier = Identifier(categoryIdentifier),
                 size = size,
                 userIdentifier = userAuthInfo?.userIdentifier
             )
@@ -101,11 +103,11 @@ class GetCategoryRetrospectController(
     )
 
     fun getRecommendationList(
-        @RequestParam(name = "retrospectType") retrospectType: String
+        @RequestParam(name = "categoryIdentifier") categoryIdentifier: String
     ): GetUserRetrospectResponseModel {
 
-        val postListResult = if (retrospectType != null && retrospectType != "all") {
-            getCategoryRetrospectUseCase.getRecommendedRetrospectListByCategory(retrospectType)
+        val postListResult = if (categoryIdentifier != null && categoryIdentifier != "all") {
+            getCategoryRetrospectUseCase.getRecommendedRetrospectListByCategory(Identifier(categoryIdentifier))
         } else {
             getCategoryRetrospectUseCase.getRecommendedRetrospectListRandom()
         }

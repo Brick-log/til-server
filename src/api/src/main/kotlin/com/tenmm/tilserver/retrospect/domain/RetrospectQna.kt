@@ -4,6 +4,6 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 data class RetrospectQna(
     val retrospectIdentifier: Identifier,
-    val name: String,
+    val questionName: String,
     val answer: String
 )

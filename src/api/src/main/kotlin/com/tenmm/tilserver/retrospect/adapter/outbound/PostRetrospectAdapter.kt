@@ -24,6 +24,7 @@ class PostRetrospectAdapter(
         val retrospectEntity: RetrospectEntity = RetrospectEntity(
             retrospectIdentifier = retrospectIdentifier,
             userIdentifier = userIdentifier.value,
+            categoryIdentifier = postRetrospectRequestModel.categoryIdentifier,
             questionType = postRetrospectRequestModel.questionType,
             isSecret = postRetrospectRequestModel.isSecret,
             createdAt = Timestamp.valueOf(LocalDateTime.now())

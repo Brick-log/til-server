@@ -17,13 +17,13 @@ class GetCategoryRetrospectService(
     private val getCategoryRetrospectPort: GetCategoryRetrospectPort,
     private val getUserRetrospectPort: GetUserRetrospectPort
 ) : GetCategoryRetrospectUseCase {
-    override fun getRetrospectListByTypeWithPageToken(pageToken: String, retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
-        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByTypeWithPageToken(pageToken, retrospectType, size)
+    override fun getRetrospectListByCategoryIdentifierWithPageToken(pageToken: String, categoryIdentifier: Identifier, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
+        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByCategoryIdentifierWithPageToken(pageToken, categoryIdentifier, size)
         return generateRetrospectWithPath(retrospectList, userIdentifier)
     }
 
-    override fun getRetrospectListByType(retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
-        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByType(retrospectType, size)
+    override fun getRetrospectListByCategoryIdentifier(categoryIdentifier: Identifier, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
+        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByCategoryIdentifier(categoryIdentifier, size)
         return generateRetrospectWithPath(retrospectList, userIdentifier)
     }
 
@@ -34,8 +34,8 @@ class GetCategoryRetrospectService(
         return generateRetrospectWithPath(retrospectList, null)
     }
 
-    override fun getRecommendedRetrospectListByCategory(retrospectType: String): GetUserRetrospectResponseModel {
-        val retrospectIdentifiers = getCategoryRetrospectPort.getByRetrospectType(retrospectType)
+    override fun getRecommendedRetrospectListByCategory(categoryIdentifier: Identifier): GetUserRetrospectResponseModel {
+        val retrospectIdentifiers = getCategoryRetrospectPort.getByCategoryIdentifier(categoryIdentifier)
         val retrospectList = getCategoryRetrospectPort.getRetrospectListByIdentifiers(retrospectIdentifiers)
 
         return generateRetrospectWithPath(retrospectList, null)
