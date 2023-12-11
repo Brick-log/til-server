@@ -9,12 +9,14 @@ import com.tenmm.tilserver.retrospect.adapter.inbound.Model.RetrospectQna
 import com.tenmm.tilserver.post.application.service.GetQuestionTypeService
 
 import com.tenmm.tilserver.retrospect.adapter.outbound.model.RetrospectList
+import com.tenmm.tilserver.user.application.service.GetUserService
 
 import org.springframework.stereotype.Service
 import com.tenmm.tilserver.common.domain.Identifier
 
 @Service
 class GetCategoryRetrospectService(
+    private val getUserService: GetUserService,
     private val getQuestionTypeService: GetQuestionTypeService,
     private val getCategoryRetrospectPort: GetCategoryRetrospectPort,
     private val getUserRetrospectPort: GetUserRetrospectPort
@@ -56,6 +58,7 @@ class GetCategoryRetrospectService(
                     createdAt = it.createdAt,
                     questionType = it.questionType,
                     questionTypeName =  getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
+                    userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
                     id = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) it.retrospectIdentifier else "",
                     qna = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                         RetrospectQna(

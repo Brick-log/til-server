@@ -16,9 +16,11 @@ import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.RetrospectQna
+import com.tenmm.tilserver.user.application.service.GetUserService
 
 @Service
 class GetUserRetrospectService(
+    private val getUserService: GetUserService,
     private val getQuestionTypeService: GetQuestionTypeService,
     private val getUserUseCase: GetUserUseCase,
     private val getUserRetrospectPort: GetUserRetrospectPort
@@ -50,7 +52,8 @@ class GetUserRetrospectService(
                 isSecret = it.isSecret,
                 createdAt = it.createdAt,
                 questionType = it.questionType,
-                questionTypeName =  getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
+                questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
+                userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
                 id = if (!it.isSecret || isSecret) it.retrospectIdentifier else "",
                 qna = if (!it.isSecret || isSecret) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                     RetrospectQna(
