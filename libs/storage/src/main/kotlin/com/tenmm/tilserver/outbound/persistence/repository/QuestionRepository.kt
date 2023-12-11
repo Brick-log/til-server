@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface QuestionRepository : JpaRepository<QuestionEntity, Long> {
-    fun findByType(Type: String): List<QuestionEntity> 
+    fun findByQuestionType(questionType: String): List<QuestionEntity> 
 }

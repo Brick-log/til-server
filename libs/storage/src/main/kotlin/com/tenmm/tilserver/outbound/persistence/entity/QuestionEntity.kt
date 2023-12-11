@@ -16,8 +16,8 @@ data class QuestionEntity (
     val id: Long = 0,
 
     @Column
-    val type: String,
+    val questionType: String,
 
     @Column
-    val name: String,
+    val questionName: String,
 )
