@@ -116,7 +116,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         value =
         """
         SELECT * FROM retrospect 
-        where categoryIdentifier = :categoryIdentifier
+        where category_identifier = :categoryIdentifier
         LIMIT :size
         """,
         nativeQuery = true

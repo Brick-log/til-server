@@ -107,7 +107,7 @@ CREATE TABLE `retrospect`
 (
     `id`                        int          not null primary key auto_increment,
     `retrospect_identifier`     char(36)     not null,
-    `categoriy_identifier`     char(36)     not null,
+    `category_identifier`     char(36)     not null,
     `user_identifier`           char(36)      not null,
     `question_type`           char(255)      not null,
     `is_secret` boolean      not null,
@@ -126,6 +126,6 @@ CREATE TABLE `recommended_retrospect`
 (
     `id`                        int          not null primary key auto_increment,
     `retrospect_identifier`     char(36)     not null,
-    `categoriy_identifier`     char(36)     not null,
+    `category_identifier`     char(36)     not null,
     `created_at`                  timestamp    not null default now()
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
