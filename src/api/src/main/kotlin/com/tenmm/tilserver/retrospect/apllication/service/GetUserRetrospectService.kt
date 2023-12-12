@@ -54,7 +54,7 @@ class GetUserRetrospectService(
                 questionType = it.questionType,
                 questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
                 userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
-                id = if (!it.isSecret || isSecret) it.retrospectIdentifier else "",
+                retrospectIdentifier = if (!it.isSecret || isSecret) it.retrospectIdentifier else "",
                 qna = if (!it.isSecret || isSecret) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                     RetrospectQna(
                         questionName = it.questionName,

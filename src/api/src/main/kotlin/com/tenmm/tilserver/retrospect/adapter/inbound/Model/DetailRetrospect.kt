@@ -4,7 +4,7 @@ import java.sql.Timestamp
 
 data class DetailRetrospect(
     val isSecret: Boolean,
-    val id: String,
+    val retrospectIdentifier: String,
     val userName: String,
     val createdAt: Timestamp,
     val questionType: String,
