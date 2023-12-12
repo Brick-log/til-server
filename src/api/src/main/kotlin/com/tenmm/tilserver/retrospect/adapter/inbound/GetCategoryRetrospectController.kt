@@ -19,8 +19,6 @@ import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetUserRetrospectRes
 import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
 
-import com.tenmm.tilserver.common.domain.Identifier
-
 @RestController
 @RequestMapping("/v1/retrospect/category")
 @Tag(name = "Retrospect")
@@ -63,13 +61,13 @@ class GetCategoryRetrospectController(
         return if (pageToken != null) {
             getCategoryRetrospectUseCase.getRetrospectListByCategoryIdentifierWithPageToken(
                 pageToken = pageToken,
-                categoryIdentifier = Identifier(categoryIdentifier),
+                categoryIdentifier = categoryIdentifier,
                 size = size,
                 userIdentifier = userAuthInfo?.userIdentifier
             )
         } else {
             getCategoryRetrospectUseCase.getRetrospectListByCategoryIdentifier(
-                categoryIdentifier = Identifier(categoryIdentifier),
+                categoryIdentifier = categoryIdentifier,
                 size = size,
                 userIdentifier = userAuthInfo?.userIdentifier
             )
@@ -107,7 +105,7 @@ class GetCategoryRetrospectController(
     ): GetUserRetrospectResponseModel {
 
         val postListResult = if (categoryIdentifier != null && categoryIdentifier != "all") {
-            getCategoryRetrospectUseCase.getRecommendedRetrospectListByCategory(Identifier(categoryIdentifier))
+            getCategoryRetrospectUseCase.getRecommendedRetrospectListByCategory(categoryIdentifier)
         } else {
             getCategoryRetrospectUseCase.getRecommendedRetrospectListRandom()
         }

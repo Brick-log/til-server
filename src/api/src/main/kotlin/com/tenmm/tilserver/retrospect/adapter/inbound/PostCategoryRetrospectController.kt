@@ -51,6 +51,6 @@ class PostCategoryRetrospectController(
         @RequestParam(name = "retrospectIdentifier") retrospectIdentifier: String,
         @RequestParam(name = "categoryIdentifier") categoryIdentifier: String
     ): Boolean {
-        return postCategoryRetrospectUseCase.addByRetrospectId(Identifier(retrospectIdentifier), Identifier(categoryIdentifier))
+        return postCategoryRetrospectUseCase.addByRetrospectId(Identifier(retrospectIdentifier), categoryIdentifier)
     }
 }
