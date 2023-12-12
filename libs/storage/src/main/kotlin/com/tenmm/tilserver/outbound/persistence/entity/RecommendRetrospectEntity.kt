@@ -18,9 +18,9 @@ data class RecommendRetrospectEntity(
 
     @Column
     val retrospectIdentifier: String,
-
+    
     @Column
-    val retrospectType: String,
+    val categoryIdentifier: String,
 
     @Column
     val createdAt: Timestamp = getNowTimestamp(),

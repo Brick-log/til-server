@@ -70,15 +70,15 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         value =
         """
         SELECT * FROM retrospect 
-        where type = :type 
+        where categoryIdentifier = :categoryIdentifier 
         AND ((created_at = :lastEntityCreatedAt AND id < :lastEntityId) OR created_at < :lastEntityCreatedAt)
         ORDER BY created_at DESC, id DESC
         LIMIT :size
         """,
         nativeQuery = true
     )
-    fun findAllByCreatedAtBeforeAndType(
-        type: String,
+    fun findAllByCreatedAtBeforeAndCategoryIdentifier(
+        categoryIdentifier: String,
         lastEntityId: Int,
         lastEntityCreatedAt: Timestamp,
         size: Int,
@@ -116,13 +116,13 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         value =
         """
         SELECT * FROM retrospect 
-        where type = :type
+        where category_identifier = :categoryIdentifier
         LIMIT :size
         """,
         nativeQuery = true
     )
-    fun findByTypeWithSize (
+    fun findByCategoryIdentifierWithSize (
         size: Int,
-        type: String,
+        categoryIdentifier: String,
     ): List<RetrospectEntity>
 }

@@ -22,7 +22,10 @@ data class RetrospectEntity (
     val userIdentifier: String,
 
     @Column
-    val type: String,
+    val categoryIdentifier: String,
+
+    @Column
+    val questionType: String,
 
     @Column
     val isSecret: Boolean,

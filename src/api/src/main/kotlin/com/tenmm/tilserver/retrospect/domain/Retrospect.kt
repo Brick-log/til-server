@@ -6,6 +6,7 @@ import java.sql.Timestamp
 data class Retrospect(
     val retrospectIdentifier: Identifier,
     val userIdentifier: Identifier,
+    val questionType: String,
     val isSecret: Boolean,
     val createdAt: Timestamp
 )

@@ -6,24 +6,28 @@ import com.tenmm.tilserver.retrospect.application.outbound.GetCategoryRetrospect
 import com.tenmm.tilserver.retrospect.application.outbound.GetUserRetrospectPort
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.DetailRetrospect
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.RetrospectQna
+import com.tenmm.tilserver.post.application.service.GetQuestionTypeService
 
 import com.tenmm.tilserver.retrospect.adapter.outbound.model.RetrospectList
+import com.tenmm.tilserver.user.application.service.GetUserService
 
 import org.springframework.stereotype.Service
 import com.tenmm.tilserver.common.domain.Identifier
 
 @Service
 class GetCategoryRetrospectService(
+    private val getUserService: GetUserService,
+    private val getQuestionTypeService: GetQuestionTypeService,
     private val getCategoryRetrospectPort: GetCategoryRetrospectPort,
     private val getUserRetrospectPort: GetUserRetrospectPort
 ) : GetCategoryRetrospectUseCase {
-    override fun getRetrospectListByTypeWithPageToken(pageToken: String, retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
-        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByTypeWithPageToken(pageToken, retrospectType, size)
+    override fun getRetrospectListByCategoryIdentifierWithPageToken(pageToken: String, categoryIdentifier: Identifier, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
+        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByCategoryIdentifierWithPageToken(pageToken, categoryIdentifier, size)
         return generateRetrospectWithPath(retrospectList, userIdentifier)
     }
 
-    override fun getRetrospectListByType(retrospectType: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
-        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByType(retrospectType, size)
+    override fun getRetrospectListByCategoryIdentifier(categoryIdentifier: Identifier, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
+        val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByCategoryIdentifier(categoryIdentifier, size)
         return generateRetrospectWithPath(retrospectList, userIdentifier)
     }
 
@@ -34,8 +38,8 @@ class GetCategoryRetrospectService(
         return generateRetrospectWithPath(retrospectList, null)
     }
 
-    override fun getRecommendedRetrospectListByCategory(retrospectType: String): GetUserRetrospectResponseModel {
-        val retrospectIdentifiers = getCategoryRetrospectPort.getByRetrospectType(retrospectType)
+    override fun getRecommendedRetrospectListByCategory(categoryIdentifier: Identifier): GetUserRetrospectResponseModel {
+        val retrospectIdentifiers = getCategoryRetrospectPort.getByCategoryIdentifier(categoryIdentifier)
         val retrospectList = getCategoryRetrospectPort.getRetrospectListByIdentifiers(retrospectIdentifiers)
 
         return generateRetrospectWithPath(retrospectList, null)
@@ -52,10 +56,13 @@ class GetCategoryRetrospectService(
                 DetailRetrospect(
                     isSecret = it.isSecret,
                     createdAt = it.createdAt,
+                    questionType = it.questionType,
+                    questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
+                    userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
                     id = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) it.retrospectIdentifier else "",
                     qna = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                         RetrospectQna(
-                            question = it.question,
+                            questionName = it.questionName,
                             answer = it.answer,
                         )
                     } else listOf<RetrospectQna>()

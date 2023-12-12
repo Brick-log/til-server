@@ -11,8 +11,8 @@ interface RecommendRetrospectRepository : JpaRepository<RecommendRetrospectEntit
     @Query(value = "SELECT * FROM recommended_retrospect order by RAND() limit :size", nativeQuery = true)
     fun findByRandom(size: Int): List<RecommendRetrospectEntity>
 
-    fun findByRetrospectTypeOrderByCreatedAtDesc(
-        Type: String,
+    fun findByCategoryIdentifierOrderByCreatedAtDesc(
+        categoryIdentifier: String,
         pageable: Pageable,
     ): List<RecommendRetrospectEntity>
 

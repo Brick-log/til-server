@@ -19,7 +19,7 @@ data class RetrospectQnaEntity (
     val retrospectIdentifier: String,
 
     @Column
-    val question: String,
+    val questionName: String,
 
     @Column
     val answer: String,

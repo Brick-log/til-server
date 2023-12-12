@@ -7,28 +7,28 @@ import com.tenmm.tilserver.question.domain.QuestionType
 
 fun Question.toEntity(): QuestionEntity {
     return QuestionEntity(
-        type = this.type,
-        name = this.name,
+        questionType = this.questionType,
+        questionName = this.questionName,
     )
 }
 
 fun QuestionEntity.toModel(): Question {
     return Question(
-        type = this.type,
-        name = this.name,
+        questionType = this.questionType,
+        questionName = this.questionName,
     )
 }
 
 fun QuestionType.toEntity(): QuestionTypeEntity {
     return QuestionTypeEntity(
-        type = this.type,
-        name = this.name,
+        questionType = this.questionType,
+        questionTypeName = this.questionTypeName,
     )
 }
 
 fun QuestionTypeEntity.toModel(): QuestionType {
     return QuestionType(
-        type = this.type,
-        name = this.name,
+        questionType = this.questionType,
+        questionTypeName = this.questionTypeName,
     )
 }

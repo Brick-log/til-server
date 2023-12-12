@@ -20,7 +20,7 @@ class GetQuestionController(
     private val getQuestionUseCase: GetQuestionUseCase,
 ) {
 
-    @GetMapping("/{type}")
+    @GetMapping("/{questionType}")
     @Operation(
         summary = "질문 요청",
         responses = [
@@ -46,9 +46,9 @@ class GetQuestionController(
         ]
     )
     fun getQuestionByType(
-        @PathVariable type: String
+        @PathVariable questionType: String
     ): GetQuestionResponse {
-        val question = getQuestionUseCase.getQuestionByType(type)
+        val question = getQuestionUseCase.getQuestionByType(questionType)
         return question
     }
 }

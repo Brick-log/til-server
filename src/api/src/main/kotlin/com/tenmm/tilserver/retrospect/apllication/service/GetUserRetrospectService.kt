@@ -4,6 +4,7 @@ import com.tenmm.tilserver.retrospect.application.inbound.GetUserRetrospectUseCa
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetUserRetrospectResponseModel
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetRetrospectMetaResponseModel
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.DetailRetrospect
+import com.tenmm.tilserver.post.application.service.GetQuestionTypeService
 import com.tenmm.tilserver.common.utils.getTimeZone
 import org.springframework.stereotype.Service
 import com.tenmm.tilserver.common.domain.Identifier
@@ -15,9 +16,12 @@ import java.time.format.DateTimeFormatter
 import java.time.LocalDate
 
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.RetrospectQna
+import com.tenmm.tilserver.user.application.service.GetUserService
 
 @Service
 class GetUserRetrospectService(
+    private val getUserService: GetUserService,
+    private val getQuestionTypeService: GetQuestionTypeService,
     private val getUserUseCase: GetUserUseCase,
     private val getUserRetrospectPort: GetUserRetrospectPort
 ) : GetUserRetrospectUseCase {
@@ -47,10 +51,13 @@ class GetUserRetrospectService(
             DetailRetrospect(
                 isSecret = it.isSecret,
                 createdAt = it.createdAt,
+                questionType = it.questionType,
+                questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
+                userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
                 id = if (!it.isSecret || isSecret) it.retrospectIdentifier else "",
                 qna = if (!it.isSecret || isSecret) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                     RetrospectQna(
-                        question = it.question,
+                        questionName = it.questionName,
                         answer = it.answer,
                     )
                 } else listOf<RetrospectQna>()
