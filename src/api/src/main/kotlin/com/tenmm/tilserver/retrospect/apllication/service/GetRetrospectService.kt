@@ -40,6 +40,6 @@ class GetRetrospectService(
             userIdentifier = retrospect?.userIdentifier,
             isSecret = retrospect?.isSecret,
             createdAt = retrospect?.createdAt
-        )   
+        )
     }
 }
