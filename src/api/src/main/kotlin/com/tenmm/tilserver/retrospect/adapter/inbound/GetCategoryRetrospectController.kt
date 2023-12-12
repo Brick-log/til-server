@@ -19,8 +19,6 @@ import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetUserRetrospectRes
 import com.tenmm.tilserver.security.domain.UserAuthInfo
 import com.tenmm.tilserver.common.security.annotation.OptionalAuthentication
 
-import com.tenmm.tilserver.common.domain.Identifier
-
 @RestController
 @RequestMapping("/v1/retrospect/category")
 @Tag(name = "Retrospect")
