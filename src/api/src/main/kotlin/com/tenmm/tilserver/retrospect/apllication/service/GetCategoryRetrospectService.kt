@@ -57,7 +57,7 @@ class GetCategoryRetrospectService(
                     isSecret = it.isSecret,
                     createdAt = it.createdAt,
                     questionType = it.questionType,
-                    questionTypeName =  getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
+                    questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
                     userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
                     id = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) it.retrospectIdentifier else "",
                     qna = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
