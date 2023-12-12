@@ -18,13 +18,13 @@ class PostRetrospectAdapter(
     private val retrospectQnaRepository: RetrospectQnaRepository,
     private val retrospectRepository: RetrospectRepository
 ) : PostRetrospectPort {
-    override fun save(userIdentifier: Identifier, postRetrospectRequestModel: PostRetrospectRequestModel) {
+    override fun save(userIdentifier: Identifier, categoryIdentifier: String, postRetrospectRequestModel: PostRetrospectRequestModel) {
         val retrospectIdentifier = Identifier.generate().value
 
         val retrospectEntity: RetrospectEntity = RetrospectEntity(
             retrospectIdentifier = retrospectIdentifier,
             userIdentifier = userIdentifier.value,
-            categoryIdentifier = postRetrospectRequestModel.categoryIdentifier,
+            categoryIdentifier = categoryIdentifier,
             questionType = postRetrospectRequestModel.questionType,
             isSecret = postRetrospectRequestModel.isSecret,
             createdAt = Timestamp.valueOf(LocalDateTime.now())
