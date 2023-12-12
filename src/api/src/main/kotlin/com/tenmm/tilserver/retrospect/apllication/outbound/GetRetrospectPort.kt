@@ -6,5 +6,6 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 interface GetRetrospectPort {
     fun findOneRetrospectByUserIdentifierToday(userIdentifier: Identifier): List<RetrospectEntity>
+    fun findOneRetrospectById(userIdentifier: Identifier): RetrospectEntity?
     fun findRetrospectQnaListByRetrospectIdentifier(retrospectIdentifier: Identifier): List<RetrospectQnaEntity>
 }

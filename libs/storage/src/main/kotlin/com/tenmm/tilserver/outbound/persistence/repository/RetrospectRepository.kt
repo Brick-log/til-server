@@ -125,4 +125,16 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         size: Int,
         categoryIdentifier: String,
     ): List<RetrospectEntity>
+
+    @Query(
+        value =
+        """
+        SELECT * FROM retrospect 
+        where retrospect_identifier = :retrospectIdentifier
+        """,
+        nativeQuery = true
+    )
+    fun findOneRetrospectById (
+        retrospectIdentifier: String
+    ): RetrospectEntity
 }

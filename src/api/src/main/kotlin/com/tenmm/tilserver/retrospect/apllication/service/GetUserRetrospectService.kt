@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.retrospect.application.service
 
+import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.retrospect.application.inbound.GetUserRetrospectUseCase
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetUserRetrospectResponseModel
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetRetrospectMetaResponseModel
@@ -23,7 +24,8 @@ class GetUserRetrospectService(
     private val getUserService: GetUserService,
     private val getQuestionTypeService: GetQuestionTypeService,
     private val getUserUseCase: GetUserUseCase,
-    private val getUserRetrospectPort: GetUserRetrospectPort
+    private val getUserRetrospectPort: GetUserRetrospectPort,
+    private val getCategoryUseCase: GetCategoryUseCase,
 ) : GetUserRetrospectUseCase {
     override fun getRetrospectListByNameAndDateWithPageToken(
         path: String,
@@ -47,6 +49,7 @@ class GetUserRetrospectService(
             from = from,
             pageToken = pageToken ?: "",
         )
+        val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
         val detailRetrospect = retrospects.map {
             DetailRetrospect(
                 isSecret = it.isSecret,
@@ -54,6 +57,9 @@ class GetUserRetrospectService(
                 questionType = it.questionType,
                 questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
                 userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
+                userPath = getUserService.getByIdentifier(Identifier(it.userIdentifier)).path,
+                categoryIdentifier = it.categoryIdentifier,
+                categoryName = categoryMap[it.categoryIdentifier]!!.name,
                 retrospectIdentifier = if (!it.isSecret || isSecret) it.retrospectIdentifier else "",
                 qna = if (!it.isSecret || isSecret) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                     RetrospectQna(

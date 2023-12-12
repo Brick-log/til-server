@@ -25,6 +25,10 @@ class GetRetrospectAdapter(
         return retrospectRepository.findOneRetrospectByUserIdentifierToday(userIdentifier.value, todayTimestamp, tomorrowTimestamp)
     }
 
+    override fun findOneRetrospectById(userIdentifier: Identifier): RetrospectEntity? {
+        return retrospectRepository.findOneRetrospectById(userIdentifier.value)
+    }
+
     override fun findRetrospectQnaListByRetrospectIdentifier(retrospectIdentifier: Identifier): List<RetrospectQnaEntity> {
         return retrospectQnaRepository.findByRetrospectIdentifier(retrospectIdentifier.value)
     }
