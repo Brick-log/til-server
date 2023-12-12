@@ -7,4 +7,5 @@ data class GetQuestionTypeResponse(
 data class QuestionType(
     val questionType: String,
     val questionTypeName: String,
+    val isRandom: Boolean,
 )

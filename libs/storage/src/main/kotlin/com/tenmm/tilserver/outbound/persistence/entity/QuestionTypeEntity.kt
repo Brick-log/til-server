@@ -20,4 +20,7 @@ data class QuestionTypeEntity (
 
     @Column
     val questionTypeName: String,
+
+    @Column
+    val isRandom: Boolean,
 )

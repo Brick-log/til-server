@@ -13,6 +13,12 @@ class GetQuestionTypeAdapter(
     override fun findAll(): List<QuestionTypeEntity> {
         return questionTypeRepository.findAll()
     }
+    override fun findRandomQuestion(): List<QuestionTypeEntity> {
+        return questionTypeRepository.findRandomQuestion()
+    }
+    override fun findStaticQuestion(): List<QuestionTypeEntity> {
+        return questionTypeRepository.findStaticQuestion()
+    }
     override fun findByType(questionType: String): QuestionTypeEntity {
         return questionTypeRepository.findByType(questionType) ?: throw QuestionTypeNotFoundException()
     }

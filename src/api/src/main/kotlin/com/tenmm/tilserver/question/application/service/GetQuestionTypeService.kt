@@ -15,7 +15,8 @@ class GetQuestionTypeService(
         val questionTypes = questionType.map {
             QuestionType(
                 questionType = it.questionType,
-                questionTypeName = it.questionTypeName
+                questionTypeName = it.questionTypeName,
+                isRandom = it.isRandom
             )
         }
         return GetQuestionTypeResponse(
@@ -23,10 +24,34 @@ class GetQuestionTypeService(
         )
     }
 
+    override fun getPartOfQuestionTypeList(): GetQuestionTypeResponse {
+        val randomQuestionType = getQuestionTypePort.findRandomQuestion()
+        val randomQuestionTypes = randomQuestionType.map {
+            QuestionType(
+                questionType = it.questionType,
+                questionTypeName = it.questionTypeName,
+                isRandom = it.isRandom
+            )
+        }
+        val staticuestionType = getQuestionTypePort.findStaticQuestion()
+        val staticQuestionTypes = staticuestionType.map {
+            QuestionType(
+                questionType = it.questionType,
+                questionTypeName = it.questionTypeName,
+                isRandom = it.isRandom
+            )
+        }
+        return GetQuestionTypeResponse(
+            types = staticQuestionTypes + randomQuestionTypes.shuffled().take(2)
+        )
+    }
+
     override fun getQuestionType(questionType: String): QuestionType {
+        val questionTypeModel = getQuestionTypePort.findByType(questionType)
         return QuestionType(
             questionType = questionType,
-            questionTypeName = getQuestionTypePort.findByType(questionType)?.questionTypeName ?: ""
+            questionTypeName = questionTypeModel.questionTypeName,
+            isRandom = questionTypeModel.isRandom
         )
     }
 }
