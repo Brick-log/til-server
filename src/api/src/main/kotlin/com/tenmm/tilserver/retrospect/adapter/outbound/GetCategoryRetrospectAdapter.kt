@@ -20,11 +20,11 @@ class GetCategoryRetrospectAdapter(
     private val retrospectRepository: RetrospectRepository,
     private val recommendRetrospectRepository: RecommendRetrospectRepository
 ) : GetCategoryRetrospectPort {
-    override fun getRetrospectListByCategoryIdentifierWithPageToken(pageToken: String, categoryIdentifier: Identifier, size: Int): RetrospectList {
+    override fun getRetrospectListByCategoryIdentifierWithPageToken(pageToken: String, categoryIdentifier: String, size: Int): RetrospectList {
 
         val parsedPageToken = cryptoHandler.decrypt(pageToken, PageTokenSearchRetrospect::class)
 
-        val result = if (categoryIdentifier.value == "all") {
+        val result = if (categoryIdentifier == "all") {
             retrospectRepository.findAllByCreatedAtBefore(
                 lastEntityId = parsedPageToken.lastEntityId,
                 lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
@@ -34,7 +34,7 @@ class GetCategoryRetrospectAdapter(
             retrospectRepository.findAllByCreatedAtBeforeAndCategoryIdentifier(
                 lastEntityId = parsedPageToken.lastEntityId,
                 lastEntityCreatedAt = parsedPageToken.lastEntityCreatedAt,
-                categoryIdentifier = categoryIdentifier.value,
+                categoryIdentifier = categoryIdentifier,
                 size = size + 1
             )
         }
@@ -52,14 +52,14 @@ class GetCategoryRetrospectAdapter(
             nextPageToken = nextPageToken
         )
     }
-    override fun getRetrospectListByCategoryIdentifier(categoryIdentifier: Identifier, size: Int): RetrospectList {
-        val result = if (categoryIdentifier.value == "all") {
+    override fun getRetrospectListByCategoryIdentifier(categoryIdentifier: String, size: Int): RetrospectList {
+        val result = if (categoryIdentifier == "all") {
             retrospectRepository.findAllWithSize(
                 size = size + 1
             )
         } else {
             retrospectRepository.findByCategoryIdentifierWithSize(
-                categoryIdentifier = categoryIdentifier.value,
+                categoryIdentifier = categoryIdentifier,
                 size = size + 1
             )
         }
@@ -74,9 +74,9 @@ class GetCategoryRetrospectAdapter(
         return recommendRetrospectRepository.findByRandom(size).map { Identifier(it.retrospectIdentifier) }
     }
 
-    override fun getByCategoryIdentifier(categoryIdentifier: Identifier): List<Identifier> {
+    override fun getByCategoryIdentifier(categoryIdentifier: String): List<Identifier> {
         return recommendRetrospectRepository.findByCategoryIdentifierOrderByCreatedAtDesc(
-            categoryIdentifier.value, PageRequest.ofSize(3)
+            categoryIdentifier, PageRequest.ofSize(3)
         ).map { Identifier(it.retrospectIdentifier) }
     }
 
