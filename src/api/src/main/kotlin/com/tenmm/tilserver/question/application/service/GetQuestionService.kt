@@ -35,4 +35,12 @@ class GetQuestionService(
         }
         return questions
     }
+
+    override fun getAllQuestionList(): List<GetQuestionResponse> {
+        val partOfQuestionTypeList = getQuestionTypeService.getQuestionTypeList()
+        val questions = partOfQuestionTypeList.types.map {
+            this.getQuestionByType(it.questionType)
+        }
+        return questions
+    }
 }

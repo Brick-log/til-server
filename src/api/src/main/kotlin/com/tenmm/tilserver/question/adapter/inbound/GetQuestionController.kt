@@ -22,7 +22,7 @@ class GetQuestionController(
 
     @GetMapping("/{questionType}")
     @Operation(
-        summary = "질문 요청",
+        summary = "특정 질문 내용 요청",
         responses = [
             ApiResponse(
                 responseCode = "200",
@@ -79,6 +79,36 @@ class GetQuestionController(
     )
     fun getPartOfQuestionList(): List<GetQuestionResponse> {
         val question = getQuestionUseCase.getPartOfQuestionList()
+        return question
+    }
+
+    @GetMapping("/allQuestion")
+    @Operation(
+        summary = "전체 질문 요청 (질문 포함)",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "질문 요청 성공"
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "잘못된 질문 요청 (ex.잘못된 id)",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "질문 조회 실패",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "서버에러",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            )
+        ]
+    )
+    fun getAllQuestionList(): List<GetQuestionResponse> {
+        val question = getQuestionUseCase.getAllQuestionList()
         return question
     }
 }
