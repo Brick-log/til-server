@@ -21,7 +21,7 @@ class GetQuestionTypeController(
 
     @GetMapping("")
     @Operation(
-        summary = "질문 타입 요청",
+        summary = "전체 질문 타입 요청",
         responses = [
             ApiResponse(
                 responseCode = "200",
@@ -51,7 +51,7 @@ class GetQuestionTypeController(
 
     @GetMapping("/randomQuestionType")
     @Operation(
-        summary = "질문 요청",
+        summary = "고정 질문 + 랜덤 질문 타입 요청 (질문 타입만)",
         responses = [
             ApiResponse(
                 responseCode = "200",

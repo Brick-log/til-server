@@ -54,7 +54,7 @@ class GetQuestionController(
 
     @GetMapping("/randomQuestion")
     @Operation(
-        summary = "질문 요청",
+        summary = "고정 질문 + 랜덤 질문 요청 (질문 포함)",
         responses = [
             ApiResponse(
                 responseCode = "200",
