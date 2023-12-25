@@ -49,7 +49,7 @@ class GetQuestionTypeController(
         return questionType
     }
 
-    @GetMapping("/random")
+    @GetMapping("/randomQuestionType")
     @Operation(
         summary = "질문 요청",
         responses = [

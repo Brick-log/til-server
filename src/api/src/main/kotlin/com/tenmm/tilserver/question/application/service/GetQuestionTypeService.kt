@@ -42,7 +42,7 @@ class GetQuestionTypeService(
             )
         }
         return GetQuestionTypeResponse(
-            types = staticQuestionTypes + randomQuestionTypes.shuffled().take(2)
+            types = staticQuestionTypes + randomQuestionTypes.shuffled().take(1)
         )
     }
 
