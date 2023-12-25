@@ -44,8 +44,38 @@ class GetQuestionTypeController(
             )
         ]
     )
-    fun getQuestionByType(): GetQuestionTypeResponse {
+    fun getAllQuestionTpyeList(): GetQuestionTypeResponse {
         val questionType = getQuestionTypeUseCase.getQuestionTypeList()
         return questionType
+    }
+
+    @GetMapping("/randomQuestionType")
+    @Operation(
+        summary = "질문 요청",
+        responses = [
+            ApiResponse(
+                responseCode = "200",
+                description = "질문 요청 성공"
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "잘못된 질문 요청 (ex.잘못된 id)",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "404",
+                description = "질문 조회 실패",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            ),
+            ApiResponse(
+                responseCode = "500",
+                description = "서버에러",
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+            )
+        ]
+    )
+    fun getPartOfQuestionTypeList(): GetQuestionTypeResponse {
+        val question = getQuestionTypeUseCase.getPartOfQuestionTypeList()
+        return question
     }
 }

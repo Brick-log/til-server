@@ -23,6 +23,7 @@ fun QuestionType.toEntity(): QuestionTypeEntity {
     return QuestionTypeEntity(
         questionType = this.questionType,
         questionTypeName = this.questionTypeName,
+        isRandom = this.isRandom
     )
 }
 
@@ -30,5 +31,6 @@ fun QuestionTypeEntity.toModel(): QuestionType {
     return QuestionType(
         questionType = this.questionType,
         questionTypeName = this.questionTypeName,
+        isRandom = this.isRandom
     )
 }

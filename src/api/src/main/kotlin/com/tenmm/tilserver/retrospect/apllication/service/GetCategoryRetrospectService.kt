@@ -1,5 +1,6 @@
 package com.tenmm.tilserver.retrospect.application.service
 
+import com.tenmm.tilserver.category.application.inbound.GetCategoryUseCase
 import com.tenmm.tilserver.retrospect.application.inbound.GetCategoryRetrospectUseCase
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetUserRetrospectResponseModel
 import com.tenmm.tilserver.retrospect.application.outbound.GetCategoryRetrospectPort
@@ -19,7 +20,8 @@ class GetCategoryRetrospectService(
     private val getUserService: GetUserService,
     private val getQuestionTypeService: GetQuestionTypeService,
     private val getCategoryRetrospectPort: GetCategoryRetrospectPort,
-    private val getUserRetrospectPort: GetUserRetrospectPort
+    private val getUserRetrospectPort: GetUserRetrospectPort,
+    private val getCategoryUseCase: GetCategoryUseCase,
 ) : GetCategoryRetrospectUseCase {
     override fun getRetrospectListByCategoryIdentifierWithPageToken(pageToken: String, categoryIdentifier: String, size: Int, userIdentifier: Identifier?): GetUserRetrospectResponseModel {
         val retrospectList: RetrospectList = getCategoryRetrospectPort.getRetrospectListByCategoryIdentifierWithPageToken(pageToken, categoryIdentifier, size)
@@ -49,6 +51,7 @@ class GetCategoryRetrospectService(
         retrospectList: RetrospectList,
         userIdentifier: Identifier?
     ): GetUserRetrospectResponseModel {
+        val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
         return GetUserRetrospectResponseModel(
             size = retrospectList.retrospectList.size,
             nextPageToken = retrospectList.nextPageToken ?: "",
@@ -59,6 +62,9 @@ class GetCategoryRetrospectService(
                     questionType = it.questionType,
                     questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
                     userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
+                    userPath = getUserService.getByIdentifier(Identifier(it.userIdentifier)).path,
+                    categoryIdentifier = it.categoryIdentifier,
+                    categoryName = categoryMap[it.categoryIdentifier]!!.name,
                     retrospectIdentifier = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) it.retrospectIdentifier else "",
                     qna = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) getUserRetrospectPort.getRetrospectListByRetrospectIdentifier(Identifier(it.retrospectIdentifier)).map {
                         RetrospectQna(

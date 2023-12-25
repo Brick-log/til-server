@@ -14,6 +14,7 @@ class GetQuestionService(
 ) : GetQuestionUseCase {
     override fun getQuestionByType(questionType: String): GetQuestionResponse {
         val question = getQuestionPort.findByQuestionType(questionType)
+        val questionTypeModel = getQuestionTypeService.getQuestionType(questionType)
         val questions = question.map {
             Question(
                 questionName = it.questionName
@@ -21,8 +22,17 @@ class GetQuestionService(
         }
         return GetQuestionResponse(
             questionType = questionType,
-            questionTypeName = getQuestionTypeService.getQuestionType(questionType).questionTypeName,
+            questionTypeName = questionTypeModel.questionTypeName,
+            isRandom = questionTypeModel.isRandom,
             question = questions
         )
+    }
+
+    override fun getPartOfQuestionList(): List<GetQuestionResponse> {
+        val partOfQuestionTypeList = getQuestionTypeService.getPartOfQuestionTypeList()
+        val questions = partOfQuestionTypeList.types.map {
+            this.getQuestionByType(it.questionType)
+        }
+        return questions
     }
 }

@@ -6,6 +6,7 @@ import com.tenmm.tilserver.retrospect.adapter.inbound.Model.GetRetrospectRespons
 import com.tenmm.tilserver.retrospect.adapter.inbound.Model.SimpleRetrospect
 import com.tenmm.tilserver.post.application.service.GetQuestionTypeService
 import com.tenmm.tilserver.common.domain.Identifier
+import com.tenmm.tilserver.retrospect.application.inbound.Model.RetrospectDto
 
 import org.springframework.stereotype.Service
 
@@ -28,5 +29,17 @@ class GetRetrospectService(
                 }
             )
         }
+    }
+
+    override fun getRetrospectById(retrospectIdentifier: Identifier): RetrospectDto {
+        val retrospect = getRetrospectPort.findOneRetrospectById(retrospectIdentifier)
+        return RetrospectDto(
+            questionType = retrospect?.questionType,
+            retrospectIdentifier = retrospect?.retrospectIdentifier,
+            categoryIdentifier = retrospect?.categoryIdentifier,
+            userIdentifier = retrospect?.userIdentifier,
+            isSecret = retrospect?.isSecret,
+            createdAt = retrospect?.createdAt
+        )
     }
 }

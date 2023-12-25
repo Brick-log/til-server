@@ -48,9 +48,8 @@ class PostCategoryRetrospectController(
         ]
     )
     fun postRecommendationList(
-        @RequestParam(name = "retrospectIdentifier") retrospectIdentifier: String,
-        @RequestParam(name = "categoryIdentifier") categoryIdentifier: String
+        @RequestParam(name = "retrospectIdentifier") retrospectIdentifier: String
     ): Boolean {
-        return postCategoryRetrospectUseCase.addByRetrospectId(Identifier(retrospectIdentifier), categoryIdentifier)
+        return postCategoryRetrospectUseCase.addByRetrospectId(Identifier(retrospectIdentifier))
     }
 }

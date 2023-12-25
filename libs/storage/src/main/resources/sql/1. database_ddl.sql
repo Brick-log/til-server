@@ -92,7 +92,8 @@ CREATE TABLE `question_type`
 (
     `id`                  int          not null primary key auto_increment,
     `question_type_name`                varchar(255)  not null,
-    `question_type`     char(255)     not null
+    `question_type`     char(255)     not null,
+    `is_random`            boolean   not null
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `question`
