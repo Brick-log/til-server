@@ -19,13 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @RestController
 @RequestMapping("/v1/my/retrospect")
-@Tag(name = "Retrospect")
+@Tag(name = "Retrospect(my)")
 class GetRetrospectController(
     private val getRetrospectUseCase: GetRetrospectUseCase,
 ) {
     @GetMapping
     @Operation(
-        summary = "회고 조회",
+        summary = "본인 회고 조회",
         responses = [
             ApiResponse(
                 responseCode = "200",

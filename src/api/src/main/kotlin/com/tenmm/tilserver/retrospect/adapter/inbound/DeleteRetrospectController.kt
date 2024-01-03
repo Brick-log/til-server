@@ -23,13 +23,13 @@ import com.tenmm.tilserver.common.domain.Identifier
 
 @RestController
 @RequestMapping("/v1/my/retrospect")
-@Tag(name = "Retrospect")
+@Tag(name = "Retrospect(my)")
 class DeleteRetrospectController(
     private val deleteRetrospectUseCase: DeleteRetrospectUseCase,
 ) {
     @DeleteMapping("{retrospectIdentifier}")
     @Operation(
-        summary = "회고 삭제",
+        summary = "본인 회고 삭제",
         responses = [
             ApiResponse(
                 responseCode = "200",

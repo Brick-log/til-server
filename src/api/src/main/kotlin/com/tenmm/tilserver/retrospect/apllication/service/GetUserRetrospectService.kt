@@ -40,7 +40,7 @@ class GetUserRetrospectService(
             return GetUserRetrospectResponseModel(
                 retrospects = emptyList(),
                 size = 0,
-                nextPageToken = ""
+                nextPageToken = null
             )
         }
         val retrospects = getUserRetrospectPort.getRetrospectListByCreatedAt(
@@ -73,7 +73,7 @@ class GetUserRetrospectService(
         return GetUserRetrospectResponseModel(
             retrospects = detailRetrospect,
             size = retrospects.size,
-            nextPageToken = ""
+            nextPageToken = null
         )
     }
 

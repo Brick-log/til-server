@@ -19,13 +19,13 @@ import com.tenmm.tilserver.retrospect.application.inbound.PostRetrospectUseCase
 
 @RestController
 @RequestMapping("/v1/my/retrospect")
-@Tag(name = "Retrospect")
+@Tag(name = "Retrospect(my)")
 class PostRetrospectController(
     private val postRetrospectUseCase: PostRetrospectUseCase,
 ) {
     @PostMapping
     @Operation(
-        summary = "회고 등록",
+        summary = "본인 회고 등록",
         responses = [
             ApiResponse(
                 responseCode = "200",
