@@ -66,7 +66,7 @@ class GetCategoryRetrospectAdapter(
 
         return RetrospectList(
             retrospectList = result,
-            nextPageToken = ""
+            nextPageToken = null
         )
     }
 
@@ -84,7 +84,7 @@ class GetCategoryRetrospectAdapter(
         val result = retrospectIdentifiers.map { retrospectRepository.findOneByRetrospectIdentifier(it.value) }
         return RetrospectList(
             retrospectList = result,
-            nextPageToken = ""
+            nextPageToken = null
         )
     }
 

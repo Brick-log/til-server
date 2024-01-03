@@ -54,7 +54,7 @@ class GetCategoryRetrospectService(
         val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
         return GetUserRetrospectResponseModel(
             size = retrospectList.retrospectList.size,
-            nextPageToken = retrospectList.nextPageToken ?: "",
+            nextPageToken = retrospectList.nextPageToken,
             retrospects = retrospectList.retrospectList.map {
                 DetailRetrospect(
                     isSecret = it.isSecret,
