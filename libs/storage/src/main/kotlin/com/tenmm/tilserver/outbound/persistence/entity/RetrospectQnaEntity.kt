@@ -6,11 +6,10 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import java.sql.Timestamp
 
 @Table(name = "retrospect_qna")
 @Entity
-data class RetrospectQnaEntity (
+data class RetrospectQnaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,

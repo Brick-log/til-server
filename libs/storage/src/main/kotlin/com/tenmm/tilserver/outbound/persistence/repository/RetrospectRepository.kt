@@ -64,7 +64,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         userIdentifier: String,
         from: Timestamp,
         to: Timestamp,
-    ):  List<RetrospectEntity>
+    ): List<RetrospectEntity>
 
     @Query(
         value =
@@ -108,7 +108,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         """,
         nativeQuery = true
     )
-    fun findAllWithSize (
+    fun findAllWithSize(
         size: Int,
     ): List<RetrospectEntity>
 
@@ -121,7 +121,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         """,
         nativeQuery = true
     )
-    fun findByCategoryIdentifierWithSize (
+    fun findByCategoryIdentifierWithSize(
         size: Int,
         categoryIdentifier: String,
     ): List<RetrospectEntity>
@@ -134,7 +134,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         """,
         nativeQuery = true
     )
-    fun findOneRetrospectById (
+    fun findOneRetrospectById(
         retrospectIdentifier: String
     ): RetrospectEntity
 }

@@ -7,6 +7,7 @@ data class DetailRetrospect(
     val retrospectIdentifier: String,
     val userName: String,
     val userPath: String,
+    val profileImgSrc: String,
     val categoryIdentifier: String,
     val categoryName: String,
     val createdAt: Timestamp,
