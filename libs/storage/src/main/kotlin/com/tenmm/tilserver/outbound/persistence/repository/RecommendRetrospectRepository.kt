@@ -15,5 +15,4 @@ interface RecommendRetrospectRepository : JpaRepository<RecommendRetrospectEntit
         categoryIdentifier: String,
         pageable: Pageable,
     ): List<RecommendRetrospectEntity>
-
 }

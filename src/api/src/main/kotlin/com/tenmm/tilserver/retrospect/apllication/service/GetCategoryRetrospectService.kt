@@ -56,13 +56,15 @@ class GetCategoryRetrospectService(
             size = retrospectList.retrospectList.size,
             nextPageToken = retrospectList.nextPageToken,
             retrospects = retrospectList.retrospectList.map {
+                val user = getUserService.getByIdentifier(Identifier(it.userIdentifier))
                 DetailRetrospect(
                     isSecret = it.isSecret,
                     createdAt = it.createdAt,
                     questionType = it.questionType,
                     questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
-                    userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
-                    userPath = getUserService.getByIdentifier(Identifier(it.userIdentifier)).path,
+                    userName = user.name,
+                    userPath = user.path,
+                    profileImgSrc = user.thumbnailUrl.value,
                     categoryIdentifier = it.categoryIdentifier,
                     categoryName = categoryMap[it.categoryIdentifier]!!.name,
                     retrospectIdentifier = if (!it.isSecret || (userIdentifier != null && it.userIdentifier == userIdentifier.value)) it.retrospectIdentifier else "",

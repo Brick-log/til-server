@@ -51,13 +51,15 @@ class GetUserRetrospectService(
         )
         val categoryMap = getCategoryUseCase.getAll().associateBy { it.identifier }
         val detailRetrospect = retrospects.map {
+            val user = getUserService.getByIdentifier(Identifier(it.userIdentifier))
             DetailRetrospect(
                 isSecret = it.isSecret,
                 createdAt = it.createdAt,
                 questionType = it.questionType,
                 questionTypeName = getQuestionTypeService.getQuestionType(it.questionType).questionTypeName,
-                userName = getUserService.getByIdentifier(Identifier(it.userIdentifier)).name,
-                userPath = getUserService.getByIdentifier(Identifier(it.userIdentifier)).path,
+                userName = user.name,
+                userPath = user.path,
+                profileImgSrc = user.thumbnailUrl.value,
                 categoryIdentifier = it.categoryIdentifier,
                 categoryName = categoryMap[it.categoryIdentifier]!!.name,
                 retrospectIdentifier = if (!it.isSecret || isSecret) it.retrospectIdentifier else "",

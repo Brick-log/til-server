@@ -10,7 +10,7 @@ import java.sql.Timestamp
 
 @Table(name = "retrospect")
 @Entity
-data class RetrospectEntity (
+data class RetrospectEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
