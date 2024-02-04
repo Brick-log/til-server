@@ -104,6 +104,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         value =
         """
         SELECT * FROM retrospect 
+        ORDER BY created_at DESC, id DESC
         LIMIT :size
         """,
         nativeQuery = true
@@ -117,6 +118,7 @@ interface RetrospectRepository : JpaRepository<RetrospectEntity, Long> {
         """
         SELECT * FROM retrospect 
         where category_identifier = :categoryIdentifier
+        ORDER BY created_at DESC, id DESC
         LIMIT :size
         """,
         nativeQuery = true

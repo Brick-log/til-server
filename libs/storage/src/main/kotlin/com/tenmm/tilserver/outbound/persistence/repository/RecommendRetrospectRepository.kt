@@ -11,6 +11,15 @@ interface RecommendRetrospectRepository : JpaRepository<RecommendRetrospectEntit
     @Query(value = "SELECT * FROM recommended_retrospect order by RAND() limit :size", nativeQuery = true)
     fun findByRandom(size: Int): List<RecommendRetrospectEntity>
 
+    @Query(
+        value =
+        """
+        SELECT * FROM recommended_retrospect 
+        where categoryIdentifier = :categoryIdentifier 
+        ORDER BY created_at DESC, id DESC
+        """,
+        nativeQuery = true
+    )
     fun findByCategoryIdentifierOrderByCreatedAtDesc(
         categoryIdentifier: String,
         pageable: Pageable,
