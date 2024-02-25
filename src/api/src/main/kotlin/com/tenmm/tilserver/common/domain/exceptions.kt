@@ -18,6 +18,7 @@ enum class ModifyUserFailType {
 }
 
 class PostNotFoundException : ServerBaseException(ErrorCode.POST_NOT_FOUND)
+class RetrospectNotFoundException : ServerBaseException(ErrorCode.RETROSPECT_NOT_FOUND)
 
 class ModifyPostFailException(val type: ModifyPostFailType) : ServerBaseException(ErrorCode.POST_MODIFY_FAIL, type.name)
 
@@ -32,3 +33,5 @@ class OAuthFailException(type: OAuthType, description: String) :
     ServerBaseException(ErrorCode.OAUTH_FAIL, "$type - $description")
 
 class PostSaveFailException : ServerBaseException(ErrorCode.POST_SAVE_FAIL)
+
+class QuestionTypeNotFoundException : ServerBaseException(ErrorCode.QUESTION_TYPE_NOT_FOUND)

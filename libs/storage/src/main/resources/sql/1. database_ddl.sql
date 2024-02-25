@@ -85,3 +85,48 @@ CREATE TABLE `user`
 
     unique index UDX_PATH (`path`)
 );
+
+
+/*Spec 1.5*/
+CREATE TABLE `question_type`
+(
+    `id`                  int          not null primary key auto_increment,
+    `question_type_name`                varchar(255)  not null,
+    `question_type`     char(255)     not null,
+    `is_random`            boolean   not null
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `question`
+(
+    `id`                  int          not null primary key auto_increment,
+    `question_name`                varchar(255)  not null,
+    `question_type`     char(255)     not null
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `retrospect`
+(
+    `id`                        int          not null primary key auto_increment,
+    `retrospect_identifier`     char(36)     not null,
+    `category_identifier`     char(36)     not null,
+    `user_identifier`           char(36)      not null,
+    `question_type`           char(255)      not null,
+    `is_secret` boolean      not null,
+    `created_at`                  timestamp    not null default now()
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `retrospect_qna`
+(
+    `id`                        int          not null primary key auto_increment,
+    `retrospect_identifier`     char(36)     not null,
+    `question_name`     char(255)     not null,
+    `answer`                varchar(255) not null
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `recommended_retrospect`
+(
+    `id`                        int          not null primary key auto_increment,
+    `retrospect_identifier`     char(36)     not null,
+    `category_identifier`     char(36)     not null,
+    `created_at`                  timestamp    not null default now()
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
